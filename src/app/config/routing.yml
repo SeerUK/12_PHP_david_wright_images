@@ -1,0 +1,20 @@
+dwi_portfolio:
+    resource: "@DWIPortfolioBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dwi_contact:
+    resource: "@DWIContactBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dwi_auth:
+    resource: "@DWIAuthBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dwi_asset:
+    resource: "@DWIAssetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dwi_static:
+    resource: "@DWIStaticBundle/Resources/config/routing.yml"
+    prefix:   /
+

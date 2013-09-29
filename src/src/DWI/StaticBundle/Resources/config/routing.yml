@@ -1,0 +1,3 @@
+dwi_static_homepage:
+    pattern:  /
+    defaults: { _controller: DWIStaticBundle:Static:home }

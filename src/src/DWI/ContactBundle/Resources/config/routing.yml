@@ -1,0 +1,3 @@
+dwi_contact_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: DWIContactBundle:Default:index }
