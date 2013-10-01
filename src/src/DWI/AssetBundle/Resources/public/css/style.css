@@ -60,6 +60,7 @@ h1 {
         content: "≈";
         display: block;
         font-size: 40px;
+        font-weight: 400;
         text-align: center;
     }
 
@@ -79,9 +80,9 @@ h1 {
         font-weight: 700;
         text-decoration: none;
         text-transform: uppercase;
-        -webkit-transition: color 0.4s ease;
-           -moz-transition: color 0.4s ease;
-                transition: color 0.4s ease;
+        -webkit-transition: all 0.4s ease;
+           -moz-transition: all 0.4s ease;
+                transition: all 0.4s ease;
     }
 
         .footer a:hover {
