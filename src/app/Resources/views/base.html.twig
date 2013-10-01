@@ -1,13 +1,35 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    <title>{% block title %}{% endblock %}{% if block('title') %} - {% endif %}{{ site_name }}</title>
+
+    {% stylesheets
+        'bundles/dwiasset/css/normalize.css'
+        'bundles/dwiasset/fonts/roboto.css'
+        'bundles/dwiasset/css/style.css'
+        filter='cssrewrite' combine=true output='css/assets.css'
+    %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    {% include '::header.html.twig' %}
+
+    <div class="container">
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    </div>
+
+    {% include '::footer.html.twig' %}
+
+    <script src='{{ asset('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') }}' type='text/javascript'></script>
+
+    {% block javascripts %}{% endblock %}
+</body>
 </html>

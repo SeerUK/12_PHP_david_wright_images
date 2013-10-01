@@ -1,0 +1,79 @@
+/*!
+ * David Wright Images
+ *
+ * @author  Elliot Wright <wright.elliot@gmail.com>
+ * @since   2013
+ * @package DWI
+ */
+
+html,
+body {
+    background: #31373f;
+    color: #A5ADB6;
+    font: 300 14px/20px Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.container {
+    margin: 0 auto;
+    width: 80%;
+}
+
+/**
+ * Header
+ */
+header {
+    background: #23282e;
+    border-bottom: 3px solid #009966;
+    margin-bottom: 60px;
+}
+
+    header section.logo {
+        background: url('../img/logo.png') no-repeat center left;
+        float: left;
+        height: 80px;
+        width: 200px;
+        margin-right: 30px;
+    }
+
+    header nav > ul {
+        display: block;
+        float: left;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        header nav > ul > li {
+            display: block;
+            float: left;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+            header nav > ul > li.active,
+            header nav > ul > li:hover {
+                border-bottom: 3px solid #009966;
+            }
+
+                header nav > ul > li.active > a,
+                header nav > ul > li:hover > a {
+                    padding: 30px 18px 27px;
+                }
+
+            header nav > ul > li > a {
+                color: white;
+                display: block;
+                padding: 30px 18px;
+                text-decoration: none;
+            }

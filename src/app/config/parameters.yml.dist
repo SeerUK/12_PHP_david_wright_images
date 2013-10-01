@@ -1,10 +1,10 @@
 parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
-    database_port:     ~
+    database_port:     null
     database_name:     symfony
     database_user:     root
-    database_password: ~
+    database_password: Diablo2
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -12,4 +12,8 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            2872f2f668f43009c6f71fd478d0ccd5
+
+    # Configurable parameters ...
+    configurable.site_name: "David Wright Images"
+    configurable.webmaster: "wright.elliot@gmail.com"
