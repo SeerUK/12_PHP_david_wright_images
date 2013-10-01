@@ -8,8 +8,8 @@
 
 html,
 body {
-    background: #31373f;
-    color: #A5ADB6;
+    background: #ededed;
+    color: #474F57;
     font: 300 14px/20px Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -24,17 +24,28 @@ body {
 }
 
 .container {
+    background: rgba(255,255,255,0.02);
     margin: 0 auto;
-    width: 80%;
+    padding: 0 60px;
+    width: 1240px;
+}
+
+.body {
+    background: white;
+    padding: 60px;
+}
+
+.container,
+.body {
+    box-sizing: border-box;
 }
 
 /**
  * Header
  */
-header {
-    background: #23282e;
-    border-bottom: 3px solid #009966;
-    margin-bottom: 60px;
+header,
+footer {
+    background: #2d3342;
 }
 
     header section.logo {
@@ -47,7 +58,7 @@ header {
 
     header nav > ul {
         display: block;
-        float: left;
+        float: right;
         list-style: none;
         margin: 0;
         padding: 0;
@@ -56,24 +67,19 @@ header {
         header nav > ul > li {
             display: block;
             float: left;
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 30px 18px 27px;
             text-transform: uppercase;
         }
-
-            header nav > ul > li.active,
-            header nav > ul > li:hover {
-                border-bottom: 3px solid #009966;
-            }
-
-                header nav > ul > li.active > a,
-                header nav > ul > li:hover > a {
-                    padding: 30px 18px 27px;
-                }
 
             header nav > ul > li > a {
                 color: white;
                 display: block;
-                padding: 30px 18px;
                 text-decoration: none;
             }
+
+                header nav > ul > li > a.active,
+                header nav > ul > li > a:hover {
+                    border-bottom: 3px solid white;
+                }
