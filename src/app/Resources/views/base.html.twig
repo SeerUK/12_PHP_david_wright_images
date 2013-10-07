@@ -22,8 +22,10 @@
 <body>
     {% include '::header.html.twig' %}
 
-    <div class="body container">
-        {% block body %}{% endblock %}
+    <div class="body">
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
     </div>
 
     {% include '::footer.html.twig' %}

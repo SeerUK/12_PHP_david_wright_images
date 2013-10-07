@@ -1,13 +1,6 @@
 <header class="clearfix">
     <div class="clearfix header container">
         <section class="logo"></section>
-        <nav role="navigation">
-            <ul>
-                <li class="active"><a href="{{ url('dwi_static_homepage') }}">Home</a></li>
-                <li><a href="{{ url('dwi_static_homepage') }}">About</a></li>
-                <li><a href="{{ url('dwi_static_homepage') }}">Portfolio</a></li>
-                <li><a href="{{ url('dwi_static_homepage') }}">Contact</a></li>
-            </ul>
-        </nav>
+        {% include '::navigation.html.twig' %}
     </div>
 </header>

@@ -8,7 +8,7 @@
 
 html,
 body {
-    background: #ededed;
+    background: #293239;
     color: #474F57;
     font: 300 14px/20px Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -44,7 +44,6 @@ h1 {
  */
 
 .container {
-    background: rgba(255,255,255,0.02);
     margin: 0 auto;
     padding: 0 60px;
     width: 1240px;
@@ -52,11 +51,14 @@ h1 {
 
 .body {
     background: white;
-    padding: 60px;
 }
 
+    .body .container {
+        padding: 60px;
+    }
+
     .body .separator:after {
-        color: #6F7684;
+        color: #aaa;
         content: "≈";
         display: block;
         font-size: 40px;
@@ -69,31 +71,6 @@ h1 {
         text-align: center;
     }
 
-.footer {
-    color: #6F7684;
-    padding: 30px 60px;
-    text-align: center;
-}
-
-    .footer a {
-        color: #6F7684;
-        font-weight: 700;
-        text-decoration: none;
-        text-transform: uppercase;
-        -webkit-transition: all 0.4s ease;
-           -moz-transition: all 0.4s ease;
-                transition: all 0.4s ease;
-    }
-
-        .footer a:hover {
-            color: white;
-        }
-
-        .footer .copy {
-            font-size: 13px;
-            font-weight: 400;
-        }
-
 .well {
     background: #ededed;
     border-radius: 3px;
@@ -104,15 +81,15 @@ h1 {
 /**
  * Header
  */
-header,
-footer {
-    background: #2d3342;
+header {
+    background: white;
+    border-bottom: 2px solid #ddd;
 }
 
     header section.logo {
         background: url('../img/logo.png') no-repeat center left;
         float: left;
-        height: 80px;
+        height: 86px;
         width: 200px;
         margin-right: 30px;
     }
@@ -130,17 +107,82 @@ footer {
             float: left;
             font-size: 14px;
             font-weight: 700;
-            padding: 30px 18px 27px;
+            padding: 28px 10px 28px;
             text-transform: uppercase;
         }
 
             header nav > ul > li > a {
-                color: white;
+                color: #aaa;
                 display: block;
+                padding: 6px 10px 4px;
                 text-decoration: none;
             }
 
+                header nav > ul > li.active > a,
                 header nav > ul > li > a.active,
                 header nav > ul > li > a:hover {
-                    border-bottom: 3px solid white;
+                    border-radius: 3px;
+                    padding: 4px 8px 2px;
                 }
+
+                header nav > ul > li > a.active,
+                header nav > ul > li > a:hover {
+                    border: 2px solid #ccc;
+                    color: #aaa;
+                }
+
+                header nav > ul > li.active > a {
+                    border: 2px solid #0fbe7b;
+                    color: #0fbe7b;
+                }
+
+
+/**
+ * Footer
+ */
+footer {
+    border-top: 2px solid #ddd;
+    color: #777;
+    text-align: center;
+}
+
+    footer nav {
+        padding: 20px 0;
+    }
+
+        footer nav > ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+            footer nav > ul > li {
+                display: inline-block;
+                font-size: 14px;
+                font-weight: 700;
+                padding: 28px 10px 28px;
+                text-transform: uppercase;
+            }
+
+                footer nav > ul > li.active > a {
+                    color: white;
+                }
+
+    footer a {
+        color: #bbb;
+        font-weight: 700;
+        text-decoration: none;
+        text-transform: uppercase;
+        -webkit-transition: all 0.4s ease;
+           -moz-transition: all 0.4s ease;
+                transition: all 0.4s ease;
+    }
+
+        footer a:hover {
+            color: white;
+        }
+
+        footer .copy {
+            font-size: 13px;
+            font-weight: 400;
+        }
