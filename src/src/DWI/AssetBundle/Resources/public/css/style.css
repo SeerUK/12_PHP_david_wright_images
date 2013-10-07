@@ -68,12 +68,14 @@ h1 {
 
     .body .title {
         color: #222;
+        padding: 20px;
         text-align: center;
     }
 
 .well {
     background: #ededed;
     border-radius: 3px;
+    margin: 0 0 30px;
     padding: 30px;
 }
 
@@ -143,6 +145,7 @@ header {
 footer {
     border-top: 2px solid #ddd;
     color: #777;
+    padding: 0 0 30px;
     text-align: center;
 }
 
@@ -186,3 +189,57 @@ footer {
             font-size: 13px;
             font-weight: 400;
         }
+
+/**
+ * Tag list
+ */
+ul.tags {
+    list-style: none;
+    margin: 0;
+    padding:0 ;
+    text-align: center;
+}
+
+    ul.tags > li {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        margin: 0 10px;
+        text-transform: uppercase;
+    }
+
+        ul.tags > li > a {
+            color: #999;
+            border: 2px solid #ccc;
+            border-radius: 3px;
+            display: block;
+            padding: 4px 10px 2px;
+            text-decoration: none;
+        }
+
+        ul.tags > li:hover > a {
+            border: 2px solid #0fbe7b;
+            color: #0fbe7b;
+        }
+
+        ul.tags > li.active > a {
+            background: #0fbe7b;
+            color: white;
+            border: 2px solid #0fbe7b;
+        }
+
+/**
+ * Thumbs
+ */
+.thumbs {
+    font-size: 0;
+    margin-left: -20px;
+}
+
+    .thumbs img {
+        border-radius: 3px;
+        margin-left: 20px;
+        margin-bottom: 20px;
+        width: 265px;
+        height: 265px;
+    }
