@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -8,11 +9,12 @@
 
     <title>{% block title %}{% endblock %}{% if block('title') %} - {% endif %}{{ site_name }}</title>
 
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,100italic,500,500italic,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
     {% stylesheets
         'bundles/dwiasset/css/normalize.css'
-        'bundles/dwiasset/fonts/roboto.css'
         'bundles/dwiasset/css/style.css'
-        filter='cssrewrite' combine=true output='css/assets.css'
+        filter='cssrewrite' combine=true output='css/assets2.css'
     %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}

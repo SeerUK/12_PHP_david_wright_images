@@ -120,7 +120,7 @@ header {
             display: block;
             float: left;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 500;
             padding: 50px 2px 50px;
             text-transform: uppercase;
         }
@@ -128,7 +128,7 @@ header {
             header nav > ul > li > a {
                 color: black;
                 display: block;
-                padding: 6px 10px 3px;
+                padding: 5px 10px 5px;
                 text-decoration: none;
             }
 
@@ -202,7 +202,7 @@ ul.tags {
     ul.tags > li {
         display: inline-block;
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 500;
         margin: 0 10px;
         text-transform: uppercase;
     }
@@ -212,7 +212,7 @@ ul.tags {
             border: 2px solid #ccc;
             border-radius: 3px;
             display: block;
-            padding: 4px 10px 1px;
+            padding: 3px 10px 3px;
             text-decoration: none;
         }
 
