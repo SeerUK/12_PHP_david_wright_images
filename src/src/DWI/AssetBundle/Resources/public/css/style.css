@@ -168,10 +168,6 @@ footer {
                 text-transform: uppercase;
             }
 
-                footer nav > ul > li.active > a {
-                    color: white;
-                }
-
     footer a {
         color: #aaa;
         font-weight: 500;
@@ -248,7 +244,7 @@ ul.tags {
 /**
  * Social Icons
  */
-.social { margin: 0 0 40px; }
+.social { margin: 0 0 50px; }
 .social > i { background-image: url(../img/social-sprite.png); display: inline-block; }
 .social-digg{ background-position: 0 -1176px; width: 48px; height: 48px; }
 .social-dribbble{ background-position: 0 -1274px; width: 48px; height: 48px; }
