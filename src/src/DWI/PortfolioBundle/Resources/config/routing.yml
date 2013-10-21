@@ -1,3 +1,3 @@
 dwi_portfolio_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: DWIPortfolioBundle:Default:index }
+    pattern:  /portfolio
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:portfolio }

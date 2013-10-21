@@ -48,7 +48,6 @@ h1 {
         text-transform: none;
     }
 
-
 /**
  * Containers
  */
@@ -88,7 +87,6 @@ h1 {
     margin: 0 0 30px;
     padding: 30px;
 }
-
 
 /**
  * Header
@@ -138,7 +136,6 @@ header {
                     background-color: #e74c3c;
                     color: white;
                 }
-
 
 /**
  * Footer
@@ -230,23 +227,88 @@ ul.tags {
 .thumbs {
     background-color: #eee;
     font-size: 0;
-    margin-left: -20px;
     padding-top: 20px;
 }
 
-    .thumbs img {
-        border-radius: 3px;
-        margin-left: 20px;
+    .thumbs .thumb {
+        display: inline-block;
+        margin-right: 20px;
         margin-bottom: 20px;
-        width: 353px;
-        height: 353px;
+        position: relative;
+        width: 360px;
+        height: 360px;
+        -webkit-touch-callout: none;
+          -webkit-user-select: none;
+           -khtml-user-select: none;
+             -moz-user-select: none;
+              -ms-user-select: none;
+                  user-select: none;
     }
+
+        .thumbs .thumb:nth-child(3n) {
+            margin-right: 0;
+        }
+
+        .thumbs .thumb > .thumb-overlay {
+            background: white;
+            background: rgba(0,0,0,0.4);
+            border-radius: 3px;
+            cursor: pointer;
+            line-height: 360px;
+            opacity: 0;
+            padding: 20px;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            -webkit-transition: all ease 0.1s;
+               -moz-transition: all ease 0.1s;
+                -ms-transition: all ease 0.1s;
+                 -o-transition: all ease 0.1s;
+                    transition: all ease 0.1s;
+        }
+
+            .thumbs .thumb:hover > .thumb-overlay {
+                opacity: 1;
+            }
+
+                .thumbs .thumb > .thumb-overlay > .cover {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    z-index: 1;
+                }
+
+                .thumbs .thumb > .thumb-overlay > .controls {
+                    position: relative;
+                    z-index: 2;
+                }
+
+            .thumbs .thumb a,
+            .thumbs .thumb i {
+                margin-right: 10px;
+            }
+
+                .thumbs .thumb a:last-child,
+                .thumbs .thumb i:last-child {
+                    margin-right: 0;
+                }
+
+        .thumbs .thumb > img {
+            border-radius: 3px;
+            height: 100%;
+            width: 100%;
+        }
 
 /**
  * Social Icons
  */
 .social { margin: 0 0 50px; }
-.social > i { background-image: url(../img/social-sprite.png); display: inline-block; }
+.social i { background-image: url(../img/social-sprite.png); display: inline-block; }
 .social-digg{ background-position: 0 -1176px; width: 48px; height: 48px; }
 .social-dribbble{ background-position: 0 -1274px; width: 48px; height: 48px; }
 .social-facebook{ background-position: 0 -1372px; width: 48px; height: 48px; }

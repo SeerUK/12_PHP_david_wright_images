@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="title">
+            <h1>
+                Portfolio<br />
+                <small>Take a look at some of my recent work below.</small>
+            </h1>
+        </div>
+        <div class="tags">
+            <ul class="tags">
+                <li class="active"><a href="#">All</a></li>
+                <li><a href="#">Concerts</a></li>
+                <li><a href="#">Landscapes</a></li>
+                <li><a href="#">Portrait</a></li>
+                <li><a href="#">Theatre</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="thumbs">
+        <div class="container">
+            {% for i in 0..5 %}
+                <div class="thumb">
+                    <div class="thumb-overlay">
+                        <a class="cover" href="#play"></a>
+                        <a class="controls" href="#play"><i class="flaticon64 flaticon64-play-4"></i></a>
+                        <a class="controls" href="#delete"><i class="flaticon64 flaticon64-x-2"></i></a>
+                    </div>
+                    <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
