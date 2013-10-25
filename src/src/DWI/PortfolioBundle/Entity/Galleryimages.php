@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * David Wright Images
+ *
+ * @author  Elliot Wright <wright.elliot@gmail.com>
+ * @since   2013
+ * @package DWI
+ */
+
 namespace DWI\PortfolioBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -45,7 +53,7 @@ class Galleryimages
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -61,14 +69,14 @@ class Galleryimages
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -84,14 +92,14 @@ class Galleryimages
     public function setPath($path)
     {
         $this->path = $path;
-    
+
         return $this;
     }
 
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -107,14 +115,14 @@ class Galleryimages
     public function setLastmodified($lastmodified)
     {
         $this->lastmodified = $lastmodified;
-    
+
         return $this;
     }
 
     /**
      * Get lastmodified
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastmodified()
     {

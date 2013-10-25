@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * David Wright Images
+ *
+ * @author  Elliot Wright <wright.elliot@gmail.com>
+ * @since   2013
+ * @package DWI
+ */
+
 namespace DWI\PortfolioBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -75,7 +83,7 @@ class Gallery
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -91,14 +99,14 @@ class Gallery
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -114,14 +122,14 @@ class Gallery
     public function setDescription($description)
     {
         $this->description = $description;
-    
+
         return $this;
     }
 
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -137,14 +145,14 @@ class Gallery
     public function setDate($date)
     {
         $this->date = $date;
-    
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -160,14 +168,14 @@ class Gallery
     public function setLastmodified($lastmodified)
     {
         $this->lastmodified = $lastmodified;
-    
+
         return $this;
     }
 
     /**
      * Get lastmodified
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getLastmodified()
     {
@@ -183,7 +191,7 @@ class Gallery
     public function addTagid(\DWI\PortfolioBundle\Entity\Tag $tagid)
     {
         $this->tagid[] = $tagid;
-    
+
         return $this;
     }
 
@@ -200,7 +208,7 @@ class Gallery
     /**
      * Get tagid
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTagid()
     {
