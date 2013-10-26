@@ -53,16 +53,16 @@ class Tag
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="DWI\PortfolioBundle\Entity\Gallery", mappedBy="tagid")
+     * @ORM\ManyToMany(targetEntity="DWI\PortfolioBundle\Entity\Gallery", mappedBy="tags")
      */
-    private $galleryId;
+    private $galleries;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->galleryId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galleries = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -145,35 +145,35 @@ class Tag
     }
 
     /**
-     * Add galleryId
+     * Add gallery
      *
-     * @param \DWI\PortfolioBundle\Entity\Gallery $galleryId
+     * @param \DWI\PortfolioBundle\Entity\Gallery $gallery
      * @return Tag
      */
-    public function addGalleryId(\DWI\PortfolioBundle\Entity\Gallery $galleryId)
+    public function addGallery(\DWI\PortfolioBundle\Entity\Gallery $gallery)
     {
-        $this->galleryId[] = $galleryId;
+        $this->galleries[] = $gallery;
 
         return $this;
     }
 
     /**
-     * Remove galleryId
+     * Remove gallery
      *
-     * @param \DWI\PortfolioBundle\Entity\Gallery $galleryId
+     * @param \DWI\PortfolioBundle\Entity\Gallery $gallery
      */
-    public function removeGalleryId(\DWI\PortfolioBundle\Entity\Gallery $galleryId)
+    public function removeGallery(\DWI\PortfolioBundle\Entity\Gallery $gallery)
     {
-        $this->galleryId->removeElement($galleryId);
+        $this->galleries->removeElement($gallery);
     }
 
     /**
-     * Get galleryId
+     * Get galleries
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getGalleryId()
+    public function getGalleries()
     {
-        return $this->galleryId;
+        return $this->galleries;
     }
 }

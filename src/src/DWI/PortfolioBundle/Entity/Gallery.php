@@ -66,9 +66,9 @@ class Gallery
     protected $images;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="DWI\PortfolioBundle\Entity\Tag", inversedBy="galleryid")
+     * @ORM\ManyToMany(targetEntity="DWI\PortfolioBundle\Entity\Tag", inversedBy="galleries")
      * @ORM\JoinTable(name="GalleryTagMap",
      *   joinColumns={
      *     @ORM\JoinColumn(name="galleryId", referencedColumnName="id")
@@ -86,7 +86,7 @@ class Gallery
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->tagid  = new ArrayCollection();
+        $this->tags   = new ArrayCollection();
     }
 
 
