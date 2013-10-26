@@ -23,7 +23,7 @@ class Tag
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -55,14 +55,14 @@ class Tag
      *
      * @ORM\ManyToMany(targetEntity="DWI\PortfolioBundle\Entity\Gallery", mappedBy="tagid")
      */
-    private $galleryid;
+    private $galleryId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->galleryid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galleryId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -73,6 +73,16 @@ class Tag
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -89,13 +99,13 @@ class Tag
     }
 
     /**
-     * Get name
+     * Get description
      *
      * @return string
      */
-    public function getName()
+    public function getDescription()
     {
-        return $this->name;
+        return $this->description;
     }
 
     /**
@@ -112,13 +122,13 @@ class Tag
     }
 
     /**
-     * Get description
+     * Get lastmodified
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getDescription()
+    public function getLastmodified()
     {
-        return $this->description;
+        return $this->lastmodified;
     }
 
     /**
@@ -135,45 +145,35 @@ class Tag
     }
 
     /**
-     * Get lastmodified
+     * Add galleryId
      *
-     * @return \DateTime
-     */
-    public function getLastmodified()
-    {
-        return $this->lastmodified;
-    }
-
-    /**
-     * Add galleryid
-     *
-     * @param \DWI\PortfolioBundle\Entity\Gallery $galleryid
+     * @param \DWI\PortfolioBundle\Entity\Gallery $galleryId
      * @return Tag
      */
-    public function addGalleryid(\DWI\PortfolioBundle\Entity\Gallery $galleryid)
+    public function addGalleryId(\DWI\PortfolioBundle\Entity\Gallery $galleryId)
     {
-        $this->galleryid[] = $galleryid;
+        $this->galleryId[] = $galleryId;
 
         return $this;
     }
 
     /**
-     * Remove galleryid
+     * Remove galleryId
      *
-     * @param \DWI\PortfolioBundle\Entity\Gallery $galleryid
+     * @param \DWI\PortfolioBundle\Entity\Gallery $galleryId
      */
-    public function removeGalleryid(\DWI\PortfolioBundle\Entity\Gallery $galleryid)
+    public function removeGalleryId(\DWI\PortfolioBundle\Entity\Gallery $galleryId)
     {
-        $this->galleryid->removeElement($galleryid);
+        $this->galleryId->removeElement($galleryId);
     }
 
     /**
-     * Get galleryid
+     * Get galleryId
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getGalleryid()
+    public function getGalleryId()
     {
-        return $this->galleryid;
+        return $this->galleryId;
     }
 }

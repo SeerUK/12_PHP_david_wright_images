@@ -10,6 +10,7 @@
 
 namespace DWI\PortfolioBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,12 +24,12 @@ class Gallery
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
 
+    private $id;
     /**
      * @var string
      *
@@ -58,10 +59,17 @@ class Gallery
     private $lastmodified;
 
     /**
+     * @var Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="DWI\PortfolioBundle\Entity\GalleryImage", mappedBy="galleryId")
+     */
+    protected $images;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="DWI\PortfolioBundle\Entity\Tag", inversedBy="galleryid")
-     * @ORM\JoinTable(name="gallerytagmap",
+     * @ORM\JoinTable(name="GalleryTagMap",
      *   joinColumns={
      *     @ORM\JoinColumn(name="galleryId", referencedColumnName="id")
      *   },
@@ -70,25 +78,17 @@ class Gallery
      *   }
      * )
      */
-    private $tagid;
+    private $tags;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tagid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new ArrayCollection();
+        $this->tagid  = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set name
@@ -183,35 +183,78 @@ class Gallery
     }
 
     /**
-     * Add tagid
+     * Get id
      *
-     * @param \DWI\PortfolioBundle\Entity\Tag $tagid
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \DWI\PortfolioBundle\Entity\GalleryImage $images
      * @return Gallery
      */
-    public function addTagid(\DWI\PortfolioBundle\Entity\Tag $tagid)
+    public function addImage(\DWI\PortfolioBundle\Entity\GalleryImage $images)
     {
-        $this->tagid[] = $tagid;
+        $this->images[] = $images;
 
         return $this;
     }
 
     /**
-     * Remove tagid
+     * Remove images
      *
-     * @param \DWI\PortfolioBundle\Entity\Tag $tagid
+     * @param \DWI\PortfolioBundle\Entity\GalleryImage $images
      */
-    public function removeTagid(\DWI\PortfolioBundle\Entity\Tag $tagid)
+    public function removeImage(\DWI\PortfolioBundle\Entity\GalleryImage $images)
     {
-        $this->tagid->removeElement($tagid);
+        $this->images->removeElement($images);
     }
 
     /**
-     * Get tagid
+     * Get images
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTagid()
+    public function getImages()
     {
-        return $this->tagid;
+        return $this->images;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \DWI\PortfolioBundle\Entity\Tag $tag
+     * @return Gallery
+     */
+    public function addTag(\DWI\PortfolioBundle\Entity\Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \DWI\PortfolioBundle\Entity\Tag $tag
+     */
+    public function removeTag(\DWI\PortfolioBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tags);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

@@ -13,17 +13,17 @@ namespace DWI\PortfolioBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Galleryimages
+ * GalleryImage
  *
- * @ORM\Table(name="GalleryImages")
+ * @ORM\Table(name="GalleryImage")
  * @ORM\Entity
  */
-class Galleryimages
+class GalleryImage
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -51,27 +51,12 @@ class Galleryimages
     private $lastmodified;
 
     /**
-     * Get id
+     * @var \DWI\PortfolioBundle\Entity\Gallery
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="DWI\PortfolioBundle\Entity\Gallery", inversedBy="images")
+     * @ORM\JoinColumn(name="galleryId", referencedColumnName="id")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Galleryimages
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
+    private $galleryId;
 
     /**
      * Get description
@@ -84,14 +69,14 @@ class Galleryimages
     }
 
     /**
-     * Set path
+     * Set description
      *
-     * @param string $path
-     * @return Galleryimages
+     * @param string $description
+     * @return GalleryImage
      */
-    public function setPath($path)
+    public function setDescription($description)
     {
-        $this->path = $path;
+        $this->description = $description;
 
         return $this;
     }
@@ -107,14 +92,14 @@ class Galleryimages
     }
 
     /**
-     * Set lastmodified
+     * Set path
      *
-     * @param \DateTime $lastmodified
-     * @return Galleryimages
+     * @param string $path
+     * @return GalleryImage
      */
-    public function setLastmodified($lastmodified)
+    public function setPath($path)
     {
-        $this->lastmodified = $lastmodified;
+        $this->path = $path;
 
         return $this;
     }
@@ -127,5 +112,51 @@ class Galleryimages
     public function getLastmodified()
     {
         return $this->lastmodified;
+    }
+
+    /**
+     * Set lastmodified
+     *
+     * @param \DateTime $lastmodified
+     * @return GalleryImage
+     */
+    public function setLastmodified($lastmodified)
+    {
+        $this->lastmodified = $lastmodified;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set galleryId
+     *
+     * @param \DWI\PortfolioBundle\Entity\Gallery $galleryId
+     * @return GalleryImage
+     */
+    public function setGalleryId(\DWI\PortfolioBundle\Entity\Gallery $galleryId = null)
+    {
+        $this->galleryId = $galleryId;
+
+        return $this;
+    }
+
+    /**
+     * Get galleryId
+     *
+     * @return \DWI\PortfolioBundle\Entity\Gallery
+     */
+    public function getGalleryId()
+    {
+        return $this->galleryId;
     }
 }
