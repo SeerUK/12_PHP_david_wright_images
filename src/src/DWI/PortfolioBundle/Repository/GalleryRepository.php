@@ -35,7 +35,8 @@ class GalleryRepository extends EntityRepository
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 
-        return $query->getResult();
+        return $query->useResultCache(true)
+            ->getResult();
     }
 
     /**
