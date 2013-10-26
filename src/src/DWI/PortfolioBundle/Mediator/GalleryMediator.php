@@ -8,14 +8,14 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\Entity;
+namespace DWI\PortfolioBundle\Mediator;
 
 use Doctrine\ORM\EntityManager;
 
 /**
- * Gallery Manager
+ * Gallery Mediator
  */
-class GalleryManager
+class GalleryMediator
 {
     /**
      * @var EntityManager

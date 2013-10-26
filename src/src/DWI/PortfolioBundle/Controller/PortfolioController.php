@@ -20,7 +20,7 @@ class PortfolioController extends Controller
 {
     public function portfolioAction()
     {
-        $gm = $this->get('dwi_portfolio.gallery_manager');
+        $gm = $this->get('dwi_portfolio.gallery_mediator');
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
             "galleries" => $gm->findGalleries(),
