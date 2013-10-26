@@ -20,22 +20,11 @@ class PortfolioController extends Controller
 {
     public function portfolioAction()
     {
-        $em        = $this->getDoctrine()->getManager();
-        $galleries = $em->getRepository('DWIPortfolioBundle:Gallery')
-            ->findAll();
+        $gm = $this->get('dwi_portfolio.gallery_manager');
 
-        foreach ($galleries as $gallery) {
-            $tags = $gallery->getTags();
-
-            foreach ($tags as $tag) {
-                var_dump($tag->getName());
-            }
-
-            var_dump($tags);
-            exit;
-        }
-
-        return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array());
+        return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
+            "galleries" => $gm->findGalleries(),
+        ));
     }
 
     public function galleryAction($id)
