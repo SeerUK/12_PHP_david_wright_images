@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Gallery
  *
  * @ORM\Table(name="Gallery")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DWI\PortfolioBundle\Repository\GalleryRepository")
  */
 class Gallery
 {

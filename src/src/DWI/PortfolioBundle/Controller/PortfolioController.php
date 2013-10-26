@@ -18,12 +18,12 @@ use DWI\PortolioBundle\Entity\GalleryRepository;
  */
 class PortfolioController extends Controller
 {
-    public function portfolioAction()
+    public function portfolioAction($page)
     {
-        $gm = $this->get('dwi_portfolio.gallery_mediator');
+        $gr = $this->get('dwi_portfolio.gallery_repository');
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
-            "galleries" => $gm->findGalleries(),
+            "galleries" => $gr->findByPage($page, 2),
         ));
     }
 

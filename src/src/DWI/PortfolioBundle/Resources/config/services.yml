@@ -1,8 +1,11 @@
 parameters:
-    dwi_portfolio.gallery_mediator.class: DWI\PortfolioBundle\Mediator\GalleryMediator
+    dwi_portfolio.gallery_repository.class: DWI\PortfolioBundle\Entity\GalleryRepository
+    dwi_portfolio.gallery_entity: "DWIPortfolioBundle:Gallery"
 
 services:
-    dwi_portfolio.gallery_mediator:
-        class: %dwi_portfolio.gallery_mediator.class%
+    dwi_portfolio.gallery_repository:
+        class: %dwi_portfolio.gallery_repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
         arguments:
-            em: "@doctrine.orm.entity_manager"
+            em: %dwi_portfolio.gallery_entity%
