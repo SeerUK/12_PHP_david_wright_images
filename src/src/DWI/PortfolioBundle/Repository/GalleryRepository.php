@@ -19,7 +19,7 @@ use Doctrine\ORM\NoResultException;
 class GalleryRepository extends EntityRepository
 {
     /**
-     * Find galleries by page
+     * Find galleries by page, returns gallery images and tags too
      *
      * @param  integer $page
      * @param  integer $limit
@@ -27,11 +27,10 @@ class GalleryRepository extends EntityRepository
      */
     public function findByPage($page, $limit)
     {
-        $dql    = 'SELECT g, gi, t FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.images AS gi LEFT JOIN g.tags AS t';
+        $dql    = 'SELECT g, gci, t FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.coverImage AS gci LEFT JOIN g.tags AS t';
         $offset = $this->getPageFirstResult($page, $limit);
 
-        $query = $this->getEntityManager()
-            ->createQuery($dql)
+        $query = $this->getEntityManager()->createQuery($dql)
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 

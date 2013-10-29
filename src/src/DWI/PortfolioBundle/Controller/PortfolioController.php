@@ -22,6 +22,12 @@ class PortfolioController extends Controller
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
 
+        $galleries = $gr->findByPage($page, 9);
+
+        foreach ($galleries as $gallery) {
+            $paths[] = $gallery->getCoverImage()->getImage()->getPath();
+        }
+
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
             "galleries" => $gr->findByPage($page, 2),
         ));

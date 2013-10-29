@@ -13,7 +13,7 @@ namespace DWI\PortfolioBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tag
+ * Tag Entity
  *
  * @ORM\Table(name="Tag")
  * @ORM\Entity

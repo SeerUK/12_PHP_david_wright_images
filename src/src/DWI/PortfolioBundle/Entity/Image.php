@@ -13,12 +13,12 @@ namespace DWI\PortfolioBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * GalleryImage
+ * Gallery Image Entity
  *
- * @ORM\Table(name="GalleryImage")
+ * @ORM\Table(name="Image")
  * @ORM\Entity
  */
-class GalleryImage
+class Image
 {
     /**
      * @var integer
@@ -56,7 +56,7 @@ class GalleryImage
      * @ORM\ManyToOne(targetEntity="DWI\PortfolioBundle\Entity\Gallery", inversedBy="images")
      * @ORM\JoinColumn(name="galleryId", referencedColumnName="id")
      */
-    private $galleryId;
+    private $gallery;
 
     /**
      * Get description
@@ -72,7 +72,7 @@ class GalleryImage
      * Set description
      *
      * @param string $description
-     * @return GalleryImage
+     * @return Image
      */
     public function setDescription($description)
     {
@@ -95,7 +95,7 @@ class GalleryImage
      * Set path
      *
      * @param string $path
-     * @return GalleryImage
+     * @return Image
      */
     public function setPath($path)
     {
@@ -118,7 +118,7 @@ class GalleryImage
      * Set lastmodified
      *
      * @param \DateTime $lastmodified
-     * @return GalleryImage
+     * @return Image
      */
     public function setLastmodified($lastmodified)
     {
@@ -138,25 +138,25 @@ class GalleryImage
     }
 
     /**
-     * Set galleryId
+     * Set gallery
      *
-     * @param \DWI\PortfolioBundle\Entity\Gallery $galleryId
-     * @return GalleryImage
+     * @param \DWI\PortfolioBundle\Entity\Gallery $gallery
+     * @return Image
      */
-    public function setGalleryId(\DWI\PortfolioBundle\Entity\Gallery $galleryId = null)
+    public function setGallery(\DWI\PortfolioBundle\Entity\Gallery $gallery = null)
     {
-        $this->galleryId = $galleryId;
+        $this->gallery = $gallery;
 
         return $this;
     }
 
     /**
-     * Get galleryId
+     * Get gallery
      *
      * @return \DWI\PortfolioBundle\Entity\Gallery
      */
     public function getGalleryId()
     {
-        return $this->galleryId;
+        return $this->gallery;
     }
 }

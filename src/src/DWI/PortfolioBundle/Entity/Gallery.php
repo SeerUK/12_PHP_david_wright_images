@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Gallery
+ * Gallery Entity
  *
  * @ORM\Table(name="Gallery")
  * @ORM\Entity(repositoryClass="DWI\PortfolioBundle\Repository\GalleryRepository")
@@ -28,8 +28,8 @@ class Gallery
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-
     private $id;
+
     /**
      * @var string
      *
@@ -61,9 +61,16 @@ class Gallery
     /**
      * @var Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="DWI\PortfolioBundle\Entity\GalleryImage", mappedBy="galleryId")
+     * @ORM\OneToMany(targetEntity="DWI\PortfolioBundle\Entity\Image", mappedBy="gallery")
      */
     protected $images;
+
+    /**
+     * @var DWI\PortfolioBundle\Entity\GalleryCoverImage
+     *
+     * @ORM\OneToOne(targetEntity="DWI\PortfolioBundle\Entity\CoverImage", mappedBy="gallery")
+     */
+    protected $coverImage;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection
@@ -195,10 +202,10 @@ class Gallery
     /**
      * Add images
      *
-     * @param \DWI\PortfolioBundle\Entity\GalleryImage $images
+     * @param \DWI\PortfolioBundle\Entity\Image $images
      * @return Gallery
      */
-    public function addImage(\DWI\PortfolioBundle\Entity\GalleryImage $images)
+    public function addImage(\DWI\PortfolioBundle\Entity\Image $images)
     {
         $this->images[] = $images;
 
@@ -208,9 +215,9 @@ class Gallery
     /**
      * Remove images
      *
-     * @param \DWI\PortfolioBundle\Entity\GalleryImage $images
+     * @param \DWI\PortfolioBundle\Entity\Image $images
      */
-    public function removeImage(\DWI\PortfolioBundle\Entity\GalleryImage $images)
+    public function removeImage(\DWI\PortfolioBundle\Entity\Image $images)
     {
         $this->images->removeElement($images);
     }
@@ -223,6 +230,29 @@ class Gallery
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Get cover image
+     *
+     * @return \DWI\PortfolioBundle\Entity\CoverImage
+     */
+    public function getCoverImage()
+    {
+        return $this->coverImage;
+    }
+
+    /**
+     * Set cover image ...
+     *
+     * @param \DWI\PortfolioBundle\Entity\CoverImage $coverImage
+     * @return Gallery
+     */
+    public function setCoverImage(\DWI\PortfolioBundle\Entity\CoverImage $coverImage)
+    {
+        $this->coverImage = $coverImage;
+
+        return $this;
     }
 
     /**

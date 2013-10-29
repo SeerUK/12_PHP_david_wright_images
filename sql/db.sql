@@ -34,7 +34,7 @@ CREATE TABLE GalleryTagMap (
     FOREIGN KEY (tagId) REFERENCES Tag(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="Maps galleries to tags.";
 
-CREATE TABLE GalleryImage (
+CREATE TABLE Image (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     galleryId int UNSIGNED NOT NULL,
     description varchar(250),
@@ -44,3 +44,14 @@ CREATE TABLE GalleryImage (
     PRIMARY KEY (id),
     FOREIGN KEY (galleryId) REFERENCES Gallery(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="Used to store image locations and information.";
+
+CREATE TABLE CoverImage (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    galleryId int UNSIGNED NOT NULL,
+    imageId int UNSIGNED NOT NULL,
+    lastModified timestamp,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (galleryId) REFERENCES Gallery(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (imageId) REFERENCES Image(id) ON DELETE CASCADE ON UPDATE CASCADE
+) COMMENT="Used to store the gallery cover image ID";
