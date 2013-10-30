@@ -27,7 +27,7 @@ class GalleryRepository extends EntityRepository
      */
     public function findByPage($page, $limit)
     {
-        $dql    = 'SELECT g, gci, t FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.coverImage AS gci LEFT JOIN g.tags AS t';
+        $dql    = 'SELECT g, gci, gcii, t FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.coverImage AS gci LEFT JOIN gci.image AS gcii LEFT JOIN g.tags AS t';
         $offset = $this->getPageFirstResult($page, $limit);
 
         $query = $this->getEntityManager()->createQuery($dql)
