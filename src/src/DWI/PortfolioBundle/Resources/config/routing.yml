@@ -4,3 +4,10 @@ dwi_portfolio_homepage:
     methods:  [GET]
     requirements:
         page: \d+
+
+dwi_portfolio_gallery:
+    pattern: /portfolio/gallery/{id}
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:gallery }
+    methods: [GET]
+    requirements:
+        id: \d+

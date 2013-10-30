@@ -25,7 +25,7 @@ class PortfolioGalleryViewModel
     /**
      * @var string
      */
-    private $name;
+    private $title;
 
     /**
      * @var string
@@ -60,24 +60,24 @@ class PortfolioGalleryViewModel
     }
 
     /**
-     * Get name
+     * Get title
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * Sets name
+     * Sets title
      *
-     * @param string $name
+     * @param string $title
      * @return PortfolioGalleryViewModel
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }

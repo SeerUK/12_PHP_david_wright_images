@@ -35,14 +35,30 @@ class PortfolioModel
                 throw new InvalidDataTypeException('$gallery not an instance of DWI\PortfolioBundle\Entity\Gallery.');
             }
 
-            $pvm = new PortfolioGalleryViewModel();
-            $pvm->setId($gallery->getId())
-                ->setName($gallery->getName())
-                ->setImagePath($gallery->getCoverImage()->getImage()->getPath());
+            // Populate view model with data we need in the view
+            $pgvm = new PortfolioGalleryViewModel();
+            $pgvm->setId($gallery->getId())
+                ->setTitle($gallery->getTitle())
+                ->setImagePath($this->getGalleryCoverImagePath($gallery));
 
-            $portfolio[] = $pvm;
+            $portfolio['galleries'][] = $pgvm;
         }
 
         return $portfolio;
+    }
+
+    /**
+     * Get gallery cover image path
+     *
+     * @param  DWI\PortfolioBundle\Entity\Gallery $gallery
+     * @return string | false
+     */
+    private function getGalleryCoverImagePath($gallery)
+    {
+        if ($ci = $gallery->getCoverImage()) {
+            return $ci->getImage()->getPath();
+        }
+
+        return false;
     }
 }

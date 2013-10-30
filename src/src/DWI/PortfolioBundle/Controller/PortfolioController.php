@@ -11,6 +11,7 @@
 namespace DWI\PortfolioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use DWI\PortfolioBundle\Model\GalleryModel;
 use DWI\PortfolioBundle\Model\PortfolioModel;
 
 /**
@@ -29,8 +30,6 @@ class PortfolioController extends Controller
         $gr = $this->get('dwi_portfolio.gallery_repository');
         $pm = new PortfolioModel();
 
-        var_dump($pm->createPortfolioView($gr->findByPage($page, 10)));
-
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
             "portfolio" => $pm->createPortfolioView($gr->findByPage($page, 10)),
         ));
@@ -44,6 +43,11 @@ class PortfolioController extends Controller
      */
     public function galleryAction($id)
     {
-        return $this->render('DWIPortfolioBundle:Default:index.html.twig', array('id' => $id));
+        $gr = $this->get('dwi_portfolio.gallery_repository');
+        $gm = new GalleryModel();
+
+        return $this->render('DWIPortfolioBundle:Portfolio:gallery.html.twig', array(
+            "gallery" => $gm->createGalleryView($gr->findById($id)),
+        ));
     }
 }

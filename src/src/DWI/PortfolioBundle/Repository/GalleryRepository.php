@@ -19,7 +19,24 @@ use Doctrine\ORM\NoResultException;
 class GalleryRepository extends EntityRepository
 {
     /**
-     * Find galleries by page, returns gallery images and tags too
+     * Find galleryes by id, also returns gallery images
+     *
+     * @param  integer $id
+     * @return DWI\PortfolioBundle\Entity\Gallery
+     */
+    public function findById($id)
+    {
+        $dql = 'SELECT g, gci, gi FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.coverImage AS gci LEFT JOIN g.images AS gi WHERE g.id = :galleryId';
+
+        $query = $this->getEntityManager()->createQuery($dql)
+            ->setParameter('galleryId', $id);
+
+        return $query->useResultCache(true)
+            ->getSingleResult();
+    }
+
+    /**
+     * Find galleries by page, returns gallery cover images and tags too
      *
      * @param  integer $page
      * @param  integer $limit

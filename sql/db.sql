@@ -7,7 +7,8 @@ CREATE DATABASE IF NOT EXISTS dwrighti
 
 CREATE TABLE Gallery (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
-    name varchar(255) NOT NULL,
+    title varchar(255) NOT NULL,
+    subtitle varchar(255) NOT NULL,
     description varchar(5000) NOT NULL,
     date datetime NOT NULL,
     lastModified timestamp,
