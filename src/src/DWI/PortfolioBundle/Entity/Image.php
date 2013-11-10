@@ -160,29 +160,47 @@ class Image
         return $this->gallery;
     }
 
+    /**
+     * Gets absolute path for image, i.e. exact filesystem location
+     *
+     * @return string
+     */
     public function getAbsolutePath()
     {
         return null === $this->path
             ? null
-            : $this->getUploadRootDir().'/'.$this->path;
+            : $this->getUploadRootDir() . '/' . $this->path;
     }
 
+    /**
+     * Gets web path for image, i.e. relative web location
+     *
+     * @return string
+     */
     public function getWebPath()
     {
         return null === $this->path
             ? null
-            : $this->getUploadDir().'/'.$this->path;
+            : $this->getUploadDir() . '/' . $this->path;
     }
 
+    /**
+     * Gets upload root directory, i.e. exact filesystem location
+     *
+     * @return string
+     */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
+    /**
+     * Gets web path, i.e. relative web location
+     *
+     * @return string
+     */
     protected function getUploadDir()
     {
-        var_dump(dirname(__FILE__));
-
         return 'bundles/dwiportfolio/albums';
     }
 }
