@@ -22,16 +22,18 @@
     </div>
     <div class="thumbs">
         <div class="container">
-            {% for gallery in portfolio.galleries %}
-                <div class="thumb">
-                    <div class="thumb-overlay">
-                        <a class="cover" href="./portfolio/gallery/{{ gallery.id }}"></a>
-                        <a class="controls" href="./portfolio/gallery/{{ gallery.id }}"><i class="flaticon64 flaticon64-play-4"></i></a>
-                        <a class="controls" href="./portfolio/gallery/delete/{{ gallery.id }}"><i class="flaticon64 flaticon64-x-2"></i></a>
+            {% if portfolio.galleries is defined %}
+                {% for gallery in portfolio.galleries %}
+                    <div class="thumb">
+                        <div class="thumb-overlay">
+                            <a class="cover" href="./portfolio/gallery/{{ gallery.id }}"></a>
+                            <a class="controls" href="./portfolio/gallery/{{ gallery.id }}"><i class="flaticon64 flaticon64-play-4"></i></a>
+                            <a class="controls" href="./portfolio/gallery/delete/{{ gallery.id }}"><i class="flaticon64 flaticon64-x-2"></i></a>
+                        </div>
+                        <img src="{{ asset(gallery.coverImagePath) }}" alt="" />
                     </div>
-                    <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
 
             {% for i in 0..4 %}
                 <div class="thumb">

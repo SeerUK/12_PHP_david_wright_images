@@ -30,7 +30,7 @@ class PortfolioGalleryViewModel
     /**
      * @var string
      */
-    private $imagePath;
+    private $coverImagePath;
 
     /**
      * Get id
@@ -83,23 +83,23 @@ class PortfolioGalleryViewModel
     }
 
     /**
-     * Get image path
+     * Get cover image path
      *
      * @return string
      */
-    public function getImagePath()
+    public function getCoverImagePath()
     {
-        return $this->imagePath;
+        return $this->coverImagePath;
     }
 
     /**
-     * Set image path
+     * Set cover image path
      *
-     * @param string $imagePath
+     * @param string $coverImagePath
      */
-    public function setImagePath($imagePath)
+    public function setCoverImagePath($coverImagePath)
     {
-        $this->imagePath = $imagePath;
+        $this->coverImagePath = $coverImagePath;
 
         return $this;
     }

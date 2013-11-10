@@ -26,7 +26,7 @@ class PortfolioModel
      *
      * @return array
      */
-    public function createPortfolioView($galleries)
+    public function createPortfolioView(array $galleries)
     {
         $portfolio = array();
 
@@ -39,7 +39,7 @@ class PortfolioModel
             $pgvm = new PortfolioGalleryViewModel();
             $pgvm->setId($gallery->getId())
                 ->setTitle($gallery->getTitle())
-                ->setImagePath($this->getGalleryCoverImagePath($gallery));
+                ->setCoverImagePath($this->getGalleryCoverImagePath($gallery));
 
             $portfolio['galleries'][] = $pgvm;
         }
@@ -56,7 +56,7 @@ class PortfolioModel
     private function getGalleryCoverImagePath($gallery)
     {
         if ($ci = $gallery->getCoverImage()) {
-            return $ci->getImage()->getPath();
+            return $ci->getImage()->getWebPath();
         }
 
         return false;
