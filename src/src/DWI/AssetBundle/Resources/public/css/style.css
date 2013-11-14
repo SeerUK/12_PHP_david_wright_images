@@ -71,27 +71,11 @@ h1 {
         padding: 60px 0;
     }
 
-    .body .separator:after {
-        color: #aaa;
-        content: "≈";
-        display: block;
-        font-size: 40px;
-        font-weight: 400;
-        text-align: center;
-    }
-
     .body .title {
         color: #222;
         padding: 20px;
         text-align: center;
     }
-
-.well {
-    background: #ededed;
-    border-radius: 3px;
-    margin: 0 0 30px;
-    padding: 30px;
-}
 
 /**
  * Header
@@ -318,7 +302,12 @@ ul.tags {
 
     .gallery-images img {
         height: 500px;
+        margin-right: 50px;
     }
+
+        .gallery-images img:last-child {
+            margin-right: 0;
+        }
 
 .gallery-desc,
 .gallery-details {

@@ -11,13 +11,22 @@
             </h1>
         </div>
     </div>
-    <div class="container-images gallery-images">
-        {% if gallery.images is defined %}
-            {% for image in gallery.images %}
-                <img src="{{ asset(image.webPath) }}" />
-            {% endfor %}
-        {% endif %}
-    </div>
+
+    {% if gallery.images is defined %}
+        <div class="container-images gallery-images">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for image in gallery.images %}
+                        <div class="swiper-slide">
+                            <img src="{{ asset(image.webPath) }}" />
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    {% endif %}
+
     <div class="container clearfix">
         <div class="gallery-details">
             <dl>
@@ -31,4 +40,23 @@
             {{ gallery.description|raw }}
         </div>
     </div>
+
+{% endblock %}
+
+{% block javascript %}
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var gallerySwiper = $('.swiper-container').swiper({
+                mode:'horizontal',
+                centeredSlides: true,
+                slidesPerView: 'auto',
+                pagination: '.swiper-pagination',
+                paginationClickable: true
+            });
+        });
+
+    </script>
+
 {% endblock %}
