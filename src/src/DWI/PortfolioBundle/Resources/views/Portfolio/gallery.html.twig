@@ -6,9 +6,29 @@
     <div class="container">
         <div class="title">
             <h1>
-                {# gallery.title #}<br />
-                <small>This should come from the gallery!</small>
+                {{ gallery.title }}<br />
+                <small>{{ gallery.subtitle }}</small>
             </h1>
+        </div>
+    </div>
+    <div class="container-images gallery-images">
+        {% if gallery.images is defined %}
+            {% for image in gallery.images %}
+                <img src="{{ asset(image.webPath) }}" />
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="container clearfix">
+        <div class="gallery-details">
+            <dl>
+                <dt>Date</dt>
+                <dd>{{ gallery.date|date("M Y") }}</dd>
+                <dt>No. of Images</dt>
+                <dd>{{ gallery.images|length }}</dd>
+            </dl>
+        </div>
+        <div class="gallery-desc">
+            {{ gallery.description|raw }}
         </div>
     </div>
 {% endblock %}

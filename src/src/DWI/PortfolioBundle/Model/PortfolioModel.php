@@ -56,7 +56,7 @@ class PortfolioModel
     private function getGalleryCoverImagePath($gallery)
     {
         if ($ci = $gallery->getCoverImage()) {
-            return $ci->getImage()->getWebPath();
+            return $ci->getImage()->getWebThumbPath();
         }
 
         return false;

@@ -173,6 +173,22 @@ class Image
     }
 
     /**
+     * Gets absolute path for thumbnail image, i.e. exact filesystem location
+     *
+     * @return string
+     */
+    public function getAbsoluteThumbPath()
+    {
+        if (null === $this->path) {
+            return null;
+        }
+
+        $pi = pathinfo($this->path);
+
+        return $this->getUploadRootDir() . '/' . $pi['dirname'] . '/' . $pi['filename'] . '_thumb.' . $pi['extension'];
+    }
+
+    /**
      * Gets web path for image, i.e. relative web location
      *
      * @return string
@@ -182,6 +198,22 @@ class Image
         return null === $this->path
             ? null
             : $this->getUploadDir() . '/' . $this->path;
+    }
+
+    /**
+     * Gets web path for thumbnail image, i.e. relative web location
+     *
+     * @return string
+     */
+    public function getWebThumbPath()
+    {
+        if (null === $this->path) {
+            return null;
+        }
+
+        $pi = pathinfo($this->path);
+
+        return $this->getUploadDir() . '/' . $pi['dirname'] . '/' . $pi['filename'] . '_thumb.' . $pi['extension'];
     }
 
     /**
