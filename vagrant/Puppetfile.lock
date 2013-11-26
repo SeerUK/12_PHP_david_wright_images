@@ -3,8 +3,12 @@ FORGE
   specs:
     puppetlabs/apt (1.4.0)
       puppetlabs/stdlib (>= 2.2.1)
+    puppetlabs/nodejs (0.4.0)
+      puppetlabs/apt (>= 0.0.3)
+      puppetlabs/stdlib (>= 2.0.0)
     puppetlabs/stdlib (4.1.0)
 
 DEPENDENCIES
   puppetlabs/apt (>= 0)
+  puppetlabs/nodejs (>= 0)
 
