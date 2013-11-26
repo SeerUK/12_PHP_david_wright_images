@@ -1,5 +1,6 @@
 forge "http://forge.puppetlabs.com"
 
-mod "puppetlabs/apt"
-mod "puppetlabs/nodejs"
-mod "puppetlabs/apache"
+mod "puppetlabs/apt", "1.4.0"
+mod "puppetlabs/nodejs", "0.4.0"
+mod "puppetlabs/apache", "0.9.0"
+mod "example42/php", "2.0.17"

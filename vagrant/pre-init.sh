@@ -2,6 +2,7 @@
 
 PUPPET_DIR=/etc/puppet/
 VAGRANT_DIR=/vagrant/
+LIBRARIAN_DIR=/vagrant/librarian/
 
 # Setup Puppet Librarian
 
@@ -9,7 +10,7 @@ if [ "$(gem search -i librarian-puppet)" = "false" ]; then
     gem install librarian-puppet
 fi
 
-cd $VAGRANT_DIR
+cd $LIBRARIAN_DIR
 librarian-puppet install
 
 

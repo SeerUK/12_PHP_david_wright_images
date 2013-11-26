@@ -2,18 +2,9 @@
 # Environment Setup
 # -----------------
 
-# Init
-
-exec { "apt-get update":
-  path => "/usr/bin",
-}
-
-# Basics
-
-package {["htop", "iotop", "screen"]: 
-  ensure  => present,
-  require => Exec["apt-get update"],
-}
+include basic
+include php54
+# include php54::composer
 
 
 # Tools
