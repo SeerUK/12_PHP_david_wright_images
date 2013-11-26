@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     box.vm.provision :puppet do |puppet|
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file  = "vagrant.pp"
-      puppet.module_path    = "modules"
+      puppet.module_path    = ["librarian/modules", "puppet/modules"],
       puppet.options        = "--verbose"
     end
 
