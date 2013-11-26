@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     box.vm.hostname = "misa.dev"
 
-    box.vm.synced_folder "../src", "/var/www", nfs: true
+    box.vm.synced_folder "../src", "/var/www/src", nfs: true
 
     # Provisioners
     box.vm.provision :shell, :path => "pre-init.sh"
