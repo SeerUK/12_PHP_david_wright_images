@@ -14,3 +14,4 @@ app/config/parameters.yml
 
 # Vagrant
 vagrant/.tmp
+vagrant/.vagrant/machine/*
