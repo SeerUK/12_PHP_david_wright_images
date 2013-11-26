@@ -14,5 +14,4 @@ app/config/parameters.yml
 
 # Vagrant
 vagrant/.tmp
-vagrant/.tmp/*
 vagrant/modules/*
