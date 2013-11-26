@@ -32,15 +32,19 @@ package {["grunt-cli", "bower"]:
   require  => Package["nodejs"],
 }
 
-# Services
+# Services::Apache2
 
-package { "apache2":
-  ensure  => present,
-  require => Exec["apt-get update"],
+class { "apache": 
+  default_mods => false,
 }
 
-service { "apache2":
-  enable  => true,
-  ensure  => running,
-  require => Package["apache2"],
+apache::mod { "rewrite": }
+
+apache::vhost { "misa.dev":
+  port          => "80",
+  docroot       => "/var/www/src/web",
+  docroot_owner => "vagrant",
+  docroot_group => "vagrant",
+  override      => "All",
 }
+

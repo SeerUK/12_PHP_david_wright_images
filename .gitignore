@@ -13,5 +13,5 @@ app/config/parameters.ini
 app/config/parameters.yml
 
 # Vagrant
-vagrant/.tmp
+vagrant/librarian/.tmp
 vagrant/.vagrant/machines/*
