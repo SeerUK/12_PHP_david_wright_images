@@ -1,42 +1,33 @@
-Vagrant.configure("2") do |config|
-  config.vm.box = "ubuntu-precise12042-x64-vbox4210"
-  config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box"
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
 
-  config.vm.network "private_network", ip: "192.168.56.101"
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
 
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define "misa_dev" do |box|
+    box.vm.box     = "precise64"
+    box.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  config.vm.synced_folder "/home/seer/git/SeerUK", "/var/www", id: "vagrant-root", :nfs => true
+    box.vm.network :private_network, ip: "192.168.56.101"
+    # box.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
+    # box.vm.network "forwarded_port", guest: 443, host: 4030, auto_correct: true
 
-  config.vm.usable_port_range = (2200..2250)
-  config.vm.provider :virtualbox do |virtualbox|
-    virtualbox.customize ["modifyvm", :id, "--name", "lena"]
-    virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    virtualbox.customize ["modifyvm", :id, "--memory", "1024"]
-    virtualbox.customize ["setextradata", :id, "--VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+    box.vm.hostname = "misa.dev"
+
+    box.vm.synced_folder "../src", "/var/www", nfs: true
+
+    # Provisioners
+    box.vm.provision :shell, :path => "pre-init.sh"
+
+    box.vm.provision :puppet do |puppet|
+      puppet.manifests_path = "puppet/manifests"
+      puppet.manifest_file  = "vagrant.pp"
+      puppet.module_path    = "modules"
+      puppet.options        = "--verbose"
+    end
+
+    # box.vm.provision :shell, :path => "post-init.sh"
   end
-
-  config.vm.provision :shell, :path => "shell/initial-setup.sh"
-  config.vm.provision :shell, :path => "shell/update-puppet.sh"
-  config.vm.provision :shell, :path => "shell/librarian-puppet-vagrant.sh"
-  config.vm.provision :puppet do |puppet|
-    puppet.facter = {
-      "ssh_username" => "vagrant"
-    }
-
-    puppet.manifests_path = "puppet/manifests"
-    puppet.options = ["--verbose", "--hiera_config /vagrant/hiera.yaml", "--parser future"]
-  end
-
-
-
-
-  config.ssh.username = "vagrant"
-
-  config.ssh.shell = "bash -l"
-
-  config.ssh.keep_alive = true
-  config.ssh.forward_agent = false
-  config.ssh.forward_x11 = false
-  config.vagrant.host = :detect
 end
 

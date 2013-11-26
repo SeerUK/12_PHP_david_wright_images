@@ -1,7 +1,10 @@
 ---
 :backends: yaml
 :yaml:
-    :datadir: '/vagrant/puppet/hieradata'
+    :datadir: /var/hieradata
 :hierarchy:
+    - custom
     - common
 :logger: console
+:merge_behavior: deeper
+
