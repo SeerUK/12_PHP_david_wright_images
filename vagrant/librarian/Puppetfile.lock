@@ -10,14 +10,20 @@ FORGE
     puppetlabs/apt (1.4.0)
       puppetlabs/stdlib (>= 2.2.1)
     puppetlabs/concat (1.0.0-rc1)
+    puppetlabs/git (0.0.2)
     puppetlabs/nodejs (0.4.0)
       puppetlabs/apt (>= 0.0.3)
       puppetlabs/stdlib (>= 2.0.0)
     puppetlabs/stdlib (4.1.0)
+    tPl0ch/composer (1.0.1)
+      puppetlabs/git (= 0.0.2)
 
 DEPENDENCIES
   example42/php (= 2.0.17)
+  example42/puppi (= 2.1.7)
   puppetlabs/apache (= 0.9.0)
   puppetlabs/apt (= 1.4.0)
+  puppetlabs/git (= 0.0.2)
   puppetlabs/nodejs (= 0.4.0)
+  tPl0ch/composer (= 1.0.1)
 

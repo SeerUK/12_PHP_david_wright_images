@@ -4,6 +4,15 @@ PUPPET_DIR=/etc/puppet/
 VAGRANT_DIR=/vagrant/
 LIBRARIAN_DIR=/vagrant/librarian/
 
+apt-get update && apt-get install -y augeas-tools build-essential libaugeas-dev pkg-config
+
+# Setup Augeas
+
+if [ "$(gem search -i ruby-augeas)" = "false" ]; then
+    gem install ruby-augeas
+fi
+
+
 # Setup Puppet Librarian
 
 if [ "$(gem search -i librarian-puppet)" = "false" ]; then
