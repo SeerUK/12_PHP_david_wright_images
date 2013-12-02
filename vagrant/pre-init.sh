@@ -4,7 +4,7 @@ PUPPET_DIR=/etc/puppet/
 VAGRANT_DIR=/vagrant/
 LIBRARIAN_DIR=/vagrant/librarian/
 
-apt-get update && apt-get install -y augeas-tools build-essential libaugeas-dev pkg-config
+apt-get update && apt-get install -y augeas-tools build-essential libaugeas-dev pkg-config memcached
 
 # Setup Augeas
 

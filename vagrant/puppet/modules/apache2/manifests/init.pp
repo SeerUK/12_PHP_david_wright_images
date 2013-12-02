@@ -19,7 +19,7 @@ class apache2 {
 
   apache::vhost { "misa.dev":
     port          => "80",
-    docroot       => "/var/www/src/web",
+    docroot       => "/opt/DWI/src/web",
     docroot_owner => "vagrant",
     docroot_group => "vagrant",
     override      => "All",

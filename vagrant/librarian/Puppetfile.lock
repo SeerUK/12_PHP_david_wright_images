@@ -11,6 +11,8 @@ FORGE
       puppetlabs/stdlib (>= 2.2.1)
     puppetlabs/concat (1.0.0-rc1)
     puppetlabs/git (0.0.2)
+    puppetlabs/mysql (2.1.0)
+      puppetlabs/stdlib (>= 2.2.1)
     puppetlabs/nodejs (0.4.0)
       puppetlabs/apt (>= 0.0.3)
       puppetlabs/stdlib (>= 2.0.0)
@@ -24,6 +26,7 @@ DEPENDENCIES
   puppetlabs/apache (= 0.9.0)
   puppetlabs/apt (= 1.4.0)
   puppetlabs/git (= 0.0.2)
+  puppetlabs/mysql (= 2.1.0)
   puppetlabs/nodejs (= 0.4.0)
   tPl0ch/composer (= 1.0.1)
 

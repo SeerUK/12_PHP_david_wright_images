@@ -15,7 +15,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     box.vm.hostname = "misa.dev"
 
-    box.vm.synced_folder "../src", "/var/www/src", nfs: true
+    box.vm.synced_folder "../src", "/opt/DWI/src", nfs: true
+    box.vm.synced_folder "../sql", "/opt/DWI/sql", nfs: true
 
     # Provisioners
     box.vm.provision :shell, :path => "pre-init.sh"
@@ -27,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       puppet.options        = "--verbose"
     end
 
-    # box.vm.provision :shell, :path => "post-init.sh"
+    box.vm.provision :shell, :path => "post-init.sh"
   end
 end
 
