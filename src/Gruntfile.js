@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         },
         less: {
             dwi: {
-                src: '<%= dirs.src %>dwi.less',
+                src: '<%= dirs.src %>less/dwi.less',
                 dest: '<%= dirs.cssBuild %>dwi.css'
             }
         },
