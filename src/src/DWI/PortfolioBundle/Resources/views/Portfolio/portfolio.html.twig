@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container container-padded">
         <div class="title">
             <h1>
                 Portfolio<br />
@@ -20,8 +20,15 @@
             </ul>
         </div>
     </div>
-    <div class="thumbs">
+
+    <div class="controls clearfix">
         <div class="container">
+            <button class="btn pull-right">Create Gallery</button>
+        </div>
+    </div>
+
+    <div class="thumbs">
+        <div class="container container-padded">
             {% if portfolio.galleries is defined %}
                 {% for gallery in portfolio.galleries %}
                     <div class="thumb">
