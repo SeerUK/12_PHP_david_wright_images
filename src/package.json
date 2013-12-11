@@ -8,9 +8,11 @@
   },
   "author": "Elliot Wright",
   "license": "BSD-2-Clause",
-  "devDependencies": {
+  "preferGlobal": true,
+  "dependencies": {
     "grunt-contrib-watch": "~0.5.3",
     "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.11",
     "grunt-contrib-less": "~0.7.0",
     "grunt-contrib-jshint": "~0.6.4",
     "grunt-contrib-copy": "~0.4.1",
