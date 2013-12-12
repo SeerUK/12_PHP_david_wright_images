@@ -31,7 +31,7 @@ class PortfolioPresenter
         $portfolio = new ViewModel();
 
         foreach ($galleries as $gallery) {
-            if (!$gallery instanceof Gallery) {
+            if ( ! $gallery instanceof Gallery) {
                 throw new InvalidDataTypeException('$gallery not an instance of DWI\PortfolioBundle\Entity\Gallery.');
             }
 
