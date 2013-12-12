@@ -10,8 +10,11 @@
 
 namespace DWI\CoreBundle\Model;
 
+use DWI\CoreBundle\Model\ClearableModelInterface;
+use DWI\CoreBundle\Model\ModelInterface,
+
 /**
- * Abstract View Model
+ * View Model
  */
 class ViewModel implements ModelInterface, ClearableModelInterface
 {

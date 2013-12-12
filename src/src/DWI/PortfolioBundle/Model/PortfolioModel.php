@@ -8,7 +8,7 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\Model;
+namespace DWI\PortfolioBundle\Presenter;
 
 use DWI\CoreBundle\Exception\InvalidDataTypeException;
 use DWI\CoreBundle\Model\ViewModel;
@@ -18,9 +18,9 @@ use DWI\PortfolioBundle\Entity\Image;
 use DWI\PortfolioBundle\ViewModel\PortfolioGalleryViewModel;
 
 /**
- * Portfolio Model
+ * Portfolio Presenter
  */
-class PortfolioModel
+class PortfolioPresenter
 {
     /**
      * Get galleries
@@ -44,8 +44,6 @@ class PortfolioModel
 
             $portfolio->addChild($gvm);
         }
-
-        var_dump($portfolio);
 
         return $portfolio;
     }
