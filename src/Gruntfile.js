@@ -17,7 +17,11 @@ module.exports = function (grunt) {
         },
         watch: {
             css: {
-                files: '<%= dirs.sass %>*.scss',
+                files: [
+                    '<%= dirs.sass %>/*.scss',
+                    '<%= dirs.sass %>/modules/*.scss',
+                    '<%= dirs.sass %>/partials/*.scss'
+                ],
                 tasks: ['compass'],
                 options: {
                     spawn: false
