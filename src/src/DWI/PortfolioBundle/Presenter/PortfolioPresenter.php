@@ -47,6 +47,7 @@ class PortfolioPresenter
         return $portfolio;
     }
 
+
     /**
      * Get gallery cover image path
      *

@@ -37,6 +37,7 @@ class PortfolioController extends Controller
         ));
     }
 
+
     /**
      * View Gallery
      *
