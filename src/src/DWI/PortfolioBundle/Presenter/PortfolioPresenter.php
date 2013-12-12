@@ -19,7 +19,7 @@ use DWI\PortfolioBundle\Entity\Image;
 /**
  * Portfolio Presenter
  */
-class PortfolioPresenter extends AbstractPresenter
+class PortfolioPresenter
 {
     /**
      * Get galleries
