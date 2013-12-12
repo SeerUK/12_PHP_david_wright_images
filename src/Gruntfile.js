@@ -4,38 +4,26 @@ module.exports = function (grunt) {
     grunt.initConfig({
         dirs: {
             src: 'src/DWI/AssetBundle/Resources/',
+            sass: 'src/DWI/AssetBundle/Resources/sass',
             cssBuild: 'src/DWI/AssetBundle/Resources/public/css/'
         },
-        cssmin: {
-            dwi: {
-                src: '<%= dirs.cssBuild %>dwi.css',
-                dest: '<%= dirs.cssBuild %>dwi.min.css'
-            }
-        },
-        less: {
-            dwi: {
-                src: '<%= dirs.src %>less/dwi.less',
-                dest: '<%= dirs.cssBuild %>dwi.css'
+        compass: {
+            dist: {
+                options: {
+                    config: '<%= dirs.sass %>/config.rb'
+                }
             }
         },
         watch: {
             css: {
-                files: '<%= dirs.src %>less/*.less',
-                tasks: [
-                    'css'
-                ]
+                files: '<%= dirs.sass %>*.scss',
+                tasks: ['compass']
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['css']);
-    grunt.registerTask('css', ['less', 'cssmin:dwi']);
+    grunt.registerTask('default', ['compass']);
 };
