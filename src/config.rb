@@ -1,11 +1,11 @@
 # Require any additional compass plugins here.
 
 # Set this to the root of your project when deployed:
-http_path = "/"
-css_dir = "../public/css"
-sass_dir = "./"
-images_dir = "../public/img"
-javascripts_dir = "../public/js"
+http_path = "./"
+css_dir = "src/DWI/AssetBundle/Resources/public/css"
+sass_dir = "src/DWI/AssetBundle/Resources/sass"
+images_dir = "src/DWI/AssetBundle/Resources/public/img"
+javascripts_dir = "src/DWI/AssetBundle/Resources/public/js"
 
 # You can select your preferred output style here (can be overridden via the command line):
 # output_style = :expanded or :nested or :compact or :compressed

@@ -3,17 +3,7 @@
 // ----------------------------------------------------
 
 // Compass
-
 @import "compass";
 
-// Core
-
-@import 'variables';
-@import 'mixins';
-
-
-// Components
-
-@import 'scaffolding';
-@import 'grid';
-@import 'typography';
+// Modules & Variables
+@import "partials/base";

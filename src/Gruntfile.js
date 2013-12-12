@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         compass: {
             dist: {
                 options: {
-                    config: '<%= dirs.sass %>/config.rb'
+                    config: 'config.rb'
                 }
             }
         },
