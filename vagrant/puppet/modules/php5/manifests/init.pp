@@ -18,7 +18,8 @@ class php5 {
       'intl',
       'memcache',
       'memcached',
-      'mysql'
+      'mysql',
+      'xdebug'
     ]:
     notify => Service['apache2'],
   }

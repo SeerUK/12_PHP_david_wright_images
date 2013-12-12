@@ -10,12 +10,13 @@
 
 namespace DWI\PortfolioBundle\ViewModel;
 
+use DWI\CoreBundle\ViewModel\AbstractViewModel;
 use DWI\PortfolioBundle\Exception\InvalidDataTypeException;
 
 /**
  * Portfolio View Model
  */
-class PortfolioGalleryViewModel
+class PortfolioGalleryViewModel extends AbstractViewModel
 {
     /**
      * @var integer

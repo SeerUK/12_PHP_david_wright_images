@@ -1,3 +1,7 @@
+dwi_core:
+    resource: "@DWICoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 dwi_portfolio:
     resource: "@DWIPortfolioBundle/Resources/config/routing.yml"
     prefix:   /

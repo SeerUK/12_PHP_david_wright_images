@@ -15,6 +15,7 @@ use DWI\PortfolioBundle\Entity\CoverImage;
 use DWI\PortfolioBundle\Entity\Gallery;
 use DWI\PortfolioBundle\Entity\Image;
 use DWI\PortfolioBundle\ViewModel\PortfolioGalleryViewModel;
+use DWI\CoreBundle\Model\ViewModel;
 
 /**
  * Portfolio Model
@@ -36,10 +37,10 @@ class PortfolioModel
             }
 
             // Populate view model with data we need in the view
-            $pgvm = new PortfolioGalleryViewModel();
-            $pgvm->setId($gallery->getId())
-                ->setTitle($gallery->getTitle())
-                ->setCoverImagePath($this->getGalleryCoverImagePath($gallery));
+            $pgvm = new ViewModel();
+            $pgvm->setVariable('id', $gallery->getId())
+                ->setVariable('title', $gallery->getTitle())
+                ->setVariable('coverImagePath', $this->getGalleryCoverImagePath($gallery));
 
             $portfolio['galleries'][] = $pgvm;
         }

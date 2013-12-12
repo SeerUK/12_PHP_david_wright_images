@@ -10,10 +10,12 @@
 
 namespace DWI\PortfolioBundle\ViewModel;
 
+use DWI\CoreBundle\ViewModel\AbstractViewModel;
+
 /**
  * Gallery view model
  */
-class GalleryViewModel
+class GalleryViewModel extends AbstractViewModel
 {
     /**
      * @var string

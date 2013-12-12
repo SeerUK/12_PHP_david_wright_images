@@ -31,7 +31,7 @@
         <div class="container container-padded">
             {% if portfolio.galleries is defined %}
                 {% for gallery in portfolio.galleries %}
-                    <div class="thumb">
+                    <div class="thumb" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
                             <a class="cover" href="./portfolio/gallery/{{ gallery.id }}"></a>
                             <a class="controls" href="./portfolio/gallery/{{ gallery.id }}"><i class="flaticon64 flaticon64-play-4"></i></a>
