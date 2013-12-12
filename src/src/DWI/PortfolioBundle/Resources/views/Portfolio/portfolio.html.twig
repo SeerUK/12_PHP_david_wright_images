@@ -37,7 +37,11 @@
                             <a class="controls" href="./portfolio/gallery/{{ gallery.id }}"><i class="flaticon64 flaticon64-play-4"></i></a>
                             <a class="controls" href="./portfolio/gallery/delete/{{ gallery.id }}"><i class="flaticon64 flaticon64-x-2"></i></a>
                         </div>
-                        <img src="{{ asset(gallery.coverImagePath) }}" alt="" />
+                        {% if gallery.coverImagePath %}
+                            <img src="{{ asset(gallery.coverImagePath) }}" alt="" />
+                        {% else %}
+                            <img src="http://placehold.it/400x400" alt="" />
+                        {% endif %}
                     </div>
                 {% endfor %}
             {% endif %}

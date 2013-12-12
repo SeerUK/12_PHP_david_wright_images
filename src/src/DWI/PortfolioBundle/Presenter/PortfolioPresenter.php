@@ -19,7 +19,7 @@ use DWI\PortfolioBundle\Entity\Image;
 /**
  * Portfolio Presenter
  */
-class PortfolioPresenter
+class PortfolioPresenter extends AbstractPresenter
 {
     /**
      * Get galleries
@@ -32,7 +32,9 @@ class PortfolioPresenter
 
         foreach ($galleries as $gallery) {
             if ( ! $gallery instanceof Gallery) {
-                throw new InvalidDataTypeException('$gallery not an instance of DWI\PortfolioBundle\Entity\Gallery.');
+                throw new InvalidDataTypeException(
+                    __METHOD__ . ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' . gettype($gallery)
+                );
             }
 
             // Populate view model with data we need in the view
@@ -52,7 +54,7 @@ class PortfolioPresenter
      * Get gallery cover image path
      *
      * @param  DWI\PortfolioBundle\Entity\Gallery $gallery
-     * @return string | false
+     * @return false|string
      */
     private function getGalleryCoverImagePath($gallery)
     {
