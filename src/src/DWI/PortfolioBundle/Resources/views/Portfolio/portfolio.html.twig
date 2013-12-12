@@ -29,8 +29,8 @@
 
     <div class="thumbs">
         <div class="container container-padded">
-            {% if portfolio.galleries is defined %}
-                {% for gallery in portfolio.galleries %}
+            {% if model.hasChildren %}
+                {% for gallery in model.children %}
                     <div class="thumb" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
                             <a class="cover" href="./portfolio/gallery/{{ gallery.id }}"></a>

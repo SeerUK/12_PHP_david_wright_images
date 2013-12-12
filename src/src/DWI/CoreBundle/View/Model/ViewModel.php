@@ -8,10 +8,10 @@
  * @package DWI
  */
 
-namespace DWI\CoreBundle\Model;
+namespace DWI\CoreBundle\View\Model;
 
 use DWI\CoreBundle\Model\ClearableModelInterface;
-use DWI\CoreBundle\Model\ModelInterface,
+use DWI\CoreBundle\Model\ModelInterface;
 
 /**
  * View Model
@@ -225,6 +225,24 @@ class ViewModel implements ModelInterface, ClearableModelInterface
     public function getChildren()
     {
         return $this->children;
+    }
+
+
+    /**
+     * Does this model have a specific child?
+     *
+     * @param  string  $name
+     * @return boolean
+     */
+    public function hasChild($name)
+    {
+        $name = (string) $name;
+
+        if (array_key_exists($name, $this->children)) {
+            return true;
+        }
+
+        return false;
     }
 
 

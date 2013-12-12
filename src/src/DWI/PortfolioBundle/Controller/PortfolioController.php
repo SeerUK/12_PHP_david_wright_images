@@ -29,10 +29,11 @@ class PortfolioController extends Controller
     public function portfolioAction($page)
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
-        $pm = new PortfolioModel();
+        $pp = $this->get('dwi_portfolio.portfolio_presenter');
+        $vm = $pp->createPortfolioView($gr->findByPage($page, 10));
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
-            "portfolio" => $pm->createPortfolioView($gr->findByPage($page, 10)),
+            'model' => $vm
         ));
     }
 

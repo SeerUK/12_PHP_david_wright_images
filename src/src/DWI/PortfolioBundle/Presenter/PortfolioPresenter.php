@@ -11,11 +11,10 @@
 namespace DWI\PortfolioBundle\Presenter;
 
 use DWI\CoreBundle\Exception\InvalidDataTypeException;
-use DWI\CoreBundle\Model\ViewModel;
+use DWI\CoreBundle\View\Model\ViewModel;
 use DWI\PortfolioBundle\Entity\CoverImage;
 use DWI\PortfolioBundle\Entity\Gallery;
 use DWI\PortfolioBundle\Entity\Image;
-use DWI\PortfolioBundle\ViewModel\PortfolioGalleryViewModel;
 
 /**
  * Portfolio Presenter

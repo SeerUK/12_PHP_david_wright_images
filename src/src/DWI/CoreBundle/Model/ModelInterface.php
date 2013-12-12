@@ -22,5 +22,6 @@ interface ModelInterface
     public function addChild(ModelInterface $child, $captureTo);
     public function getChild($name);
     public function getChildren();
+    public function hasChild($name);
     public function hasChildren();
 }
