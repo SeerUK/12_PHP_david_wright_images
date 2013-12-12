@@ -10,12 +10,12 @@
 
 namespace DWI\PortfolioBundle\Model;
 
-use DWI\PortfolioBundle\Exception\InvalidDataTypeException;
+use DWI\CoreBundle\Exception\InvalidDataTypeException;
+use DWI\CoreBundle\Model\ViewModel;
 use DWI\PortfolioBundle\Entity\CoverImage;
 use DWI\PortfolioBundle\Entity\Gallery;
 use DWI\PortfolioBundle\Entity\Image;
 use DWI\PortfolioBundle\ViewModel\PortfolioGalleryViewModel;
-use DWI\CoreBundle\Model\ViewModel;
 
 /**
  * Portfolio Model
@@ -29,7 +29,7 @@ class PortfolioModel
      */
     public function createPortfolioView(array $galleries)
     {
-        $portfolio = array();
+        $portfolio = new ViewModel();
 
         foreach ($galleries as $gallery) {
             if (!$gallery instanceof Gallery) {
@@ -37,13 +37,15 @@ class PortfolioModel
             }
 
             // Populate view model with data we need in the view
-            $pgvm = new ViewModel();
-            $pgvm->setVariable('id', $gallery->getId())
+            $gvm = new ViewModel();
+            $gvm->setVariable('id', $gallery->getId())
                 ->setVariable('title', $gallery->getTitle())
                 ->setVariable('coverImagePath', $this->getGalleryCoverImagePath($gallery));
 
-            $portfolio['galleries'][] = $pgvm;
+            $portfolio->addChild($gvm);
         }
+
+        var_dump($portfolio);
 
         return $portfolio;
     }
