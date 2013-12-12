@@ -6,7 +6,7 @@ CREATE DATABASE IF NOT EXISTS DWI
 
 USE DWI;
 
-CREATE TABLE Gallery (
+CREATE TABLE IF NOT EXISTS Gallery (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     title varchar(255) NOT NULL,
     subtitle varchar(255) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE Gallery (
     PRIMARY KEY (id)
 ) COMMENT="Contains Gallery";
 
-CREATE TABLE Tag (
+CREATE TABLE IF NOT EXISTS Tag (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     name varchar(30) NOT NULL,
     description varchar(250) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE Tag (
     PRIMARY KEY (id)
 ) COMMENT="Contains tags for galleries etc";
 
-CREATE TABLE GalleryTagMap (
+CREATE TABLE IF NOT EXISTS GalleryTagMap (
     galleryId int UNSIGNED NOT NULL,
     tagId int UNSIGNED NOT NULL,
     lastModified timestamp,
@@ -36,7 +36,7 @@ CREATE TABLE GalleryTagMap (
     FOREIGN KEY (tagId) REFERENCES Tag(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="Maps galleries to tags.";
 
-CREATE TABLE Image (
+CREATE TABLE IF NOT EXISTS Image (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     galleryId int UNSIGNED NOT NULL,
     description varchar(250),
@@ -47,7 +47,7 @@ CREATE TABLE Image (
     FOREIGN KEY (galleryId) REFERENCES Gallery(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="Used to store image locations and information.";
 
-CREATE TABLE CoverImage (
+CREATE TABLE IF NOT EXISTS CoverImage (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     galleryId int UNSIGNED NOT NULL,
     imageId int UNSIGNED NOT NULL,
