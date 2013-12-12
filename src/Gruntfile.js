@@ -1,4 +1,5 @@
 module.exports = function (grunt) {
+
     "use strict";
 
     grunt.initConfig({
@@ -17,7 +18,10 @@ module.exports = function (grunt) {
         watch: {
             css: {
                 files: '<%= dirs.sass %>*.scss',
-                tasks: ['compass']
+                tasks: ['compass'],
+                options: {
+                    spawn: false
+                }
             }
         }
     });

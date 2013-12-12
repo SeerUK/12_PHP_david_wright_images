@@ -18,3 +18,4 @@ vagrant/.vagrant/machines/*
 
 # SASS
 src/.sass-cache
+src/src/DWI/AssetBundle/Resources/public/css/dwi.css
