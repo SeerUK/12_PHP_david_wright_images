@@ -29,9 +29,11 @@ security:
             logout:
                 path:   /account/logout
                 target: /portfolio
-            #anonymous: ~
+            anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
 
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/account/login }
+        - { path: ^/admin, roles: ROLE_ADMIN }
