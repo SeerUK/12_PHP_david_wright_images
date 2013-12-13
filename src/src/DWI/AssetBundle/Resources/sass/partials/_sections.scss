@@ -29,7 +29,10 @@ footer,
 // --------------------------------------------------
 
 header {
+    @include row(12);
+
     border-bottom: 1px solid $gray-lighter;
+    margin: 0 auto;
 
     > section.logo {
         @include column(3);

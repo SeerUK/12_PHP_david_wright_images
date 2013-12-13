@@ -34,11 +34,11 @@
         font-style: italic;
 
         dl > dt {
-            color: black;
+            color: $black;
         }
 
         dl > dd {
-            margin: 0 0 20px 0;
+            margin: 0 0 20px;
 
             dl > dd:last-child {
                 margin: 0;
@@ -50,6 +50,49 @@
         @include column(9);
 
         font-size: floor(($font-size-base * 1.1));
-        line-height: ($line-height-computed * 1.1);
+        line-height: ($line-height-computed * 1.2);
+
+        p {
+            margin-bottom: ($line-height-computed * 1.1);
+        }
+    }
+
+}
+
+// Slider
+.swiper-container {
+    padding: 40px 0;
+
+    .swiper-slide {
+        cursor:move;
+
+        img {
+            height: 100%;
+        }
+    }
+}
+
+.swiper-pagination {
+    @include row(12);
+
+    margin: 0 auto;
+    padding: 0 0 40px;
+    text-align: center;
+
+    .swiper-pagination-switch {
+        @include border-radius(8px);
+        @include opacity(0.8);
+
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: $white;
+        margin-right: 5px;
+        border: 1px solid $gray-darker;
+        cursor: pointer;
+    }
+
+    .swiper-active-switch {
+        background: $gray-darker;
     }
 }

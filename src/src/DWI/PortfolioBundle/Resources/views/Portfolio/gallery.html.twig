@@ -27,7 +27,7 @@
         </div>
     {% endif %}
 
-    <div class="canvas clearfix">
+    <div class="canvas">
         <div class="gallery">
             <div class="gallery-details">
                 <dl>
@@ -38,7 +38,7 @@
                 </dl>
             </div>
             <div class="gallery-desc">
-                {{ gallery.description }}
+                {{ gallery.description|raw }}
             </div>
         </div>
     </div>
