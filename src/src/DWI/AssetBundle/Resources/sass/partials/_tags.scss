@@ -17,8 +17,8 @@ ul.tags {
         > a {
             @include border-radius(3px);
 
+            border: 2px solid $gray-light;
             color: $gray;
-            border: 2px solid #ccc;
             display: block;
             padding: 6px 10px 6px;
             text-decoration: none;
@@ -32,7 +32,7 @@ ul.tags {
 
     li.active > a {
         background: $red;
-        color: white;
         border: 2px solid $red;
+        color: white;
     }
 }

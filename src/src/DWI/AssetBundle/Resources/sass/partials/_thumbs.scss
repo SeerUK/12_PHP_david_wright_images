@@ -17,15 +17,20 @@
         position: relative;
         height: 300px;
 
+        &:hover > .thumb-overlay {
+            @include opacity(1);
+        }
+
+        > img,
         > .thumb-overlay {
             @include border-radius(3px);
-            @include opacity(0);
-            @include single-transition(opacity, 0.1s, ease);
+        }
 
-            background: white;
+        > .thumb-overlay {
+            @include opacity(0);
+            @include single-transition(opacity, 0.05s, ease);
+
             background: rgba(0,0,0,0.4);
-            cursor: pointer;
-            padding: 20px;
             position: absolute;
             top: 0;
             right: 0;
@@ -42,31 +47,17 @@
             }
 
             > .controls {
-                @extend .pull-right;
-
-                margin: 0 auto;
                 position: relative;
+                top: 20px;
+                right: 20px;
+                text-align: right;
                 z-index: 2;
-
-                > .control {
-                    margin-right: 10px;
-
-                    &:last-child {
-                        margin-right: 0;
-                    }
-                }
             }
         }
 
         > img {
-            @include border-radius(3px);
-
             height: 100%;
             width: 100%;
         }
-    }
-
-    .thumb:hover > .thumb-overlay {
-        @include opacity(1);
     }
 }
