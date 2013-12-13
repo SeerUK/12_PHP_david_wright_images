@@ -21,9 +21,11 @@ CREATE TABLE IF NOT EXISTS Tag (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     name varchar(30) NOT NULL,
     description varchar(250) NOT NULL,
+    isPrimary tinyint(1) NOT NULL,
     lastModified timestamp,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE KEY (name)
 ) COMMENT="Contains tags for galleries etc";
 
 CREATE TABLE IF NOT EXISTS GalleryTagMap (
