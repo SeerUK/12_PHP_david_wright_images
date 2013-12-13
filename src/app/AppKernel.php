@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new DWI\ContactBundle\DWIContactBundle(),
             new DWI\PortfolioBundle\DWIPortfolioBundle(),
             new DWI\CoreBundle\DWICoreBundle(),
+            new DWI\SecurityBundle\DWISecurityBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -59,3 +59,18 @@ CREATE TABLE IF NOT EXISTS CoverImage (
     FOREIGN KEY (galleryId) REFERENCES Gallery(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (imageId) REFERENCES Image(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="Used to store the gallery cover image ID";
+
+CREATE TABLE IF NOT EXISTS User (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    username varchar(25) NOT NULL,
+    password varchar(128) NOT NULL,
+    email varchar(255) NOT NULL,
+    isActive boolean NOT NULL,
+    lastModified timestamp NOT NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY (username),
+    UNIQUE KEY (email)
+)
+ENGINE=InnoDB,
+DEFAULT CHARSET utf8;

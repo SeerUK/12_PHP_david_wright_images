@@ -1,17 +1,16 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        DWI\SecurityBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 15
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        default:
+            entity: { class: DWI\SecurityBundle\Entity\User, property: username }
 
     firewalls:
         dev:
@@ -19,17 +18,17 @@ security:
             security: false
 
         login:
-            pattern:  ^/demo/secured/login$
+            pattern:  ^/account/login$
             security: false
 
         secured_area:
-            pattern:    ^/demo/secured/
+            pattern:    ^/
             form_login:
-                check_path: _security_check
-                login_path: _demo_login
+                check_path: /account/login/check
+                login_path: /account/login
             logout:
-                path:   _demo_logout
-                target: _demo
+                path:   /account/logout
+                target: /portfolio
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
