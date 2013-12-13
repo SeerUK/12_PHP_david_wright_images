@@ -102,7 +102,7 @@ class ViewModel implements ModelInterface, ClearableModelInterface
      *
      * @param  string $name
      * @param  mixed  $value
-     * @return AbstractViewModel
+     * @return ViewModel
      */
     public function setVariable($name, $value)
     {
@@ -116,7 +116,7 @@ class ViewModel implements ModelInterface, ClearableModelInterface
      * Sets view variables en masse
      *
      * @param  array $variables
-     * @return AbstractViewModel
+     * @return ViewModel
      */
     public function setVariables($variables)
     {
@@ -170,7 +170,7 @@ class ViewModel implements ModelInterface, ClearableModelInterface
     /**
      * Clear all view variables
      *
-     * @return AbstractViewModel
+     * @return ViewModel
      */
     public function clearVariables()
     {

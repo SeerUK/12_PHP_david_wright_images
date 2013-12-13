@@ -30,7 +30,9 @@ class PortfolioController extends Controller
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
         $pp = $this->get('dwi_portfolio.portfolio_presenter');
-        $vm = $pp->createPortfolioView($gr->findByPage($page, 10));
+
+        $vm = $pp->setVariable('galleries', $gr->findByPage($page, 10))
+            ->prepareView();
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
             'model' => $vm

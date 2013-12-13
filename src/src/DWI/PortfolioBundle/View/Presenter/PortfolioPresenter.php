@@ -8,29 +8,28 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\Presenter;
+namespace DWI\PortfolioBundle\View\Presenter;
 
 use DWI\CoreBundle\Exception\InvalidDataTypeException;
 use DWI\CoreBundle\View\Model\ViewModel;
-use DWI\PortfolioBundle\Entity\CoverImage;
+use DWI\CoreBundle\View\Presenter\AbstractPresenter;
 use DWI\PortfolioBundle\Entity\Gallery;
-use DWI\PortfolioBundle\Entity\Image;
 
 /**
  * Portfolio Presenter
  */
-class PortfolioPresenter
+class PortfolioPresenter extends AbstractPresenter
 {
     /**
-     * Get galleries
+     * Prepare view model
      *
      * @return array
      */
-    public function createPortfolioView(array $galleries)
+    public function prepareView()
     {
         $portfolio = new ViewModel();
 
-        foreach ($galleries as $gallery) {
+        foreach ($this->getVariable('galleries') as $gallery) {
             if ( ! $gallery instanceof Gallery) {
                 throw new InvalidDataTypeException(
                     __METHOD__ . ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' . gettype($gallery)
