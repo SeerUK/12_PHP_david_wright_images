@@ -27,6 +27,7 @@ class PortfolioPresenter extends AbstractPresenter
      */
     public function prepareView()
     {
+        $model     = new ViewModel();
         $portfolio = new ViewModel();
 
         foreach ($this->getVariable('galleries') as $gallery) {
@@ -45,7 +46,7 @@ class PortfolioPresenter extends AbstractPresenter
             $portfolio->addChild($gvm);
         }
 
-        return $portfolio;
+        return $model->addChild($portfolio, 'portfolio');
     }
 
 

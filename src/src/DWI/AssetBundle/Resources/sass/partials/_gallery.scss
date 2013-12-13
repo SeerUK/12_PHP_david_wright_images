@@ -1,0 +1,55 @@
+//
+// Gallery
+// -------------------------------------------------
+
+
+.gallery {
+    @include row(12);
+
+    margin: 0 auto;
+    padding: 40px 0;
+
+    .gallery-images {
+        text-align: center;
+
+        img {
+            height: 500px;
+            margin-right: 50px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .gallery-desc,
+    .gallery-details {
+        color: $gray-dark;
+        font-family: $font-family-serif;
+    }
+
+    .gallery-details {
+        @include column(3);
+
+        font-style: italic;
+
+        dl > dt {
+            color: black;
+        }
+
+        dl > dd {
+            margin: 0 0 20px 0;
+
+            dl > dd:last-child {
+                margin: 0;
+            }
+        }
+    }
+
+    .gallery-desc {
+        @include column(9);
+
+        font-size: floor(($font-size-base * 1.1));
+        line-height: ($line-height-computed * 1.1);
+    }
+}

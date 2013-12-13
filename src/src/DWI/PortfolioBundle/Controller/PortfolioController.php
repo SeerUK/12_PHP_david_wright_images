@@ -12,8 +12,6 @@ namespace DWI\PortfolioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\NoResultException;
-use DWI\PortfolioBundle\Model\GalleryModel;
-use DWI\PortfolioBundle\Model\PortfolioModel;
 
 /**
  * Portolio Controller
@@ -51,17 +49,18 @@ class PortfolioController extends Controller
     public function galleryAction($id)
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
-        $gm = new GalleryModel();
+        $gp = $this->get('dwi_portfolio.gallery_presenter');
 
         // If the gallery doesn't exist, redirect the user to a 404 page
         try {
-            $g  = $gr->findById($id);
+            $vm = $gp->setVariable('gallery', $gr->findById($id))
+                ->prepareView();
         } catch (NoResultException $e) {
             throw $this->createNotFoundException('That gallery doesn\'t exist!');
         }
 
         return $this->render('DWIPortfolioBundle:Portfolio:gallery.html.twig', array(
-            "gallery" => $gm->createGalleryView($g),
+            'model' => $vm,
         ));
     }
 }

@@ -1,19 +1,19 @@
+{% set gallery = model.getChild('gallery') %}
+
 {% extends '::base.html.twig' %}
 
 {% block title %}{# gallery.title #}{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="title">
-            <h1>
-                {{ gallery.title }}<br />
-                <small>{{ gallery.subtitle }}</small>
-            </h1>
+    <div class="canvas">
+        <div class="jumbotron">
+            {{ gallery.title }}<br />
+            <small>{{ gallery.subtitle }}</small>
         </div>
     </div>
 
-    {% if gallery.images is defined %}
-        <div class="container-images gallery-images">
+    {% if gallery.images is not empty %}
+        <div class="canvas gray">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     {% for image in gallery.images %}
@@ -27,20 +27,21 @@
         </div>
     {% endif %}
 
-    <div class="container clearfix">
-        <div class="gallery-details">
-            <dl>
-                <dt>Date</dt>
-                <dd>{{ gallery.date|date("M Y") }}</dd>
-                <dt>No. of Images</dt>
-                <dd>{{ gallery.images|length }}</dd>
-            </dl>
-        </div>
-        <div class="gallery-desc">
-            {{ gallery.description|raw }}
+    <div class="canvas clearfix">
+        <div class="gallery">
+            <div class="gallery-details">
+                <dl>
+                    <dt>Date</dt>
+                    <dd>{{ gallery.date|date("M Y") }}</dd>
+                    <dt>No. of Images</dt>
+                    <dd>{{ gallery.images|length }}</dd>
+                </dl>
+            </div>
+            <div class="gallery-desc">
+                {{ gallery.description }}
+            </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block javascript %}

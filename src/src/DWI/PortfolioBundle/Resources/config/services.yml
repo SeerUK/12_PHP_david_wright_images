@@ -1,6 +1,7 @@
 parameters:
     dwi_portfolio.gallery_repository.class: DWI\PortfolioBundle\Entity\GalleryRepository
     dwi_portfolio.gallery_entity: "DWIPortfolioBundle:Gallery"
+    dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\GalleryPresenter
     dwi_portfolio.portfolio_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioPresenter
 
 services:
@@ -13,3 +14,6 @@ services:
 
     dwi_portfolio.portfolio_presenter:
         class: %dwi_portfolio.portfolio_presenter.class%
+
+    dwi_portfolio.gallery_presenter:
+        class: %dwi_portfolio.gallery_presenter.class%
