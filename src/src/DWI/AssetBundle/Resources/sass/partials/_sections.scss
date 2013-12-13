@@ -1,0 +1,146 @@
+//
+// Sections
+// ----------------------------------------------------
+
+// Black Canvas
+// --------------------------------------------------
+
+.canvas {
+    background: white;
+
+    &.gray {
+        background: $gray-lighter;
+    }
+}
+
+
+// Shared
+// --------------------------------------------------
+
+header,
+footer,
+.jumbotron {
+    @include row(12);
+    margin: 0 auto;
+}
+
+
+// Header
+// --------------------------------------------------
+
+header {
+    border-bottom: 1px solid $gray-lighter;
+
+    > section.logo {
+        @include column(3);
+
+        height: 130px;
+        width: 200px;
+        line-height: 150px;
+        margin-right: 30px;
+    }
+
+    // Header specific navbar
+    > nav.navbar {
+        @include column(9);
+
+        > ul {
+            @extend .pull-right;
+
+            > li {
+                float: left;
+                font-size: ceil(($font-size-base * 0.9));
+                padding: 50px 2px 50px;
+
+                > a {
+                    @include border-radius(3px);
+
+                    color: $black;
+                    padding: 5px 10px;
+                }
+
+                > a:hover {
+                    background: $red;
+                    color: $white;
+                }
+            }
+        }
+
+    }
+}
+
+
+// Jumobotron
+// --------------------------------------------------
+
+.jumbotron {
+    font-size: floor(($font-size-base * 4.3));
+    font-weight: $font-weight-light;
+    line-height: ($line-height-base / 1.5);
+    padding: 80px 0;
+    text-align: center;
+    text-transform: uppercase;
+
+    > small {
+        color: $gray-dark;
+        font-size: 33%;
+        font-weight: $font-weight-normal;
+        text-transform: none;
+    }
+}
+
+
+// Footer
+// --------------------------------------------------
+
+footer {
+    color: $gray;
+    padding: 30px 0 60px;
+
+    // Footer specific navbar
+    > nav.navbar {
+        @include column(12);
+        @extend .text-center;
+
+        padding: 20px 0;
+
+        > ul > li {
+            padding: 28px 10px;
+        }
+    }
+
+    a {
+        color: $gray;
+        font-weight: $font-weight-bold;
+        text-decoration: none;
+        text-transform: uppercase;
+
+        @include single-transition(all, 0.4s, ease);
+    }
+
+    a:hover {
+        color: $white;
+    }
+}
+
+
+// Shared Navbar
+// --------------------------------------------------
+
+nav.navbar {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > ul > li {
+        display: inline-block;
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+
+        > a {
+            display: block;
+            text-decoration: none;
+        }
+    }
+}

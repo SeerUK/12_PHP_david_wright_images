@@ -1,0 +1,38 @@
+//
+// Tags
+// ----------------------------------------------------
+
+ul.tags {
+    list-style: none;
+    margin: 0;
+    padding:0 ;
+    text-align: center;
+
+    > li {
+        display: inline-block;
+        font-size: ceil(($font-size-base * 0.9));
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+
+        > a {
+            @include border-radius(3px);
+
+            color: $gray;
+            border: 2px solid #ccc;
+            display: block;
+            padding: 6px 10px 6px;
+            text-decoration: none;
+        }
+    }
+
+    li:hover > a {
+        border: 2px solid $red;
+        color: $red;
+    }
+
+    li.active > a {
+        background: $red;
+        color: white;
+        border: 2px solid $red;
+    }
+}

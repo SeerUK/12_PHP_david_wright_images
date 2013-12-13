@@ -13,7 +13,7 @@
     <link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
     {% stylesheets
-        'bundles/dwiasset/css/normalize.css'
+        'bundles/dwiasset/css/dwi.css'
         'bundles/dwiasset/css/flaticons.css'
         'bundles/dwiasset/css/style.css'
         'bundles/dwiasset/css/idangerous.swiper.css'
@@ -27,9 +27,7 @@
 <body>
     {% include '::header.html.twig' %}
 
-    <div class="body">
-        {% block body %}{% endblock %}
-    </div>
+    {% block body %}{% endblock %}
 
     {% include '::footer.html.twig' %}
 

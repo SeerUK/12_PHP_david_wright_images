@@ -5,10 +5,17 @@
 // Compass
 @import "compass";
 @import "compass/reset";
+@import "compass/css3/user-interface";
 
 // Modules & Variables
 @import "partials/base";
 @import "partials/typography";
+@import "partials/utilities";
+@import "partials/scaffolding";
+@import "partials/sections";
+@import "partials/social";
+@import "partials/tags";
+@import "partials/thumbs";
 
 // Partials
 

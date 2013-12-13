@@ -3,39 +3,39 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <div class="container container-padded">
-        <div class="title">
-            <h1>
-                Portfolio<br />
-                <small>Take a look at some of my recent work below.</small>
-            </h1>
-        </div>
-        <div class="tags">
-            <ul class="tags">
-                <li class="active"><a href="#">All</a></li>
-                <li><a href="#">Concerts</a></li>
-                <li><a href="#">Landscapes</a></li>
-                <li><a href="#">Portrait</a></li>
-                <li><a href="#">Theatre</a></li>
-            </ul>
+    <div class="canvas">
+        <div class="jumbotron">
+            Portfolio<br />
+            <small>Take a look at some of my recent work below.</small>
+
+            <div class="tags">
+                <ul class="tags">
+                    <li class="active"><a href="#">All</a></li>
+                    <li><a href="#">Concerts</a></li>
+                    <li><a href="#">Landscapes</a></li>
+                    <li><a href="#">Portrait</a></li>
+                    <li><a href="#">Theatre</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
-    <div class="controls clearfix">
+    {# <div class="controls clearfix">
         <div class="container">
             <button class="btn pull-right">Create Gallery</button>
         </div>
-    </div>
+    </div> #}
 
-    <div class="thumbs">
-        <div class="container container-padded">
+    <div class="canvas gray">
+        <div class="thumbs">
             {% if model.hasChildren %}
                 {% for gallery in model.children %}
                     <div class="thumb" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
                             <a class="cover" href="./portfolio/gallery/{{ gallery.id }}"></a>
-                            <a class="controls" href="./portfolio/gallery/{{ gallery.id }}"><i class="flaticon64 flaticon64-play-4"></i></a>
-                            <a class="controls" href="./portfolio/gallery/delete/{{ gallery.id }}"><i class="flaticon64 flaticon64-x-2"></i></a>
+                            <div class="controls">
+                                <a class="control" href="./portfolio/gallery/delete/{{ gallery.id }}"><i class="flaticon64 flaticon64-x-2"></i></a>
+                            </div>
                         </div>
                         {% if gallery.coverImagePath %}
                             <img src="{{ asset(gallery.coverImagePath) }}" alt="" />
@@ -50,10 +50,11 @@
                 <div class="thumb">
                     <div class="thumb-overlay">
                         <a class="cover" href="#play"></a>
-                        <a class="controls" href="#play"><i class="flaticon64 flaticon64-play-4"></i></a>
-                        <a class="controls" href="#delete"><i class="flaticon64 flaticon64-x-2"></i></a>
+                        <div class="controls">
+                            <a class="control" href="#delete"><i class="flaticon64 flaticon64-x-2"></i></a>
+                        </div>
                     </div>
-                    <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
+                    <img src="http://placehold.it/400x400" alt="" />
                 </div>
             {% endfor %}
         </div>
