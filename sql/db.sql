@@ -71,6 +71,24 @@ CREATE TABLE IF NOT EXISTS User (
     PRIMARY KEY (id),
     UNIQUE KEY (username),
     UNIQUE KEY (email)
-)
-ENGINE=InnoDB,
-DEFAULT CHARSET utf8;
+) COMMENT="Users";
+
+CREATE TABLE IF NOT EXISTS Role (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    name varchar(30) NOT NULL,
+    role varchar(20) NOT NULL,
+    lastModified timestamp NOT NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY (role)
+) COMMENT="User roles";
+
+CREATE TABLE IF NOT EXISTS UserRole (
+    userId int UNSIGNED NOT NULL,
+    roleId int UNSIGNED NOT NULL,
+    lastModified timestamp NOT NULL,
+
+    PRIMARY KEY (userId, roleId),
+    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (roleId) REFERENCES Role(id) ON DELETE CASCADE ON UPDATE CASCADE
+) COMMENT="User roles";

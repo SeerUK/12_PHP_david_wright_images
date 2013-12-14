@@ -11,7 +11,10 @@
 namespace DWI\SecurityBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * DWI\SecurityBundle\Entity\User
@@ -49,13 +52,23 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @JoinTable(name="UserRole",
+     *     joinColumns={@JoinColumn(name="userId", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="roleId", referencedColumnName="id")}
+     * )
+     */
+    private $roles;
+
+    /**
      * @ORM\Column(name="isActive", type="boolean")
      */
     private $isActive;
 
     public function __construct()
     {
-        $this->salt = '';
+        $this->roles = new ArrayCollection();
+        $this->salt  = '';
     }
 
     /**
@@ -143,7 +156,7 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        return array('ROLE_USER', 'ROLE_ADMIN');
+        return $this->roles->toArray();
     }
 
     /**

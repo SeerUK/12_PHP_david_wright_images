@@ -28,6 +28,7 @@ class PortfolioController extends Controller
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
         $pp = $this->get('dwi_portfolio.portfolio_presenter');
+        // $up = $this->get('dwi_security.user_view_model');
 
         $vm = $pp->setVariable('galleries', $gr->findByPage($page, 10))
             ->prepareView();

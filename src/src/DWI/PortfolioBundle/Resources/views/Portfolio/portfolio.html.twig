@@ -35,9 +35,11 @@
                     <div class="thumb" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
                             <a class="cover" href="./portfolio/gallery/{{ gallery.id }}"></a>
+                            {% if is_granted('ROLE_ADMIN') %}
                             <div class="controls">
                                 <a class="control" href="./portfolio/gallery/delete/{{ gallery.id }}"><i class="flaticon32 flaticon32-x-2"></i></a>
                             </div>
+                            {% endif %}
                         </div>
                         {% if gallery.coverImagePath %}
                             <img src="{{ asset(gallery.coverImagePath) }}" alt="" />

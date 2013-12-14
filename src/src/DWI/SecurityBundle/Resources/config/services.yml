@@ -1,7 +1,5 @@
 parameters:
-#    dwi_security.example.class: DWI\SecurityBundle\Example
+    #
 
 services:
-#    dwi_security.example:
-#        class: %dwi_security.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    #

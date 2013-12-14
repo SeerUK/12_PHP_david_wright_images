@@ -22,9 +22,11 @@ use Doctrine\ORM\NoResultException;
  */
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
-        public function loadUserByUsername($username)
+    public function loadUserByUsername($username)
     {
         $query = $this->createQueryBuilder('u')
+            ->select('u, r')
+            ->leftJoin('u.roles', 'r')
             ->where('u.username = :username')
             ->setParameter('username', $username)
             ->getQuery();
