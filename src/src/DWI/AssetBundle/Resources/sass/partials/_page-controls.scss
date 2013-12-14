@@ -1,0 +1,10 @@
+//
+// Page Controls
+// -------------------------------------------------
+
+.page-controls {
+    @include row(12);
+
+    margin: 0 auto;
+    padding: 20px 0;
+}

@@ -8,8 +8,28 @@
 .canvas {
     background: white;
 
-    &.gray {
+    &.gray-lighter {
         background: $gray-lighter;
+    }
+
+    &.gray-light {
+        background: $gray-light;
+    }
+
+    &.gray {
+        background: $gray;
+    }
+
+    &.gray-dark {
+        background: $gray-dark;
+    }
+
+    &.slate {
+        background: $slate;
+    }
+
+    &.slate-dark {
+        background: $slate-dark;
     }
 }
 

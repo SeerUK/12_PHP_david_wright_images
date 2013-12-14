@@ -1,0 +1,80 @@
+//
+// Buttons
+// -------------------------------------------------
+
+.btn {
+    @include border-radius(2px);
+    @include box-shadow(0 2px 0 $gray-light);
+    @include user-select(none);
+
+    background: $gray-lighter;
+    border: none;
+    color: $black;
+    cursor: pointer;
+    display: inline-block;
+    font-family: $font-family-sans-serif;
+    font-weight: $font-weight-bold;
+    margin: 0;
+    outline: none;
+    padding: 6px 10px;
+    text-transform: uppercase;
+
+    & + & {
+        margin-left: 4px;
+    }
+
+    &,
+    &.btn-success,
+    &.btn-warning,
+    &.btn-danger,
+    &.btn-info {
+        &:active {
+            @include box-shadow(none);
+            @include translate(0, 2px);
+        }
+    }
+
+    &.btn-success {
+        @include box-shadow(0 2px 0 $green-dark);
+
+        background: $green;
+        color: $white;
+
+        &:hover {
+            background: darken($green, 3%);
+        }
+    }
+
+    &.btn-warning {
+        @include box-shadow(0 2px 0 $orange-dark);
+
+        background: $orange;
+        color: $white;
+
+        &:hover {
+            background: darken($orange, 3%);
+        }
+    }
+
+    &.btn-danger {
+        @include box-shadow(0 2px 0 $red-dark);
+
+        background: $red;
+        color: $white;
+
+        &:hover {
+            background: darken($red, 3%);
+        }
+    }
+
+    &.btn-info {
+        @include box-shadow(0 2px 0 $blue-dark);
+
+        background: $blue;
+        color: $white;
+
+        &:hover {
+            background: darken($blue, 3%);
+        }
+    }
+}

@@ -8,7 +8,7 @@
     <div class="canvas">
         <div class="jumbotron">
             Portfolio<br />
-            <small>Take a look at some of my recent work below.</small>
+            <small>Take a look at some of my recent work below</small>
 
             <div class="tags">
                 <ul class="tags">
@@ -22,13 +22,15 @@
         </div>
     </div>
 
-    {# <div class="controls clearfix">
-        <div class="container">
-            <button class="btn pull-right">Create Gallery</button>
+    <div class="canvas gray-light">
+        <div class="page-controls">
+            <div class="pull-right">
+                <button class="btn btn-success">Create Gallery</button>
+            </div>
         </div>
-    </div> #}
+    </div>
 
-    <div class="canvas gray">
+    <div class="canvas gray-lighter">
         <div class="thumbs">
             {% if portfolio.hasChildren %}
                 {% for gallery in portfolio.children %}
