@@ -11,3 +11,8 @@ dwi_portfolio_gallery:
     methods: [GET]
     requirements:
         id: \d+
+
+dwi_portfolio_create_gallery:
+    pattern: /portfolio/gallery/create
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:createGallery }
+    methods: [GET,POST]

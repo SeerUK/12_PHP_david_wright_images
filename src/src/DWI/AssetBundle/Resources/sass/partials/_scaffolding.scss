@@ -18,3 +18,16 @@ body {
     color: $text-color;
     background-color: $body-bg;
 }
+
+strong,
+b {
+    font-weight: $font-weight-bold;
+}
+
+// Oh well, only temporary!
+.xdebug-var-dump {
+    background: $white;
+    font-family: $font-family-monospace;
+    padding: 10px;
+    border-bottom: 1px solid $gray;
+}

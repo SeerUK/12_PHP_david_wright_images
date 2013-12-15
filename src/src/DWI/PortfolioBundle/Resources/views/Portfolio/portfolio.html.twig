@@ -22,13 +22,15 @@
         </div>
     </div>
 
-    <div class="canvas gray-light">
-        <div class="page-controls">
-            <div class="pull-right">
-                <button class="btn btn-success">Create Gallery</button>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="canvas gray-light">
+            <div class="page-controls">
+                <div class="pull-right">
+                    <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-success">Create Gallery</a>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
     <div class="canvas gray-lighter">
         <div class="thumbs">
@@ -38,9 +40,9 @@
                         <div class="thumb-overlay">
                             <a class="cover" href="./portfolio/gallery/{{ gallery.id }}"></a>
                             {% if is_granted('ROLE_ADMIN') %}
-                            <div class="controls">
-                                <a class="control" href="./portfolio/gallery/delete/{{ gallery.id }}"><i class="flaticon32 flaticon32-x-2"></i></a>
-                            </div>
+                                <div class="controls">
+                                    <a class="control" href="./portfolio/gallery/delete/{{ gallery.id }}"><i class="flaticon32 flaticon32-x-2"></i></a>
+                                </div>
                             {% endif %}
                         </div>
                         {% if gallery.coverImagePath %}

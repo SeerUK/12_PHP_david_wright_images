@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Create Gallery{% endblock %}
+
+{% block body %}
+    <div class="canvas">
+        <div class="jumbotron">
+            Create Gallery<br />
+            <small>A new place to store images</small>
+        </div>
+    </div>
+
+    <div class="canvas">
+        {{ form(form) }}
+    </div>
+{% endblock %}
