@@ -11,9 +11,8 @@
 namespace DWI\PortfolioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
-use DWI\PortfolioBundle\Entity\Gallery;
-use DWI\PortfolioBundle\Form\Type\GalleryType;
 
 /**
  * Portolio Controller
@@ -73,26 +72,17 @@ class PortfolioController extends Controller
      */
     public function createGalleryAction()
     {
-        if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
         }
 
-        // Make CreateGalleryType, pass a new GalleryType into it, use
-        // the registration docs on symfony to try figure it out
-
-        $gallery = new Gallery();
-        $request = $this->getRequest();
-        $form = $this->createForm(new GalleryType(), $gallery, array(
-            'action' => $this->generateUrl('dwi_portfolio_create_gallery'),
-        ));
-
-        var_dump($form->isValid());
-        var_dump($gallery);
-        var_dump($form->getData());
+        $request = $this->get('request');
+        $form    = $this->get('dwi_portfolio.create_gallery_form')
+            ->handleRequest($request);
 
         if ('POST' === $request->getMethod() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($gallery);
+            $em->persist($form->getData());
             $em->flush();
 
             return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));

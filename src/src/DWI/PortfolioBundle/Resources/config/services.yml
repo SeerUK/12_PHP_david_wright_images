@@ -3,6 +3,8 @@ parameters:
     dwi_portfolio.gallery_entity: "DWIPortfolioBundle:Gallery"
     dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\GalleryPresenter
     dwi_portfolio.portfolio_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioPresenter
+    dwi_portfolio.create_gallery_form_factory.class: DWI\PortfolioBundle\Form\Factory\GalleryFormFactory
+    dwi_portfolio.create_gallery_form.class: Symfony\Component\Form\Form
 
 services:
     dwi_portfolio.gallery_repository:
@@ -17,3 +19,15 @@ services:
 
     dwi_portfolio.gallery_presenter:
         class: %dwi_portfolio.gallery_presenter.class%
+
+    dwi_portfolio.create_gallery_form_factory:
+        class: %dwi_portfolio.create_gallery_form_factory.class%
+        scope: "request"
+        arguments:
+            ff: "@form.factory"
+            generator: "@router"
+
+    dwi_portfolio.create_gallery_form:
+        class: %dwi_portfolio.create_gallery_form.class%
+        factory_service: dwi_portfolio.create_gallery_form_factory
+        factory_method: prepareForm
