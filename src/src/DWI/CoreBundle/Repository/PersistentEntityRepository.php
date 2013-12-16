@@ -8,7 +8,7 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\Repository;
+namespace DWI\CoreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;

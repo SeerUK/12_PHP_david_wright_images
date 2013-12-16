@@ -79,6 +79,8 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
         $em->persist($entity);
         $em->flush();
 
+        // Must find a way of clearing memcache here...
+
         return $this;
     }
 
@@ -102,6 +104,8 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
         $em = $this->getEntityManager();
         $em->remove($entity);
         $em->flush();
+
+        // Must find a way of clearing memcache here...
 
         return $this;
     }

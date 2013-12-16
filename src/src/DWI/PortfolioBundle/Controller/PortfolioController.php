@@ -13,6 +13,7 @@ namespace DWI\PortfolioBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
+use DWI\PortfolioBundle\Entity\Gallery;
 
 /**
  * Portolio Controller
@@ -84,7 +85,7 @@ class PortfolioController extends Controller
 
         if ('POST' === $request->getMethod() && $form->isValid()) {
             $this->get('dwi_portfolio.gallery_repository')
-                ->remove($form->getData());
+                ->persist($form->getData());
 
             return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
                 'id' => $gallery->getId(),
@@ -105,7 +106,7 @@ class PortfolioController extends Controller
      *
      * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
-    public function removeGalleryAction($id)
+    public function removeGalleryAction(Gallery $gallery)
     {
         if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
@@ -115,9 +116,8 @@ class PortfolioController extends Controller
             throw $this->createNotFoundException('That gallery doesn\'t exist!');
         }
 
-        $em = $this->getDoctrine()->getEntityManager();
-        $em->remove($gallery);
-        $em->flush();
+        $this->get('dwi_portfolio.gallery_repository')
+            ->remove($gallery);
 
         return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));
     }
