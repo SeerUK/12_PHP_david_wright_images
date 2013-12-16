@@ -81,11 +81,15 @@ class PortfolioController extends Controller
             ->handleRequest($request);
 
         if ('POST' === $request->getMethod() && $form->isValid()) {
+            $gallery = $form->getData();
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($form->getData());
+            $em->persist($gallery);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));
+            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+                'id' => $gallery->getId(),
+            )));
         }
 
         return $this->render('DWIPortfolioBundle:Portfolio:createGallery.html.twig', array(
