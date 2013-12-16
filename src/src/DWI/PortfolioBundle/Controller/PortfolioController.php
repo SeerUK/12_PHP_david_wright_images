@@ -69,6 +69,8 @@ class PortfolioController extends Controller
      * Create Gallery
      *
      * @return Symfony\Component\HttpFoundation\Response
+     *
+     * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function createGalleryAction()
     {
@@ -81,11 +83,8 @@ class PortfolioController extends Controller
             ->handleRequest($request);
 
         if ('POST' === $request->getMethod() && $form->isValid()) {
-            $gallery = $form->getData();
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($gallery);
-            $em->flush();
+            $this->get('dwi_portfolio.gallery_repository')
+                ->remove($form->getData());
 
             return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
                 'id' => $gallery->getId(),
@@ -95,5 +94,31 @@ class PortfolioController extends Controller
         return $this->render('DWIPortfolioBundle:Portfolio:createGallery.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+
+    /**
+     * Remove Gallery
+     *
+     * @param  integer $id
+     * @return Symfony\Component\HttpFoundation\Response
+     *
+     * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function removeGalleryAction($id)
+    {
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        if ( ! $gallery) {
+            throw $this->createNotFoundException('That gallery doesn\'t exist!');
+        }
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->remove($gallery);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));
     }
 }

@@ -33,7 +33,9 @@ class PortfolioPresenter extends AbstractPresenter
         foreach ($this->getVariable('galleries') as $gallery) {
             if ( ! $gallery instanceof Gallery) {
                 throw new InvalidDataTypeException(
-                    __METHOD__ . ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' . gettype($gallery)
+                    __METHOD__ .
+                    ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' .
+                    gettype($gallery)
                 );
             }
 

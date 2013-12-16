@@ -12,11 +12,13 @@ namespace DWI\PortfolioBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use DWI\CoreBundle\Repository\PersistentEntityRepository;
+use DWI\PortfolioBundle\Entity\Gallery;
 
 /**
  * Gallery Repository
  */
-class GalleryRepository extends EntityRepository
+class GalleryRepository extends EntityRepository implements PersistentEntityRepository
 {
     /**
      * Find galleryes by id, also returns gallery images
@@ -26,14 +28,15 @@ class GalleryRepository extends EntityRepository
      */
     public function findById($id)
     {
-        $dql = 'SELECT g, gci, gi FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.coverImage AS gci LEFT JOIN g.images AS gi WHERE g.id = :galleryId';
+        $dql = 'SELECT g, gci, gi FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.coverImage AS gci LEFT JOIN g.images AS gi WHERE g.id = :id';
 
         $query = $this->getEntityManager()->createQuery($dql)
-            ->setParameter('galleryId', $id);
+            ->setParameter('id', $id);
 
         return $query->useResultCache(true)
             ->getSingleResult();
     }
+
 
     /**
      * Find galleries by page, returns gallery cover images and tags too
@@ -54,6 +57,69 @@ class GalleryRepository extends EntityRepository
         return $query->useResultCache(true)
             ->getResult();
     }
+
+
+    /**
+     * Persist Gallery
+     *
+     * @param  Gallery $entity
+     * @return GalleryRepository
+     */
+    public function persist($entity)
+    {
+        if ( ! $this->isGallery($entity)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' .
+                gettype($entity)
+            );
+        }
+
+        $em = $this->getEntityManager();
+        $em->persist($entity);
+        $em->flush();
+
+        return $this;
+    }
+
+
+    /**
+     * Remove Gallery
+     *
+     * @param  Gallery $entity
+     * @return GalleryRepository
+     */
+    public function remove($entity)
+    {
+        if ( ! $this->isGallery($entity)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' .
+                gettype($entity)
+            );
+        }
+
+        $em = $this->getEntityManager();
+        $em->remove($entity);
+        $em->flush();
+
+        return $this;
+    }
+
+
+    /**
+     * Is the given entity an instance of Gallery?
+     *
+     * @param  mixed   $entity
+     * @return boolean
+     */
+    public function isGallery($entity)
+    {
+        return ($entity instanceof Gallery)
+            ? true
+            : false;
+    }
+
 
     /**
      * Get first result number (offset) for page

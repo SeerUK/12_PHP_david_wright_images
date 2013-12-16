@@ -16,3 +16,10 @@ dwi_portfolio_create_gallery:
     pattern: /portfolio/gallery/create
     defaults: { _controller: DWIPortfolioBundle:Portfolio:createGallery }
     methods: [GET,POST]
+
+dwi_portfolio_remove_gallery:
+    pattern: /portfolio/gallery/{id}/remove/confirm
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:removeGallery }
+    methods: [GET]
+    requirements:
+        id: \d+
