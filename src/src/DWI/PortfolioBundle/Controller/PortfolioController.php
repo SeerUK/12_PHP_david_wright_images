@@ -84,8 +84,10 @@ class PortfolioController extends Controller
             ->handleRequest($request);
 
         if ('POST' === $request->getMethod() && $form->isValid()) {
+            $gallery = $form->getData();
+
             $this->get('dwi_portfolio.gallery_repository')
-                ->persist($form->getData());
+                ->persist($gallery);
 
             return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
                 'id' => $gallery->getId(),
