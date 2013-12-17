@@ -79,7 +79,10 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
         $em->persist($entity);
         $em->flush();
 
-        // Must find a way of clearing memcache here...
+        // Clear query cache so that subsequent requests for Gallery objects
+        // don't return bring back ghosts
+        $cd = $em->getConfiguration()->getResultCacheImpl();
+        $cd->deleteAll();
 
         return $this;
     }
@@ -105,7 +108,10 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
         $em->remove($entity);
         $em->flush();
 
-        // Must find a way of clearing memcache here...
+        // Clear query cache so that subsequent requests for Gallery objects
+        // don't return bring back ghosts
+        $cd = $em->getConfiguration()->getResultCacheImpl();
+        $cd->deleteAll();
 
         return $this;
     }
