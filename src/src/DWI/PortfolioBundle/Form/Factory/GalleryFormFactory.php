@@ -48,7 +48,10 @@ class GalleryFormFactory extends AbstractFormFactory
      */
     public function prepareForm()
     {
-        $form = $this->ff->create(new GalleryType(), new Gallery(), array(
+        $gallery = new Gallery();
+        $gallery->setDate(new \DateTime());
+
+        $form = $this->ff->create(new GalleryType(), $gallery, array(
             'action' => $this->generator->generate('dwi_portfolio_create_gallery'),
         ));
 
