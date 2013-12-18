@@ -4,6 +4,7 @@
 
 .btn {
     @include border-radius(2px);
+    @include box-sizing(border-box);
     @include box-shadow(0 2px 0 $gray-light);
     @include user-select(none);
 
@@ -15,10 +16,11 @@
     font-family: $font-family-sans-serif;
     font-size: floor(($font-size-base * 0.9));
     font-weight: $font-weight-bold;
-    line-height: normal;
+    height: 34px;
+    line-height: $line-height-base;
     margin: 0 0 2px;
     outline: none;
-    padding: 6px 10px;
+    padding: 9px 12px;
     text-decoration: none;
     text-transform: uppercase;
 
@@ -26,7 +28,13 @@
         margin-left: 4px;
     }
 
+    &.btn-block {
+        display: block;
+        width: 100%;
+    }
+
     &,
+    &.btn-white,
     &.btn-success,
     &.btn-warning,
     &.btn-danger,
@@ -34,6 +42,17 @@
         &:active {
             @include box-shadow(none);
             @include translate(0, 2px);
+        }
+    }
+
+    &.btn-white {
+        @include box-shadow(0 2px 0 $gray-light);
+
+        background: $white;
+        color: $black;
+
+        &:hover {
+            background: darken($white, 3%);
         }
     }
 

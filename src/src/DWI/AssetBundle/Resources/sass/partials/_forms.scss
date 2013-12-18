@@ -1,0 +1,39 @@
+//
+// Tags
+// ----------------------------------------------------
+
+// Form Elements
+
+.form-control {
+    @include border-radius(3px);
+    @include box-sizing(border-box);
+    @include box-shadow(0 2px 0 $gray-light);
+
+    border: none;
+    display: block;
+    height: 34px;
+    line-height: $line-height-base;
+    margin-bottom: 8px;
+    padding: 9px 12px;
+    width: 100%;
+}
+
+.form-label {
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+
+// Form Styles
+
+.form-compact {
+    @include row(12);
+
+    margin: 0 auto;
+    padding: 40px 0;
+
+    > fieldset {
+        @include column(4);
+        @include push(4);
+    }
+}
