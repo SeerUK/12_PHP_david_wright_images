@@ -25,8 +25,14 @@
     {% if is_granted('ROLE_ADMIN') %}
         <div class="canvas gray-light">
             <div class="page-controls">
-                <div class="pull-right">
-                    <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-success">Create Gallery</a>
+                <div class="stats">
+                    Overall gallery views<br />
+                    <strong>1,728</strong>
+                </div>
+                <div class="actions">
+                    <div class="pull-right">
+                        <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-success">Create Gallery</a>
+                    </div>
                 </div>
             </div>
         </div>
