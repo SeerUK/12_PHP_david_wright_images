@@ -103,7 +103,7 @@ class PortfolioController extends Controller
     /**
      * Remove Gallery
      *
-     * @param  integer $id
+     * @param  Gallery $gallery
      * @return Symfony\Component\HttpFoundation\Response
      *
      * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
