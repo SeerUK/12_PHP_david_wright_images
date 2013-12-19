@@ -26,10 +26,24 @@ class GalleryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text')
-            ->add('subtitle', 'text')
-            ->add('description', 'textarea')
-            ->add('date', 'date')
+            ->add('title', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Title'
+                )
+            ))
+            ->add('subtitle', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Subtitle'
+                )
+            ))
+            ->add('description', 'textarea', array(
+                'attr' => array(
+                    'placeholder' => 'Description...'
+                )
+            ))
+            ->add('date', 'date', array(
+                'format' => 'dd MMMM yyyy',
+            ))
             ->add('submit', 'submit');
     }
 

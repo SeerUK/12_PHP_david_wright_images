@@ -12,4 +12,19 @@
     > .actions {
         @include column(6);
     }
+
+    > .stats {
+        > .stat {
+            display: inline-block;
+            margin: 0 6px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
 }

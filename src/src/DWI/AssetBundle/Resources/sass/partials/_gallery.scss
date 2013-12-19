@@ -54,6 +54,10 @@
 
         p {
             margin-bottom: ($line-height-computed * 1.1);
+
+            &:not(:first-child) {
+                text-indent: 40px;
+            }
         }
     }
 

@@ -1,0 +1,89 @@
+{% block form_widget_simple %}
+    {% spaceless %}
+        <div class="form-row">
+            {% set type = type|default('text') %}
+            <input class="form-control" type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    {% spaceless %}
+        {% if required and empty_value is none and not empty_value_in_choices %}
+            {% set required = false %}
+        {% endif %}
+        <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+            {% if empty_value is not none %}
+                <option value=""{% if required and value is empty %} selected="selected"{% endif %}>{{ empty_value|trans({}, translation_domain) }}</option>
+            {% endif %}
+            {% if preferred_choices|length > 0 %}
+                {% set options = preferred_choices %}
+                {{ block('choice_widget_options') }}
+                {% if choices|length > 0 and separator is not none %}
+                    <option disabled="disabled">{{ separator }}</option>
+                {% endif %}
+            {% endif %}
+            {% set options = choices %}
+            {{ block('choice_widget_options') }}
+        </select>
+    {% endspaceless %}
+{% endblock choice_widget_collapsed %}
+
+{% block date_widget %}
+    {% spaceless %}
+        {% if widget == 'single_text' %}
+            {{ block('form_widget_simple') }}
+        {% else %}
+            <div {{ block('widget_container_attributes') }}>
+                {{ date_pattern|replace({
+                    '{{ year }}':  form_widget(form.year, { 'attr': { 'class': 'form-control date-control' } }),
+                    '{{ month }}': form_widget(form.month, { 'attr': { 'class': 'form-control date-control' } }),
+                    '{{ day }}':   form_widget(form.day, { 'attr': { 'class': 'form-control date-control' } }),
+                })|raw }}
+            </div>
+        {% endif %}
+    {% endspaceless %}
+{% endblock date_widget %}
+
+{% block button_widget %}
+    {% spaceless %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <button class="{{ class|default('btn') }}" type="{{ type|default('button') }}" {{ block('button_attributes') }}>{{ label|trans({}, translation_domain) }}</button>
+    {% endspaceless %}
+{% endblock button_widget %}
+
+{% block submit_widget %}
+    {% spaceless %}
+        {% set class = 'btn btn-success' %}
+        {% set type = type|default('submit') %}
+        {{ block('button_widget') }}
+    {% endspaceless %}
+{% endblock submit_widget %}
+
+{% block form_start %}
+    {% spaceless %}
+        {% set method = method|upper %}
+        {% if method in ["GET", "POST"] %}
+            {% set form_method = method %}
+        {% else %}
+            {% set form_method = "POST" %}
+        {% endif %}
+        <form method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+        {% if form_method != method %}
+            <fieldset>
+                <input type="hidden" name="_method" value="{{ method }}" />
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_start %}
+
+{% block form_end %}
+    {% spaceless %}
+            {% if not render_rest is defined or render_rest %}
+                {{ form_rest(form) }}
+            {% endif %}
+            </fieldset>
+        </form>
+    {% endspaceless %}
+{% endblock form_end %}
