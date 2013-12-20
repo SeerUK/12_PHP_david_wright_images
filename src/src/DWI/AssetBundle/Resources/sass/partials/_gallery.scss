@@ -76,10 +76,14 @@
         }
     }
 
-    blockquote p {
-        font-size: inherit;
-        font-weight: inherit;
-        line-height: inherit;
+    blockquote {
+        font-style: italic;
+
+        p {
+            font-size: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+        }
     }
 
     p {
