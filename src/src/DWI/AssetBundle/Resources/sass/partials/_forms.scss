@@ -15,9 +15,10 @@
     @include box-sizing(border-box);
     @include box-shadow(0 2px 0 $gray-light);
 
-    background: white;
+    background: $white;
     border: none;
     display: block;
+    font-family: $font-family-sans-serif;
     height: 34px;
     line-height: $line-height-base;
     padding: 9px 12px;
@@ -48,4 +49,17 @@
         @include column(4);
         @include push(4);
     }
+}
+
+*::-webkit-input-placeholder {
+    color: $gray;
+}
+*:-moz-placeholder {
+    color: $gray;
+}
+*::-moz-placeholder {
+    color: $gray;
+}
+*:-ms-input-placeholder {
+    color: $gray;
 }

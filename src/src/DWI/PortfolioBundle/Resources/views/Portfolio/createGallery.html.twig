@@ -19,7 +19,13 @@
 
             {{ form_widget(form.title) }}
             {{ form_widget(form.subtitle) }}
-            {{ form_widget(form.description) }}
+
+            <div class="form-row">
+                {{ form_widget(form.description, { 'attr':
+                    { 'class': 'txt-medium-editable gallery-type' }
+                }) }}
+            </div>
+
             {{ form_widget(form.date) }}
 
             <div class="form-row">

@@ -1,0 +1,30 @@
+//
+// Medium-like Editor
+// -------------------------------------------------
+
+.medium-editable {
+    @include border-radius(3px);
+    @include box-sizing(border-box);
+    @include box-shadow(0 2px 0 $gray-light);
+
+    background: $white;
+    line-height: $line-height-base;
+    min-height: 200px;
+    max-height: 700px;
+    overflow:auto;
+    padding: 9px 12px;
+    resize: vertical;
+    width: 100%;
+
+    &:after {
+        color: $gray;
+        font-style: normal;
+        padding: 9px 12px;
+    }
+}
+
+.medium-editor-action {
+    font-family: $font-family-serif;
+    font-size: $font-size-base;
+    margin: 0;
+}

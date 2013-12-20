@@ -8,60 +8,94 @@
 
     margin: 0 auto;
     padding: 40px 0;
-
-    .gallery-images {
-        text-align: center;
-
-        img {
-            height: 500px;
-            margin-right: 50px;
-
-            &:last-child {
-                margin-right: 0;
-            }
-        }
-    }
-
-    .gallery-desc,
-    .gallery-details {
-        color: $gray-dark;
-        font-family: $font-family-serif;
-    }
-
-    .gallery-details {
-        @include column(3);
-
-        font-style: italic;
-
-        dl > dt {
-            color: $black;
-        }
-
-        dl > dd {
-            margin: 0 0 20px;
-
-            dl > dd:last-child {
-                margin: 0;
-            }
-        }
-    }
-
-    .gallery-desc {
-        @include column(9);
-
-        font-size: floor(($font-size-base * 1.1));
-        line-height: ($line-height-computed * 1.2);
-
-        p {
-            margin-bottom: ($line-height-computed * 1.1);
-
-            &:not(:first-child) {
-                text-indent: 40px;
-            }
-        }
-    }
-
 }
+
+.gallery-images {
+    text-align: center;
+
+    img {
+        height: 500px;
+        margin-right: 50px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.gallery-type,
+.gallery-type::after,
+.gallery-details {
+    color: $gray-dark;
+    font-family: $font-family-serif;
+}
+
+.gallery-details {
+    @include column(3);
+
+    font-style: italic;
+
+    dl > dt {
+        color: $black;
+    }
+
+    dl > dd {
+        margin: 0 0 20px;
+
+        dl > dd:last-child {
+            margin: 0;
+        }
+    }
+}
+
+.gallery-desc {
+    @include column(9);
+}
+
+.gallery-type {
+    font-size: floor(($font-size-base * 1.1));
+    font-weight: $font-weight-normal;
+    line-height: ($line-height-computed * 1.2);
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: $font-family-serif;
+        line-height: $line-height-base;
+        margin-bottom: ($line-height-computed * 1.1);
+
+        & + h1,
+        & + h2,
+        & + h3,
+        & + h4,
+        & + h5,
+        & + h6 {
+            margin-top: -($line-height-computed * 1.1);
+        }
+    }
+
+    blockquote p {
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+    }
+
+    p {
+        margin-bottom: ($line-height-computed * 1.1);
+    }
+
+    strong,
+    b {
+        font-weight: $font-weight-thick;
+    }
+
+    i, cite, em, var, dfn {
+        font-style: italic;
+    }
+}
+
 
 // Slider
 .swiper-container {
