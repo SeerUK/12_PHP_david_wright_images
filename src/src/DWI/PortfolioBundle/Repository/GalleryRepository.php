@@ -67,7 +67,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      */
     public function persist($entity)
     {
-        if ( ! $this->isGallery($entity)) {
+        if ( ! $this->isEntityType($entity)) {
             throw new \InvalidArgumentException(
                 __METHOD__ .
                 ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' .
@@ -96,7 +96,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      */
     public function remove($entity)
     {
-        if ( ! $this->isGallery($entity)) {
+        if ( ! $this->isEntityType($entity)) {
             throw new \InvalidArgumentException(
                 __METHOD__ .
                 ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' .
@@ -123,7 +123,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      * @param  mixed   $entity
      * @return boolean
      */
-    public function isGallery($entity)
+    public function isEntityType($entity)
     {
         return ($entity instanceof Gallery)
             ? true

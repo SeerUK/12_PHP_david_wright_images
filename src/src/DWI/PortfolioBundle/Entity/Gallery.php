@@ -59,6 +59,13 @@ class Gallery
     private $date;
 
     /**
+     * @var DWI\PortfolioBundle\Entity\GalleryView
+     *
+     * @ORM\OneToOne(targetEntity="DWI\PortfolioBundle\Entity\GalleryView", mappedBy="gallery")
+     */
+    private $views;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="lastModified", type="datetime", nullable=false)
@@ -83,7 +90,7 @@ class Gallery
      * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="DWI\PortfolioBundle\Entity\Tag", inversedBy="galleries")
-     * @ORM\JoinTable(name="GalleryTagMap",
+     * @ORM\JoinTable(name="GalleryTag",
      *   joinColumns={
      *     @ORM\JoinColumn(name="galleryId", referencedColumnName="id")
      *   },
@@ -193,6 +200,29 @@ class Gallery
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set views
+     *
+     * @param integer $views
+     * @return Gallery
+     */
+    public function setViews($views)
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    /**
+     * Get views
+     *
+     * @return integer
+     */
+    public function getViews()
+    {
+        return $this->views;
     }
 
     /**

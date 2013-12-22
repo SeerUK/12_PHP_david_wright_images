@@ -23,11 +23,42 @@ class PortfolioPresenter extends AbstractPresenter
     /**
      * Prepare view model
      *
-     * @return array
+     * @return ViewModel
      */
     public function prepareView()
     {
-        $model     = new ViewModel();
+        $model = new ViewModel();
+        $model
+            ->addChild($this->prepareControls(), 'controls')
+            ->addChild($this->prepareGalleries(), 'portfolio');
+
+        return $model;
+    }
+
+
+    /**
+     * Prepare portfolio controls view models
+     *
+     * @return ViewModel
+     */
+    private function prepareControls()
+    {
+        $controls = new ViewModel();
+
+        $controls
+            ->setVariable('views', $this->getVariable('views'));
+
+        return $controls;
+    }
+
+
+    /**
+     * Prepare gallery view models
+     *
+     * @return ViewModel
+     */
+    private function prepareGalleries()
+    {
         $portfolio = new ViewModel();
 
         foreach ($this->getVariable('galleries') as $gallery) {
@@ -48,7 +79,7 @@ class PortfolioPresenter extends AbstractPresenter
             $portfolio->addChild($gvm);
         }
 
-        return $model->addChild($portfolio, 'portfolio');
+        return $portfolio;
     }
 
 

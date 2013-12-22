@@ -29,9 +29,12 @@ class PortfolioController extends Controller
     public function portfolioAction($page)
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
+        $vr = $this->get('dwi_portfolio.gallery_view_gateway');
         $pp = $this->get('dwi_portfolio.portfolio_presenter');
 
-        $vm = $pp->setVariable('galleries', $gr->findByPage($page, 10))
+        $vm = $pp
+            ->setVariable('views', $vr->findTotalViews())
+            ->setVariable('galleries', $gr->findByPage($page, 10))
             ->prepareView();
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
@@ -94,7 +97,7 @@ class PortfolioController extends Controller
             )));
         }
 
-        return $this->render('DWIPortfolioBundle:Portfolio:createGallery.html.twig', array(
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:create-gallery.html.twig', array(
             'form' => $form->createView(),
         ));
     }

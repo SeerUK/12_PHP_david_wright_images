@@ -1,6 +1,9 @@
 parameters:
     dwi_portfolio.gallery_repository.class: DWI\PortfolioBundle\Entity\GalleryRepository
     dwi_portfolio.gallery_entity: "DWIPortfolioBundle:Gallery"
+    dwi_portfolio.gallery_view_repository.class: Doctrine\ORM\EntityRepository
+    dwi_portfolio.gallery_view_entity: "DWIPortfolioBundle:GalleryView"
+    dwi_portfolio.gallery_view_gateway.class: DWI\PortfolioBundle\Gateway\GalleryViewGateway
     dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\GalleryPresenter
     dwi_portfolio.portfolio_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioPresenter
     dwi_portfolio.create_gallery_form_factory.class: DWI\PortfolioBundle\Form\Factory\GalleryFormFactory
@@ -13,6 +16,18 @@ services:
         factory_method: getRepository
         arguments:
             em: %dwi_portfolio.gallery_entity%
+
+    dwi_portfolio.gallery_view_repository:
+        class: %dwi_portfolio.gallery_view_repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            em: %dwi_portfolio.gallery_view_entity%
+
+    dwi_portfolio.gallery_view_gateway:
+        class: %dwi_portfolio.gallery_view_gateway.class%
+        arguments:
+            conn: '@doctrine.dbal.default_connection'
 
     dwi_portfolio.portfolio_presenter:
         class: %dwi_portfolio.portfolio_presenter.class%

@@ -8,14 +8,24 @@ USE DWI;
 
 CREATE TABLE IF NOT EXISTS Gallery (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
-    title varchar(255) NOT NULL,
-    subtitle varchar(255) NOT NULL,
+    title varchar(250) NOT NULL,
+    subtitle varchar(250) NOT NULL,
     description varchar(5000) NOT NULL,
     date datetime NOT NULL,
     lastModified timestamp,
 
     PRIMARY KEY (id)
 ) COMMENT="Contains Gallery";
+
+CREATE TABLE IF NOT EXISTS GalleryView (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    galleryId int UNSIGNED NOT NULL,
+    views int UNSIGNED NOT NULL,
+    lastModified timestamp,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (galleryId) REFERENCES Gallery(id) ON DELETE CASCADE ON UPDATE CASCADE
+) COMMENT="Contains gallery views";
 
 CREATE TABLE IF NOT EXISTS Tag (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -28,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Tag (
     UNIQUE KEY (name)
 ) COMMENT="Contains tags for galleries etc";
 
-CREATE TABLE IF NOT EXISTS GalleryTagMap (
+CREATE TABLE IF NOT EXISTS GalleryTag (
     galleryId int UNSIGNED NOT NULL,
     tagId int UNSIGNED NOT NULL,
     lastModified timestamp,
