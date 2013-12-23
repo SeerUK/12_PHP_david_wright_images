@@ -10,38 +10,13 @@
 
 namespace DWI\PortfolioBundle\Gateway;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\EntityManager;
+use DWI\CoreBundle\Gateway\AbstractGateway;
 
 /**
  * Gallery View Gateway
  */
-class GalleryViewGateway
+class GalleryViewGateway extends AbstractGateway
 {
-    /**
-     * @var CacheProvider
-     */
-    private $cache;
-
-
-    /**
-     * @var Connection
-     */
-    private $conn;
-
-
-    /**
-     * Constructor
-     *
-     * @param Connection $conn
-     */
-    public function __construct(Connection $conn, EntityManager $em)
-    {
-        $this->conn  = $conn;
-        $this->cache = $em->getConfiguration()->getResultCacheImpl();
-    }
-
-
     /**
      * Find gallery views by id
      *

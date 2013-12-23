@@ -1,7 +1,14 @@
 parameters:
-#    dwi_core.example.class: DWI\CoreBundle\Example
+    dwi_core.gateway_cache_factory.class: DWI\CoreBundle\Gateway\Cache\GatewayCacheFactory
+    dwi_core.gateway_result_cache.class: Doctrine\Common\Cache\CacheProvider
 
 services:
-#    dwi_core.example:
-#        class: %dwi_core.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    dwi_core.gateway_cache_factory:
+        class: %dwi_core.gateway_cache_factory.class%
+        arguments:
+            em: '@doctrine.orm.entity_manager'
+
+    dwi_core.gateway_result_cache:
+        class: %dwi_core.gateway_result_cache.class%
+        factory_service: dwi_core.gateway_cache_factory
+        factory_method: getResultCache
