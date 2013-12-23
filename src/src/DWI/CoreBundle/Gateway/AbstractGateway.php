@@ -34,7 +34,7 @@ abstract class AbstractGateway
      * Constructor
      *
      * @param Connection    $conn
-     * @param CacheProvider $em
+     * @param CacheProvider $cache
      */
     public function __construct(Connection $conn, CacheProvider $cache)
     {
