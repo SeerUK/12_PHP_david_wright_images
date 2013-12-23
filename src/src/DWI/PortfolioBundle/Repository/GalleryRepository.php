@@ -28,7 +28,22 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      */
     public function findById($id)
     {
-        $dql = 'SELECT g, gci, gi FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.coverImage AS gci LEFT JOIN g.images AS gi WHERE g.id = :id';
+        $dql = '
+            SELECT
+                g,
+                gci,
+                gi,
+                gv
+            FROM
+                DWIPortfolioBundle:Gallery AS g
+            LEFT JOIN
+                g.coverImage AS gci
+            LEFT JOIN
+                g.images AS gi
+            LEFT JOIN
+                g.views AS gv
+            WHERE
+                g.id = :id';
 
         $query = $this->getEntityManager()->createQuery($dql)
             ->setParameter('id', $id);
@@ -47,10 +62,26 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      */
     public function findByPage($page, $limit)
     {
-        $dql    = 'SELECT g, gci, gcii, t FROM DWIPortfolioBundle:Gallery AS g LEFT JOIN g.coverImage AS gci LEFT JOIN gci.image AS gcii LEFT JOIN g.tags AS t';
-        $offset = $this->getPageFirstResult($page, $limit);
+        $dql    = '
+            SELECT
+                g,
+                gci,
+                gcii,
+                t,
+                gv
+            FROM
+                DWIPortfolioBundle:Gallery AS g
+            LEFT JOIN
+                g.coverImage AS gci
+            LEFT JOIN
+                gci.image AS gcii
+            LEFT JOIN
+                g.tags AS t
+            LEFT JOIN
+                g.views AS gv';
 
-        $query = $this->getEntityManager()->createQuery($dql)
+        $offset = $this->getPageFirstResult($page, $limit);
+        $query  = $this->getEntityManager()->createQuery($dql)
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 

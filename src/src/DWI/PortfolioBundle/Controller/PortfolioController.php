@@ -29,12 +29,12 @@ class PortfolioController extends Controller
     public function portfolioAction($page)
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
-        $vr = $this->get('dwi_portfolio.gallery_view_gateway');
+        $vg = $this->get('dwi_portfolio.gallery_view_gateway');
         $pp = $this->get('dwi_portfolio.portfolio_presenter');
 
         $vm = $pp
-            ->setVariable('views', $vr->findTotalViews())
             ->setVariable('galleries', $gr->findByPage($page, 10))
+            ->setVariable('views', $vg->findTotal())
             ->prepareView();
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
@@ -54,10 +54,13 @@ class PortfolioController extends Controller
     public function galleryAction($id)
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
+        $vg = $this->get('dwi_portfolio.gallery_view_gateway');
         $gp = $this->get('dwi_portfolio.gallery_presenter');
 
         try {
-            $vm = $gp->setVariable('gallery', $gr->findById($id))
+            $vm = $gp
+                ->setVariable('gallery', $gr->findById($id))
+                ->setVariable('views', $vg->findByGalleryId($id))
                 ->prepareView();
         } catch (NoResultException $e) {
             throw $this->createNotFoundException('That gallery doesn\'t exist!');
@@ -97,7 +100,7 @@ class PortfolioController extends Controller
             )));
         }
 
-        return $this->render('DWIPortfolioBundle:Portfolio/Admin:create-gallery.html.twig', array(
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-create.html.twig', array(
             'form' => $form->createView(),
         ));
     }

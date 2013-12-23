@@ -12,6 +12,10 @@
         </div>
     </div>
 
+    {% include 'DWIPortfolioBundle:Portfolio/Admin/partials:gallery-controls.html.twig' with {
+        'model': model.getChild('controls')
+    } %}
+
     {% if gallery.images is not empty %}
         <div class="canvas gray-lighter">
             <div class="swiper-container">

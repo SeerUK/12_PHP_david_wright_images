@@ -11,12 +11,19 @@
 namespace DWI\PortfolioBundle\Gateway;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Gallery View Gateway
  */
 class GalleryViewGateway
 {
+    /**
+     * @var CacheProvider
+     */
+    private $cache;
+
+
     /**
      * @var Connection
      */
@@ -28,9 +35,45 @@ class GalleryViewGateway
      *
      * @param Connection $conn
      */
-    public function __construct(Connection $conn)
+    public function __construct(Connection $conn, EntityManager $em)
     {
-        $this->conn = $conn;
+        $this->conn  = $conn;
+        $this->cache = $em->getConfiguration()->getResultCacheImpl();
+    }
+
+
+    /**
+     * Find gallery views by id
+     *
+     * @param  integer $id
+     * @return integer
+     */
+    public function findByGalleryId($id)
+    {
+        $ck = __CLASS__ . ':' . __METHOD__ . ':' . $id;
+
+        // Fetch cached result, or recache
+        if ( ! (bool) $result = $this->cache->fetch($ck)) {
+            $sql = '
+                SELECT
+                    COALESCE(gv.views, 0) AS views
+                FROM
+                    GalleryView AS gv
+                WHERE
+                    gv.galleryId = :id';
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue('id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetch();
+
+            $this->cache->save($ck, $result);
+        }
+
+        return $result['views']
+            ? $result['views']
+            : 0;
     }
 
 
@@ -39,14 +82,28 @@ class GalleryViewGateway
      *
      * @return integer
      */
-    public function findTotalViews()
+    public function findTotal()
     {
-        $sql = 'SELECT SUM(VIEWS) AS views FROM GalleryView';
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
+        $ck = __CLASS__ . ':' . __METHOD__;
 
-        $result = $stmt->fetch();
+        // Fetch cached result, or recache
+        if ( ! (bool) $result = $this->cache->fetch($ck)) {
+            $sql = '
+                SELECT
+                    COALESCE(SUM(views), 0) AS views
+                FROM
+                    GalleryView';
 
-        return $result['views'];
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            $result = $stmt->fetch();
+
+            $this->cache->save($ck, $result);
+        }
+
+        return $result['views']
+            ? $result['views']
+            : 0;
     }
 }

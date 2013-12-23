@@ -28,6 +28,7 @@ services:
         class: %dwi_portfolio.gallery_view_gateway.class%
         arguments:
             conn: '@doctrine.dbal.default_connection'
+            em: '@doctrine.orm.entity_manager'
 
     dwi_portfolio.portfolio_presenter:
         class: %dwi_portfolio.portfolio_presenter.class%

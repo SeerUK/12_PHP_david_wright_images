@@ -1,0 +1,23 @@
+{% if is_granted('ROLE_ADMIN') %}
+    <div class="canvas gray-light">
+        <div class="page-controls">
+            <div class="stats">
+                <div class="stat">
+                    Gallery views<br />
+                    <strong>{{ model.views|number_format }}</strong>
+                </div>
+                <div class="stat">
+                    Status<br />
+                    <strong>Unpublished {# {{ model.views|number_format }} #}</strong>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="pull-right">
+                    <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-success">Publish</a>
+                    <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
