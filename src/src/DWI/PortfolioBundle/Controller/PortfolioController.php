@@ -138,13 +138,19 @@ class PortfolioController extends Controller
 
         $request = $this->get('request');
 
+        // If we've viewed and posted our response
         if ('POST' === $request->getMethod()) {
             if ($request->request->get('doDelete')) {
                 $this->get('dwi_portfolio.gallery_repository')
                     ->remove($gallery);
+
+                return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));
             }
 
-            return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));
+            // Redirect user to the gallery
+            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+                'id' => $gallery->getId(),
+            )));
         }
 
         return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-delete.html.twig', array(
