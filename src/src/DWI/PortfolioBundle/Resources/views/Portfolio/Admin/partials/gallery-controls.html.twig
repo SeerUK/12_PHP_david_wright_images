@@ -8,14 +8,18 @@
                 </div>
                 <div class="stat">
                     Status<br />
-                    <strong>Unpublished {# {{ model.views|number_format }} #}</strong>
+                    {% if model.isActive %}
+                        <strong>Published</strong>
+                    {% else %}
+                        <strong>Unpublished</strong>
+                    {% endif %}
                 </div>
             </div>
             <div class="actions">
                 <div class="pull-right">
                     <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-success">Publish</a>
                     <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-warning">Edit</a>
-                    <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-danger">Delete</a>
+                    <a href="{{ url('dwi_portfolio_remove_gallery', { id: model.galleryId }) }}" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>

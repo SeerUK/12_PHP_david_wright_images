@@ -62,7 +62,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      */
     public function findByPage($page, $limit)
     {
-        $dql    = '
+        $dql = '
             SELECT
                 g,
                 gci,

@@ -18,6 +18,11 @@ use DWI\CoreBundle\View\Presenter\AbstractPresenter;
  */
 class GalleryPresenter extends AbstractPresenter
 {
+    /**
+     * Prepare view
+     *
+     * @return ViewModel
+     */
     public function prepareView()
     {
         $model = new ViewModel();
@@ -30,13 +35,18 @@ class GalleryPresenter extends AbstractPresenter
 
     /**
      * Prepare controls view model
+     *
+     * @return ViewModel
      */
     public function prepareControls()
     {
-        $cvm = new ViewModel();
+        $cvm     = new ViewModel();
+        $gallery = $this->getVariable('gallery');
 
         return $cvm
-            ->setVariable('views', $this->getVariable('views'));
+            ->setVariable('galleryId', $gallery->getId())
+            ->setVariable('views', $this->getVariable('views'))
+            ->setVariable('isActive', $gallery->getIsActive());
     }
 
 

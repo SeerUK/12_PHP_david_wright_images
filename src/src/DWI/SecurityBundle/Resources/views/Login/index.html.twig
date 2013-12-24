@@ -10,20 +10,27 @@
         </div>
     </div>
 
-    {% if error %}
-
-        <div class="alert alert-error">Sign in error - {{ error.message }}</div>
-
-    {% endif %}
-
     <div class="canvas gray-lighter">
         <form action="{{ path('dwi_security_account_login_check') }}" class="form-compact" method="POST">
-            <fieldset>
+            {% if error %}
+                <div class="form-row">
+                    <div class="alert alert-error">Sign in error - {{ error.message }}</div>
+                </div>
+            {% endif %}
+
+            <div class="form-row">
                 <input type="text" class="form-control" name="_username" value="{{ last_username }}" placeholder="Username" />
+            </div>
+
+            <div class="form-row">
                 <input type="password" class="form-control" name="_password" placeholder="Password" />
-                <input type="hidden" name="_target_path" value="/portfolio" />
+            </div>
+
+            <input type="hidden" name="_target_path" value="/portfolio" />
+
+            <div class="form-row">
                 <input type="submit" class="btn btn-block btn-success" value="Sign In" />
-            </fieldset>
+            </div>
         </form>
     </div>
 {% endblock %}

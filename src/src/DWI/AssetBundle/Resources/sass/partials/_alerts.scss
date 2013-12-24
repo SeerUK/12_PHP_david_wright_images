@@ -1,0 +1,20 @@
+//
+// Gallery
+// -------------------------------------------------
+
+.alert {
+    @include box-sizing(border-box);
+
+    color: $white;
+    font-size: floor(($font-size-base * 0.9));
+    font-weight: $font-weight-bold;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+
+    &.alert-error {
+        background: $red;
+        color: $white;
+    }
+}

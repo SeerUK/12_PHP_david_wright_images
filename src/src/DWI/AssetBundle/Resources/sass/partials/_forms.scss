@@ -4,12 +4,6 @@
 
 // Form Elements
 
-.form-row {
-    @include column(12);
-
-    margin-bottom: 8px;
-}
-
 .form-control {
     @include border-radius(3px);
     @include box-sizing(border-box);
@@ -39,16 +33,38 @@
 
 // Form Styles
 
+.form {
+    .form-row {
+        @include column(12);
+    }
+}
+
 .form-compact {
-    @include row(12);
-
-    margin: 0 auto;
-    padding: 40px 0;
-
-    > fieldset {
+    .form-row {
         @include column(4);
         @include push(4);
     }
+}
+
+.form,
+.form-compact {
+    @include row(12);
+
+    margin: 0 auto 20px;
+
+    .form-row {
+        margin-bottom: 8px;
+    }
+}
+
+.form:first-child,
+.form-compact:first-child {
+    padding-top: 40px;
+}
+
+.form:last-child,
+.form-compact:last-child {
+    padding-bottom: 40px;
 }
 
 *::-webkit-input-placeholder {

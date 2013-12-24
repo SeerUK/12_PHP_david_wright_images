@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS Gallery (
     subtitle varchar(250) NOT NULL,
     description varchar(5000) NOT NULL,
     date datetime NOT NULL,
+    isActive tinyint(1) NOT NULL,
     lastModified timestamp,
 
     PRIMARY KEY (id)

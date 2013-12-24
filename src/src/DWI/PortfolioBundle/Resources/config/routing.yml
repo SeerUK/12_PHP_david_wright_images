@@ -18,8 +18,8 @@ dwi_portfolio_create_gallery:
     methods: [GET,POST]
 
 dwi_portfolio_remove_gallery:
-    pattern: /portfolio/gallery/{id}/remove/confirm
-    defaults: { _controller: DWIPortfolioBundle:Portfolio:removeGallery }
-    methods: [GET]
+    pattern: /portfolio/gallery/{id}/remove
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:deleteGallery }
+    methods: [GET,POST]
     requirements:
         id: \d+

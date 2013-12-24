@@ -119,14 +119,14 @@ class PortfolioController extends Controller
 
 
     /**
-     * Remove Gallery
+     * Delete Gallery
      *
      * @param  Gallery $gallery
      * @return Symfony\Component\HttpFoundation\Response
      *
      * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
-    public function removeGalleryAction(Gallery $gallery)
+    public function deleteGalleryAction(Gallery $gallery)
     {
         if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
@@ -136,9 +136,19 @@ class PortfolioController extends Controller
             throw $this->createNotFoundException('That gallery doesn\'t exist!');
         }
 
-        $this->get('dwi_portfolio.gallery_repository')
-            ->remove($gallery);
+        $request = $this->get('request');
 
-        return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));
+        if ('POST' === $request->getMethod()) {
+            if ($request->request->get('doDelete')) {
+                $this->get('dwi_portfolio.gallery_repository')
+                    ->remove($gallery);
+            }
+
+            return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));
+        }
+
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-delete.html.twig', array(
+            'gallery' => $gallery,
+        ));
     }
 }

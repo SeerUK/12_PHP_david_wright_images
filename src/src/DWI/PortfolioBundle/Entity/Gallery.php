@@ -59,6 +59,13 @@ class Gallery
     private $date;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isActive", type="boolean", nullable=false)
+     */
+    private $isActive;
+
+    /**
      * @var DWI\PortfolioBundle\Entity\GalleryView
      *
      * @ORM\OneToOne(targetEntity="DWI\PortfolioBundle\Entity\GalleryView", mappedBy="gallery")
@@ -200,6 +207,29 @@ class Gallery
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param  boolean $isActive
+     * @return Gallery
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 
     /**

@@ -30,7 +30,7 @@
         <div class="thumbs">
             {% if portfolio.hasChildren %}
                 {% for gallery in portfolio.children %}
-                    <div class="thumb" title="{{ gallery.title }}">
+                    <div class="thumb {{ not gallery.isActive ? 'inactive' }}" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
                             <a class="cover" href="{{ url('dwi_portfolio_gallery', {'id': gallery.id}) }}"></a>
                             {% if is_granted('ROLE_ADMIN') %}
@@ -47,18 +47,6 @@
                     </div>
                 {% endfor %}
             {% endif %}
-
-            {% for i in 0..4 %}
-                <div class="thumb">
-                    <div class="thumb-overlay">
-                        <a class="cover" href="#play"></a>
-                        <div class="controls">
-                            <a class="control" href="#delete"><i class="flaticon32 flaticon32-x-2"></i></a>
-                        </div>
-                    </div>
-                    <img src="http://placehold.it/300x300" alt="" />
-                </div>
-            {% endfor %}
         </div>
     </div>
 {% endblock %}

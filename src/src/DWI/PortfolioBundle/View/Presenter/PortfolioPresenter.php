@@ -74,7 +74,8 @@ class PortfolioPresenter extends AbstractPresenter
             $gvm = new ViewModel();
             $gvm->setVariable('id', $gallery->getId())
                 ->setVariable('title', $gallery->getTitle())
-                ->setVariable('coverImagePath', $this->getGalleryCoverImagePath($gallery));
+                ->setVariable('coverImagePath', $this->getGalleryCoverImagePath($gallery))
+                ->setVariable('isActive', $gallery->getIsActive());
 
             $portfolio->addChild($gvm);
         }
