@@ -8,7 +8,7 @@
  * @package DWI
  */
 
-namespace DWI\CoreBundle\Gateway\Cache;
+namespace DWI\CoreBundle\Cache;
 
 use Doctrine\Common\Cache\CacheProvider;
 use Doctrine\ORM\EntityManager;
@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityManager;
 /**
  * Gallery View Gateway
  */
-class GatewayCacheFactory
+class CacheFactory
 {
     /**
      * @var EntityManager

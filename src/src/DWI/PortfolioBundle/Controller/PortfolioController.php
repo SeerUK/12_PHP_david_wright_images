@@ -28,17 +28,20 @@ class PortfolioController extends Controller
      */
     public function portfolioAction($page)
     {
+        $sc = $this->get('security.context');
         $gr = $this->get('dwi_portfolio.gallery_repository');
-        $vg = $this->get('dwi_portfolio.gallery_view_gateway');
         $pp = $this->get('dwi_portfolio.portfolio_presenter');
 
-        $vm = $pp
-            ->setVariable('galleries', $gr->findByPage($page, 10))
-            ->setVariable('views', $vg->findTotal())
-            ->prepareView();
+        // Setup view model
+        $pp->setVariable('galleries', $gr->findByPage($page, 10));
+
+        if ($sc->isGranted('ROLE_ADMIN')) {
+            $vg = $this->get('dwi_portfolio.gallery_view_gateway');
+            $pp->setVariable('views', $vg->findTotal());
+        }
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
-            'model' => $vm,
+            'model' => $pp->prepareView(),
         ));
     }
 
@@ -53,21 +56,30 @@ class PortfolioController extends Controller
      */
     public function galleryAction($id)
     {
+        $sc = $this->get('security.context');
         $gr = $this->get('dwi_portfolio.gallery_repository');
         $vg = $this->get('dwi_portfolio.gallery_view_gateway');
         $gp = $this->get('dwi_portfolio.gallery_presenter');
 
+        // Try fetch gallery
         try {
-            $vm = $gp
-                ->setVariable('gallery', $gr->findById($id))
-                ->setVariable('views', $vg->findByGalleryId($id))
-                ->prepareView();
+            $gallery = $gr->findById($id);
         } catch (NoResultException $e) {
             throw $this->createNotFoundException('That gallery doesn\'t exist!');
         }
 
+        // Record view
+        $vg->recordByGalleryId($id);
+
+        // Setup view model
+        $gp->setVariable('gallery', $gallery);
+
+        if ($sc->isGranted('ROLE_ADMIN')) {
+            $gp->setVariable('views', $vg->findByGalleryId($id));
+        }
+
         return $this->render('DWIPortfolioBundle:Portfolio:gallery.html.twig', array(
-            'model' => $vm,
+            'model' => $gp->prepareView(),
         ));
     }
 

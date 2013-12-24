@@ -25,7 +25,15 @@ class GalleryViewGateway extends AbstractGateway
      */
     public function findByGalleryId($id)
     {
-        $ck = __CLASS__ . ':' . __METHOD__ . ':' . $id;
+        if ( ! filter_var($id, FILTER_VALIDATE_INT)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' expected an integer. Received ' .
+                gettype($id)
+            );
+        }
+
+        $ck = __METHOD__ . ':' . $id;
 
         // Fetch cached result, or recache
         if ( ! (bool) $result = $this->cache->fetch($ck)) {
@@ -59,7 +67,7 @@ class GalleryViewGateway extends AbstractGateway
      */
     public function findTotal()
     {
-        $ck = __CLASS__ . ':' . __METHOD__;
+        $ck = __METHOD__;
 
         // Fetch cached result, or recache
         if ( ! (bool) $result = $this->cache->fetch($ck)) {
@@ -80,5 +88,66 @@ class GalleryViewGateway extends AbstractGateway
         return $result['views']
             ? $result['views']
             : 0;
+    }
+
+
+    /**
+     * Record view by gallery id
+     *
+     * @param  integer $id
+     */
+    public function recordByGalleryId($id)
+    {
+        if ( ! filter_var($id, FILTER_VALIDATE_INT)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' expected an integer. Received ' .
+                gettype($id)
+            );
+        }
+
+        $ck = __METHOD__ . ':' . $id;
+
+        $sql = '
+            INSERT INTO
+                GalleryView (galleryId, views)
+            VALUES
+                (:id, 1)
+            ON DUPLICATE KEY UPDATE
+                views = views + 1';
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue('id', $id);
+        $stmt->execute();
+
+        $this->destroyCacheByGalleryId($id)
+            ->destroyTotalCache();
+    }
+
+
+    /**
+     * Destroys cached views of a gallery
+     *
+     * @param  integer $id
+     * @return GalleryViewGateway
+     */
+    public function destroyCacheByGalleryId($id)
+    {
+        $this->cache->delete(get_called_class() . '::findByGalleryId:' . $id);
+
+        return $this;
+    }
+
+
+    /**
+     * Destroy total gallery view cache
+     *
+     * @return GalleryViewGateway
+     */
+    public function destroyTotalCache()
+    {
+        $this->cache->delete(get_called_class() . '::findTotal');
+
+        return $this;
     }
 }

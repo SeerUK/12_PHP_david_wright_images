@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS GalleryView (
     lastModified timestamp,
 
     PRIMARY KEY (id),
+    UNIQUE KEY (galleryId),
     FOREIGN KEY (galleryId) REFERENCES Gallery(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="Contains gallery views";
 
