@@ -23,7 +23,7 @@
                         <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.galleryId }) }}" class="btn btn-success">Publish</a>
                     {% endif %}
 
-                    <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ url('dwi_portfolio_edit_gallery', { id: model.galleryId }) }}" class="btn btn-warning">Edit</a>
                     <a href="{{ url('dwi_portfolio_remove_gallery', { id: model.galleryId }) }}" class="btn btn-danger">Delete</a>
                 </div>
             </div>

@@ -21,5 +21,6 @@ interface PersistentEntityRepository
 {
     public function persist($entity);
     public function remove($entity);
+    public function update($entity);
     public function isEntityType($entity);
 }

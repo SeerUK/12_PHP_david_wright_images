@@ -120,6 +120,34 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
 
 
     /**
+     * Update Gallery
+     *
+     * @param  Gallery $entity
+     * @return GalleryRepository
+     */
+    public function update($entity)
+    {
+        if ( ! $this->isEntityType($entity)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' expected an instance of DWI\PortfolioBundle\Entity\Gallery. Received ' .
+                gettype($entity)
+            );
+        }
+
+        $em = $this->getEntityManager();
+        $em->flush();
+
+        // Clear query cache so that subsequent requests for Gallery objects
+        // don't return ghosts
+        $cd = $em->getConfiguration()->getResultCacheImpl();
+        $cd->deleteAll();
+
+        return $this;
+    }
+
+
+    /**
      * Remove Gallery
      *
      * @param  Gallery $entity

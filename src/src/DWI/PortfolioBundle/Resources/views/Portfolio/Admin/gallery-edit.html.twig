@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% form_theme form 'DWICoreBundle:Form:fields.html.twig' %}
+
+{% block title %}Create Gallery{% endblock %}
+
+{% block body %}
+    <div class="canvas">
+        <div class="jumbotron">
+            Edit Gallery<br />
+            <small>A new place to store images</small>
+        </div>
+    </div>
+
+    <div class="canvas gray-lighter">
+        {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
+            {{ form_row (form._token) }}
+            {{ form_errors(form) }}
+
+            {{ form_widget(form.title) }}
+            {{ form_widget(form.subtitle) }}
+
+            <div class="form-row">
+                {{ form_widget(form.description, { 'attr':
+                    { 'class': 'txt-medium-editable gallery-type' }
+                }) }}
+            </div>
+
+            {{ form_widget(form.date) }}
+
+            <div class="form-row">
+                <div class="pull-right">
+                    {{ form_widget(form.submit) }}
+                </div>
+            </div>
+        {{ form_end(form, { 'render_rest': false }) }}
+    </div>
+{% endblock %}

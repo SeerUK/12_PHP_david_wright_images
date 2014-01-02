@@ -129,6 +129,49 @@ class PortfolioController extends Controller
      * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
+    public function editGalleryAction(Gallery $gallery)
+    {
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        if ( ! $gallery) {
+            throw $this->createNotFoundException('That gallery doesn\'t exist!');
+        }
+
+        $request = $this->get('request');
+        $factory = $this->get('dwi_portfolio.create_gallery_form_factory');
+        $form    = $factory
+            ->setGallery($gallery)
+            ->prepareForm()
+            ->handleRequest($request);
+
+        if ('POST' === $request->getMethod() && $form->isValid()) {
+            $gallery = $form->getData();
+
+            $this->get('dwi_portfolio.gallery_repository')
+                ->update($gallery);
+
+            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+                'id' => $gallery->getId(),
+            )));
+        }
+
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-edit.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+
+    /**
+     * Delete Gallery
+     *
+     * @param  Gallery $gallery
+     * @return Symfony\Component\HttpFoundation\Response
+     *
+     * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
     public function deleteGalleryAction(Gallery $gallery)
     {
         if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {

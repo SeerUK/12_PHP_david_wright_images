@@ -22,6 +22,12 @@ use DWI\PortfolioBundle\Form\Type\GalleryType;
 class GalleryFormFactory extends AbstractFormFactory
 {
     /**
+     * @var Gallery
+     */
+    private $gallery;
+
+
+    /**
      * @var UrlGeneratorInterface
      */
     private $generator;
@@ -37,6 +43,9 @@ class GalleryFormFactory extends AbstractFormFactory
     {
         parent::__construct($ff);
 
+        $this->gallery = new Gallery();
+        $this->gallery->setDate(new \DateTime());
+
         $this->generator = $generator;
     }
 
@@ -48,13 +57,22 @@ class GalleryFormFactory extends AbstractFormFactory
      */
     public function prepareForm()
     {
-        $gallery = new Gallery();
-        $gallery->setDate(new \DateTime());
-
-        $form = $this->ff->create(new GalleryType(), $gallery, array(
-            'action' => $this->generator->generate('dwi_portfolio_create_gallery'),
-        ));
+        $form = $this->ff->create(new GalleryType(), $this->gallery);
 
         return $form;
+    }
+
+
+    /**
+     * Set gallery
+     *
+     * @param  Gallery $gallery
+     * @return GalleryFormFactory
+     */
+    public function setGallery(Gallery $gallery)
+    {
+        $this->gallery = $gallery;
+
+        return $this;
     }
 }

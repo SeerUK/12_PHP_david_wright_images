@@ -17,13 +17,19 @@ dwi_portfolio_create_gallery:
     defaults: { _controller: DWIPortfolioBundle:Portfolio:createGallery }
     methods: [GET,POST]
 
+dwi_portfolio_edit_gallery:
+    pattern: /portfolio/gallery/{id}/edit
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:editGallery }
+    methods: [GET,POST]
+    requirements:
+        id: \d+
+
 dwi_portfolio_remove_gallery:
     pattern: /portfolio/gallery/{id}/remove
     defaults: { _controller: DWIPortfolioBundle:Portfolio:deleteGallery }
     methods: [GET,POST]
     requirements:
         id: \d+
-
 
 dwi_portfolio_publish_gallery:
     pattern: /portfolio/gallery/{id}/publish
