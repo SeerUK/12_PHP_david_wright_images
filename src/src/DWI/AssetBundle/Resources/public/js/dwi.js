@@ -8,7 +8,7 @@ $(function() {
             'secondHeader': 'h3'
         }
 
-        $('<div>' + $this.html() + '</div>')
+        $('<div>' + $this.text() + '</div>')
             .attr('class', $this.attr('class'))
             .addClass('medium-editable')
             .removeClass('txt-medium-editable')
