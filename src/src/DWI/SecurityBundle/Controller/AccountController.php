@@ -31,9 +31,10 @@ class AccountController extends Controller
         }
 
         return $this->render('DWISecurityBundle:Login:index.html.twig', array(
-            'pageTitle'     => 'Login',
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'pageTitle'     => 'Login',
+            'referer'       => $request->headers->get('referer'),
         ));
     }
 }
