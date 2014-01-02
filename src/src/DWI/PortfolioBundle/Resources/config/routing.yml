@@ -23,3 +23,11 @@ dwi_portfolio_remove_gallery:
     methods: [GET,POST]
     requirements:
         id: \d+
+
+
+dwi_portfolio_publish_gallery:
+    pattern: /portfolio/gallery/{id}/publish
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:publishGallery }
+    methods: [GET,POST]
+    requirements:
+        id: \d+
