@@ -1,14 +1,17 @@
+{% set form = model.form %}
+{% set gallery = model.getChild('gallery') %}
+
 {% extends '::base.html.twig' %}
 
 {% form_theme form 'DWICoreBundle:Form:fields.html.twig' %}
 
-{% block title %}Create Gallery{% endblock %}
+{% block title %}Upload Images{% endblock %}
 
 {% block body %}
     <div class="canvas">
         <div class="jumbotron">
-            Create Gallery<br />
-            <small>A new place to store images</small>
+            Upload Images<br />
+            <small>Into gallery "{{ gallery.title }}"</small>
         </div>
     </div>
 
@@ -17,21 +20,12 @@
             {{ form_row (form._token) }}
             {{ form_errors(form) }}
 
-            {{ form_widget(form.title) }}
-            {{ form_widget(form.subtitle) }}
-
-            <div class="form-row">
-                {{ form_widget(form.description, { 'attr':
-                    { 'class': 'txt-medium-editable gallery-type' }
-                }) }}
-            </div>
-
-            {{ form_widget(form.date) }}
+            {{ form_widget(form.file) }}
 
             <div class="form-row">
                 <div class="pull-right">
                     {{ form_widget(form.submit) }}
-                    <a href="{{ url('dwi_portfolio_homepage') }}" class="btn btn-white">Cancel</a>
+                    <a href="{{ url('dwi_portfolio_gallery', { id: gallery.id }) }}" class="btn btn-white">Cancel</a>
                 </div>
             </div>
         {{ form_end(form, { 'render_rest': false }) }}

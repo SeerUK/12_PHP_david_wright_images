@@ -1,13 +1,18 @@
 parameters:
-    dwi_portfolio.gallery_repository.class: DWI\PortfolioBundle\Entity\GalleryRepository
+    dwi_portfolio.gallery_repository.class: Doctrine\ORM\EntityRepository
     dwi_portfolio.gallery_entity: "DWIPortfolioBundle:Gallery"
     dwi_portfolio.gallery_view_repository.class: Doctrine\ORM\EntityRepository
     dwi_portfolio.gallery_view_entity: "DWIPortfolioBundle:GalleryView"
+    dwi_portfolio.image_repository.class: Doctrine\ORM\EntityRepository
+    dwi_portfolio.image_entity: "DWIPortfolioBundle:Image"
     dwi_portfolio.gallery_view_gateway.class: DWI\PortfolioBundle\Gateway\GalleryViewGateway
-    dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\GalleryPresenter
-    dwi_portfolio.portfolio_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioPresenter
     dwi_portfolio.create_gallery_form_factory.class: DWI\PortfolioBundle\Form\Factory\GalleryFormFactory
     dwi_portfolio.create_gallery_form.class: Symfony\Component\Form\Form
+    dwi_portfolio.upload_image_form_factory.class: DWI\PortfolioBundle\Form\Factory\ImageFormFactory
+    dwi_portfolio.upload_image_form.class: Symfony\Component\Form\Form
+    dwi_portfolio.portfolio_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioPresenter
+    dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\GalleryPresenter
+    dwi_portfolio.upload_image_presenter.class: DWI\PortfolioBundle\View\Presenter\UploadImagePresenter
 
 services:
     dwi_portfolio.gallery_repository:
@@ -24,17 +29,18 @@ services:
         arguments:
             em: %dwi_portfolio.gallery_view_entity%
 
+    dwi_portfolio.image_repository:
+        class: %dwi_portfolio.image_repository.class%
+        factory_service: doctrine.orm.entity_manager
+        factory_method: getRepository
+        arguments:
+            em: %dwi_portfolio.image_entity%
+
     dwi_portfolio.gallery_view_gateway:
         class: %dwi_portfolio.gallery_view_gateway.class%
         arguments:
             conn: '@doctrine.dbal.default_connection'
             cache: '@dwi_core.result_cache'
-
-    dwi_portfolio.portfolio_presenter:
-        class: %dwi_portfolio.portfolio_presenter.class%
-
-    dwi_portfolio.gallery_presenter:
-        class: %dwi_portfolio.gallery_presenter.class%
 
     dwi_portfolio.create_gallery_form_factory:
         class: %dwi_portfolio.create_gallery_form_factory.class%
@@ -47,3 +53,24 @@ services:
         class: %dwi_portfolio.create_gallery_form.class%
         factory_service: dwi_portfolio.create_gallery_form_factory
         factory_method: prepareForm
+
+    dwi_portfolio.upload_image_form_factory:
+        class: %dwi_portfolio.upload_image_form_factory.class%
+        scope: "request"
+        arguments:
+            ff: "@form.factory"
+            generator: "@router"
+
+    dwi_portfolio.upload_image_form:
+        class: %dwi_portfolio.upload_image_form.class%
+        factory_service: dwi_portfolio.upload_image_form_factory
+        factory_method: prepareForm
+
+    dwi_portfolio.portfolio_presenter:
+        class: %dwi_portfolio.portfolio_presenter.class%
+
+    dwi_portfolio.gallery_presenter:
+        class: %dwi_portfolio.gallery_presenter.class%
+
+    dwi_portfolio.upload_image_presenter:
+        class: %dwi_portfolio.upload_image_presenter.class%

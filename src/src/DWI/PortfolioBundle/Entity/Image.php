@@ -11,12 +11,15 @@
 namespace DWI\PortfolioBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Gallery Image Entity
  *
  * @ORM\Table(name="Image")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DWI\PortfolioBundle\Repository\ImageRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Image
 {
@@ -57,6 +60,18 @@ class Image
      * @ORM\JoinColumn(name="galleryId", referencedColumnName="id")
      */
     private $gallery;
+
+    /**
+     * @var UploadedFile
+     *
+     * @Assert\File(maxSize="20971520")
+     */
+    private $file;
+
+    /**
+     * @var UploadedFile
+     */
+    private $temp;
 
     /**
      * Get description
@@ -155,7 +170,7 @@ class Image
      *
      * @return \DWI\PortfolioBundle\Entity\Gallery
      */
-    public function getGalleryId()
+    public function getGallery()
     {
         return $this->gallery;
     }
@@ -233,6 +248,81 @@ class Image
      */
     protected function getUploadDir()
     {
-        return 'bundles/dwiportfolio/albums';
+        return 'bundles/dwiportfolio/albums/' . $this->getGallery()->getId();
+    }
+
+    /**
+     * Gets file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+
+        // Check for an old image
+        if (isset($this->path)) {
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // Check for an old image
+        if (isset($this->temp)) {
+            // Delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+
+            // Clear the temp image path
+            $this->temp = null;
+        }
+
+        $this->file = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        // TODO: ALSO REMOVE OTHER IMAGE SIZES
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
     }
 }

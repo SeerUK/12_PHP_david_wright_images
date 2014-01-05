@@ -17,14 +17,16 @@
             </div>
             <div class="actions">
                 <div class="pull-right">
+                    <a href="{{ url('dwi_portfolio_upload_images', { id: model.galleryId }) }}" class="btn btn-info">Upload Images</a>
+
                     {% if model.isActive %}
-                        <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.galleryId }) }}" class="btn btn-danger">Unpublish</a>
+                        <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.galleryId }) }}" class="btn btn-info">Unpublish</a>
                     {% else %}
-                        <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.galleryId }) }}" class="btn btn-success">Publish</a>
+                        <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.galleryId }) }}" class="btn btn-info">Publish</a>
                     {% endif %}
 
-                    <a href="{{ url('dwi_portfolio_edit_gallery', { id: model.galleryId }) }}" class="btn btn-warning">Edit</a>
-                    <a href="{{ url('dwi_portfolio_remove_gallery', { id: model.galleryId }) }}" class="btn btn-danger">Delete</a>
+                    <a href="{{ url('dwi_portfolio_edit_gallery', { id: model.galleryId }) }}" class="btn btn-info">Edit</a>
+                    <a href="{{ url('dwi_portfolio_remove_gallery', { id: model.galleryId }) }}" class="btn btn-info">Delete</a>
                 </div>
             </div>
         </div>
