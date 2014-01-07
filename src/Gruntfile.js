@@ -4,14 +4,35 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         dirs: {
-            src: 'src/DWI/AssetBundle/Resources/',
+            cssBuild: 'src/DWI/AssetBundle/Resources/public/css/',
+            js: 'src/DWI/AssetBundle/Resources/js',
+            jsBuild: 'src/DWI/AssetBundle/Resources/public/js',
             sass: 'src/DWI/AssetBundle/Resources/sass',
-            cssBuild: 'src/DWI/AssetBundle/Resources/public/css/'
+            src: 'src/DWI/AssetBundle/Resources/'
         },
         compass: {
             dist: {
                 options: {
                     config: 'config.rb'
+                }
+            }
+        },
+        concat: {
+            options: {
+                separator: ';',
+            },
+            dist: {
+                src: ['<%= dirs.js %>/modules/*.js', '<%= dirs.js %>/*.js'],
+                dest: '<%= dirs.jsBuild %>/dwi.js'
+            }
+        },
+        uglify: {
+            options: {
+                // mangle: false
+            },
+            target: {
+                files: {
+                    '<%= dirs.jsBuild %>/dwi.min.js': ['<%= dirs.jsBuild %>/dwi.js']
                 }
             }
         },
@@ -22,7 +43,17 @@ module.exports = function (grunt) {
                     '<%= dirs.sass %>/modules/*.scss',
                     '<%= dirs.sass %>/partials/*.scss'
                 ],
-                tasks: ['compass'],
+                tasks: ['css'],
+                options: {
+                    spawn: false
+                }
+            },
+            js: {
+                files: [
+                    '<%= dirs.js %>/modules/*.js',
+                    '<%= dirs.js %>/*.js'
+                ],
+                tasks: ['js'],
                 options: {
                     spawn: false
                 }
@@ -31,7 +62,11 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['compass']);
+    grunt.registerTask('default', ['css', 'js']);
+    grunt.registerTask('css', ['compass']);
+    grunt.registerTask('js', ['concat', 'uglify']);
 };

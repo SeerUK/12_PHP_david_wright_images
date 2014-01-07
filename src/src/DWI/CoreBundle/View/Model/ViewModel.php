@@ -19,24 +19,33 @@ use DWI\CoreBundle\Model\ModelInterface;
 class ViewModel implements ModelInterface, ClearableModelInterface
 {
     /**
-     * @var array
+     * @var string
      */
-    private $children = array();
+    protected $captureTo;
 
 
     /**
-     * @var array
+     * @var \ArrayObject
      */
-    private $variables = array();
+    protected $children;
+
+
+    /**
+     * @var \ArrayObject
+     */
+    protected $variables;
 
 
     /**
      * Constructor
      *
-     * @param null|array $variables
+     * @param null|array|\ArrayObject $variables
      */
     public function __construct($variables = null)
     {
+        $this->children  = new \ArrayObject();
+        $this->variables = new \ArrayObject();
+
         if (null !== $variables) {
             $this->setVariables($variables);
         }
@@ -98,6 +107,31 @@ class ViewModel implements ModelInterface, ClearableModelInterface
 
 
     /**
+     * Set captureTo
+     *
+     * @param  string $captureTo
+     * @return ViewModel
+     */
+    public function setCaptureTo($captureTo)
+    {
+        $this->captureTo = (string) $captureTo;
+
+        return $this;
+    }
+
+
+    /**
+     * Get captureTo
+     *
+     * @return string
+     */
+    public function getCaptureTo()
+    {
+        return $this->captureTo;
+    }
+
+
+    /**
      * Set view variable
      *
      * @param  string $name
@@ -128,8 +162,7 @@ class ViewModel implements ModelInterface, ClearableModelInterface
             ));
         }
 
-        foreach ($variables as $key => $value)
-        {
+        foreach ($variables as $key => $value) {
             $this->setVariable($key, $value);
         }
 
@@ -174,7 +207,7 @@ class ViewModel implements ModelInterface, ClearableModelInterface
      */
     public function clearVariables()
     {
-        $this->variables = array();
+        $this->variables = new \ArrayObject();
 
         return $this;
     }
@@ -185,14 +218,28 @@ class ViewModel implements ModelInterface, ClearableModelInterface
      *
      * @param  ModelInterface $child
      * @param  null|string    $captureTo
+     * @param  null|bool      $append
      * @return ViewModel
      */
-    public function addChild(ModelInterface $child, $captureTo = null)
+    public function addChild(ModelInterface $child, $captureTo = null, $append = null)
     {
+        $this->children[] = $child;
+
         if (null !== $captureTo) {
-            $this->children[(string) $captureTo] = $child;
-        } else {
-            $this->children[] = $child;
+            $captureTo = (string) $captureTo;
+
+            $this->setCaptureTo($captureTo);
+
+            if ( ! $append) {
+                // If we're simply storing the child with a name
+                $this->setVariable($captureTo, $child);
+            } else {
+                // If we're creating a traversible object containing child model(s)
+                $temp   = $this->getVariable($captureTo);
+                $temp[] = $child;
+
+                $this->setVariable($captureTo, $temp);
+            }
         }
 
         return $this;
@@ -236,9 +283,7 @@ class ViewModel implements ModelInterface, ClearableModelInterface
      */
     public function hasChild($name)
     {
-        $name = (string) $name;
-
-        if (array_key_exists($name, $this->children)) {
+        if (array_key_exists((string) $name, $this->children)) {
             return true;
         }
 
@@ -253,7 +298,7 @@ class ViewModel implements ModelInterface, ClearableModelInterface
      */
     public function hasChildren()
     {
-        return (0 < count($this->children));
+        return (0 < $this->count());
     }
 
 
@@ -267,5 +312,16 @@ class ViewModel implements ModelInterface, ClearableModelInterface
         $this->children = array();
 
         return $this;
+    }
+
+
+    /**
+     * Return count of children
+     *
+     * @return integer
+     */
+    public function count()
+    {
+        return count($this->children);
     }
 }

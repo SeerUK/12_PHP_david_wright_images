@@ -30,8 +30,7 @@ class ImageType extends AbstractType
                 'attr' => array(
                     'accept'   => 'image/*',
                 )
-            ))
-            ->add('submit', 'submit');
+            ));
     }
 
 

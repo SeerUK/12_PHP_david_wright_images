@@ -1,4 +1,4 @@
-{% set gallery = model.getChild('gallery') %}
+{% set gallery = model.gallery %}
 
 {% extends '::base.html.twig' %}
 
@@ -13,7 +13,7 @@
     </div>
 
     {% include 'DWIPortfolioBundle:Portfolio/Admin/partials:gallery-controls.html.twig' with {
-        'model': model.getChild('controls')
+        'model': model.controls
     } %}
 
     {% if gallery.images is not empty %}

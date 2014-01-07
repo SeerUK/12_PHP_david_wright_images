@@ -1,0 +1,30 @@
+//
+// Image Preview List
+// -------------------------------------------------
+
+.image-previews {
+    @include row(12);
+
+    > li {
+        @include border-radius(3px);
+        @include column(3);
+
+        background: $white;
+        margin-bottom: 20px;
+
+        > .preview {
+            @include border-radius(3px);
+
+            height: 200px;
+        }
+
+        > .status {
+            text-align: center;
+        }
+
+        > .preview,
+        > .status {
+            margin: 20px;
+        }
+    }
+}

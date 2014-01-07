@@ -1,4 +1,4 @@
-{% set portfolio = model.getChild('portfolio') %}
+{% set portfolio = model.portfolio %}
 
 {% extends '::base.html.twig' %}
 
@@ -23,13 +23,13 @@
     </div>
 
     {% include 'DWIPortfolioBundle:Portfolio/Admin/partials:portfolio-controls.html.twig' with {
-        'model': model.getChild('controls')
+        'model': model.controls
     } %}
 
     <div class="canvas gray-lighter">
         <div class="thumbs">
-            {% if portfolio.hasChildren %}
-                {% for gallery in portfolio.children %}
+            {% if portfolio.galleries|length %}
+                {% for gallery in portfolio.galleries %}
                     <div class="thumb {{ not gallery.isActive ? 'inactive' }}" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
                             <a class="cover" href="{{ url('dwi_portfolio_gallery', {'id': gallery.id}) }}"></a>
@@ -39,6 +39,7 @@
                                 </div>
                             {% endif %}
                         </div>
+
                         {% if gallery.coverImagePath %}
                             <img src="{{ asset(gallery.coverImagePath) }}" alt="" />
                         {% else %}

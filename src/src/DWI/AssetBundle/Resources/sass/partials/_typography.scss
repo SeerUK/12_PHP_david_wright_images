@@ -78,6 +78,16 @@ cite {
 }
 
 // Contextual emphasis
+
+.text-muted,
+.text-primary,
+.text-warning,
+.text-danger,
+.text-success,
+.text-info {
+    cursor: default;
+}
+
 .text-muted {
   color: $text-muted;
 }

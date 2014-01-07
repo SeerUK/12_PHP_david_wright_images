@@ -41,20 +41,7 @@ class ImageController extends Controller
         }
 
         $request = $this->get('request');
-        $form    = $this->get('dwi_portfolio.upload_image_form')
-            ->handleRequest($request);
-
-        if ('POST' === $request->getMethod() && $form->isValid()) {
-            $image = $form->getData();
-            $image->setGallery($gallery);
-
-            $this->get('dwi_portfolio.image_repository')
-                ->persist($image);
-
-            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
-                'id' => $gallery->getId(),
-            )));
-        }
+        $form    = $this->get('dwi_portfolio.upload_image_form');
 
         $uip = $this->get('dwi_portfolio.upload_image_presenter')
             ->setVariable('form', $form)
@@ -98,7 +85,7 @@ class ImageController extends Controller
         $form = $this->get('dwi_portfolio.upload_image_form')
             ->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() && rand(0, 1)) {
             $image = $form->getData();
             $image->setGallery($gallery);
 

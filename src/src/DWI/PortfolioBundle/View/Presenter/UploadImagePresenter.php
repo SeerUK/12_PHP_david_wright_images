@@ -28,7 +28,7 @@ class UploadImagePresenter extends AbstractPresenter
         $model = new ViewModel();
 
         return $model
-            ->setVariable('form', $this->prepareForm())
+            ->addChild($this->prepareForm(), 'form')
             ->addChild($this->prepareGallery(), 'gallery');
     }
 
@@ -40,8 +40,21 @@ class UploadImagePresenter extends AbstractPresenter
      */
     public function prepareForm()
     {
-        return $this->getVariable('form')
+        $fvm      = new ViewModel();
+        $formView = $this->getVariable('form')
             ->createView();
+
+        $fields = array();
+        foreach ($formView->children as $child) {
+            $fields[$child->vars['name']] = array(
+                'name'  => $child->vars['full_name'],
+                'value' => $child->vars['value'],
+            );
+        }
+
+        $fvm->setVariable('fields', $fields);
+
+        return $fvm;
     }
 
 

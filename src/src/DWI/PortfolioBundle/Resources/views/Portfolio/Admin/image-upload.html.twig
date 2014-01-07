@@ -1,9 +1,7 @@
 {% set form = model.form %}
-{% set gallery = model.getChild('gallery') %}
+{% set gallery = model.gallery %}
 
 {% extends '::base.html.twig' %}
-
-{% form_theme form 'DWICoreBundle:Form:fields.html.twig' %}
 
 {% block title %}Upload Images{% endblock %}
 
@@ -16,18 +14,259 @@
     </div>
 
     <div class="canvas gray-lighter">
-        {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
-            {{ form_row (form._token) }}
-            {{ form_errors(form) }}
-
-            {{ form_widget(form.file) }}
-
-            <div class="form-row">
-                <div class="pull-right">
-                    {{ form_widget(form.submit) }}
-                    <a href="{{ url('dwi_portfolio_gallery', { id: gallery.id }) }}" class="btn btn-white">Cancel</a>
-                </div>
+        <div class="form">
+            <input id="files" type="file" name="{{ form.fields.file.name }}" multiple="multiple" />
+        </div>
+        <div class="form">
+            <div class="form-row text-center">
+                <button id="submit" class="btn btn-success" disabled>Upload</button>
+                <a class="btn btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
             </div>
-        {{ form_end(form, { 'render_rest': false }) }}
+        </div>
+        <div class="form">
+            <ul id="fileList" class="image-previews"></ul>
+        </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+
+        var am         = new AjaxManager();
+        var elFiles    = $('#files');
+        var elFileList = $('#fileList');
+        var elSubmit   = $('#submit');
+        var fileList;
+        var images;
+
+        elFiles.change(function(e) {
+            fileList = e.target.files;
+            images   = convertFileListToArray(fileList);
+
+            // Create previews
+            createPreviews(images);
+
+            if (images.length) {
+                elSubmit.prop('disabled', false);
+            } else {
+                elSubmit.prop('disabled', true);
+            }
+        });
+
+        elSubmit.click(function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            // Go over each file and upload them
+            for (var i = 0; i < images.length; i++) {
+                if ( ! isValidImage(images[i]['file'])) {
+                    continue;
+                }
+
+                // Spinner here
+                updatePreviewStatus(images[i]['item'], 'waiting');
+
+                var data = new FormData();
+
+                data.append("{{ form.fields._token.name }}", "{{ form.fields._token.value }}");
+                data.append("{{ form.fields.file.name }}", images[i]['file']);
+
+                am.addRequest(createAjaxOptions(data, images[i]));
+                images.splice(i, 1);
+                i--;
+            }
+
+            am.run();
+
+            if ( ! images.length) {
+                elSubmit.prop('disabled', true);
+            }
+        });
+
+        // Functions
+        // ================================================================= //
+
+        /**
+         * Convert FileList to Array
+         *
+         * @param  FileList fileList
+         * @return Array
+         */
+        function convertFileListToArray(fileList)
+        {
+            var images = new Array();
+
+            $.each(fileList, function(key, value) {
+                images[key] = {
+                    'file': value,
+                    'item': null
+                };
+            });
+
+            return images;
+        }
+
+
+        /**
+         * Create previews
+         *
+         * @param  FileList files
+         */
+        function createPreviews(images)
+        {
+            // Destroy old previews
+            elFileList.html('');
+
+            // Synchronus previews
+            createPreview(0, images);
+        }
+
+
+        /**
+         * Create preview
+         *
+         * @param  File file
+         * @return bool
+         */
+        function createPreview(key, images)
+        {
+            if ( ! images[key]) {
+                return false;
+            }
+
+            file = images[key]['file'];
+
+            if (isValidImage(file)) {
+                var reader = new FileReader();
+
+                reader.onload = (function(file) {
+                    return function(e) {
+                        var elLi      = $('<li />');
+                        var elPreview = $('<div />');
+                        var elStatus  = $('<div />');
+                        var image     = e.target.result;
+
+                        images[key]['item'] = md5(image);
+
+                        elPreview
+                            .addClass('preview')
+                            .css({
+                                'background-image': 'url(' + image + ')',
+                                'background-position': '50%',
+                                'background-size': 'cover',
+                            })
+                            .appendTo(elLi);
+
+                        elStatus
+                            .addClass('status')
+                            .appendTo(elLi);
+
+                        elLi
+                            .attr('data-item', images[key]['item'])
+                            .appendTo(elFileList);
+
+                        createPreview((key + 1), images);
+                        updatePreviewStatus(images[key]['item'], 'ready');
+                    }
+                })(file);
+
+                reader.readAsDataURL(file);
+
+                return true;
+            } else {
+                createPreview((key + 1), images);
+
+                return false
+            }
+        }
+
+
+        /**
+         * Check if image is valid file format
+         *
+         * @param  File file
+         * @return bool
+         */
+        function isValidImage(image)
+        {
+            return image.type.match('image.*')
+                ? true
+                : false;
+        }
+
+
+        /**
+         * Create ajax request options
+         *
+         * @param  FormData data
+         * @param  Array    image
+         * @return jqXHR
+         */
+        function createAjaxOptions(data, image)
+        {
+            return {
+                url: "{{ url('dwi_portfolio_upload_image', {id: gallery.id}) }}",
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(data, status, jqXHR) {
+                    if (data.id) {
+                        updatePreviewStatus(image['item'], 'success');
+
+                        return true;
+                    } else {
+                        updatePreviewStatus(image['item'], 'error');
+
+                        return false;
+                    }
+                },
+                error: function(jqXHR, status, error) {
+                    updatePreviewStatus(image['item'], 'error');
+
+                    return false;
+                }
+            };
+        }
+
+
+        /**
+         * Update preview status
+         *
+         * @param  integer index
+         * @param  string  status
+         */
+        function updatePreviewStatus(index, status)
+        {
+            var elPreview = elFileList.find('[data-item="' + index + '"]');
+            var elStatus  = elPreview.find('.status');
+            var elText    = $('<span />');
+
+            switch (status) {
+                case 'ready':
+                    elText.text('Ready to upload');
+                    break;
+                case 'waiting':
+                    elText.text('Waiting to be uploaded...');
+                    break;
+                case 'success':
+                    elText
+                        .addClass('text-success')
+                        .text('Upload successful');
+                    break;
+                case 'error':
+                    elText
+                        .addClass('text-danger')
+                        .text('Upload failed');
+                    break;
+                default:
+                    break;
+            }
+
+            elStatus.html(elText);
+        }
+
+    </script>
 {% endblock %}
