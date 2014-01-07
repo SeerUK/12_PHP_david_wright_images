@@ -64,6 +64,7 @@ class Image
     /**
      * @var UploadedFile
      *
+     * @Assert\NotBlank()
      * @Assert\File(maxSize="20971520")
      */
     private $file;

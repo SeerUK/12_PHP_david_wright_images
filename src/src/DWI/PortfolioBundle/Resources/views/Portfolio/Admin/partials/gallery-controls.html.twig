@@ -17,7 +17,7 @@
             </div>
             <div class="actions">
                 <div class="pull-right">
-                    <a href="{{ url('dwi_portfolio_upload_images', { id: model.galleryId }) }}" class="btn btn-info">Upload Images</a>
+                    <a href="{{ url('dwi_portfolio_upload_images_form', { id: model.galleryId }) }}" class="btn btn-info">Upload Images</a>
 
                     {% if model.isActive %}
                         <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.galleryId }) }}" class="btn btn-info">Unpublish</a>

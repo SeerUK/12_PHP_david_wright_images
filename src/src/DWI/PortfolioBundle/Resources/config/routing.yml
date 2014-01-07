@@ -38,10 +38,16 @@ dwi_portfolio_publish_gallery:
     requirements:
         id: \d+
 
-dwi_portfolio_upload_images:
-    pattern: /portfolio/gallery/{id}/images/upload
-    defaults: { _controller: DWIPortfolioBundle:Image:uploadImages }
+dwi_portfolio_upload_images_form:
+    pattern: /portfolio/gallery/{id}/image/upload
+    defaults: { _controller: DWIPortfolioBundle:Image:uploadImagesForm }
     methods: [GET,POST]
+    requirements:
+        id: \d+
+
+dwi_portfolio_upload_image:
+    pattern: /portfolio/gallery/{id}/image/upload/process
+    defaults: { _controller: DWIPortfolioBundle:Image:uploadImage }
     requirements:
         id: \d+
 
