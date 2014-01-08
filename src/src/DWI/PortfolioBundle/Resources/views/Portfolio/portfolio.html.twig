@@ -28,7 +28,7 @@
 
     <div class="canvas gray-lighter">
         <div class="thumbs">
-            {% if portfolio.galleries|length %}
+            {% if portfolio.galleries is defined %}
                 {% for gallery in portfolio.galleries %}
                     <div class="thumb {{ not gallery.isActive ? 'inactive' }}" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
