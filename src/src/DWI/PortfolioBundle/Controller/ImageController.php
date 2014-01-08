@@ -85,7 +85,7 @@ class ImageController extends Controller
         $form = $this->get('dwi_portfolio.upload_image_form')
             ->handleRequest($request);
 
-        if ($form->isValid() && rand(0, 1)) {
+        if ($form->isValid()) {
             $image = $form->getData();
             $image->setGallery($gallery);
 

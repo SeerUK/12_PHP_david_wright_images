@@ -19,10 +19,14 @@ body {
     background-color: $body-bg;
 }
 
-strong,
-b {
-    font-weight: $font-weight-bold;
+
+// Support Styles
+// --------------------------------------------------
+
+.hide {
+    display: none;
 }
+
 
 // Oh well, only temporary!
 .xdebug-var-dump {

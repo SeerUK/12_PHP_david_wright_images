@@ -13,17 +13,49 @@
         </div>
     </div>
 
-    <div class="canvas gray-lighter">
-        <div class="form">
-            <input id="files" type="file" name="{{ form.fields.file.name }}" multiple="multiple" />
-        </div>
-        <div class="form">
-            <div class="form-row text-center">
-                <button id="submit" class="btn btn-success" disabled>Upload</button>
-                <a class="btn btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
+    <div id="shown" class="canvas canvas-padded gray-lighter">
+        <div class="form-compact step1">
+            <div class="form-row">
+                <div class="btn-table">
+                    <div class="btn-row">
+                        <div class="btn-cell file-multiple">
+                            <input id="files" type="file" name="{{ form.fields.file.name }}" multiple="multiple" />
+                            <button class="btn btn-block btn-success">Choose Files</button>
+                        </div>
+                        <div class="btn-cell">
+                            <a class="btn btn-block btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form">
+    </div>
+
+    <div id="previews" class="canvas canvas-padded hide">
+        <ul id="fileList" class="image-previews"></ul>
+    </div>
+
+    <div id="hidden" class="hide">
+        <div class="form-compact step2">
+            <div class="form-row text-center">
+                <div class="btn-table">
+                    <div class="btn-row">
+                        <div class="btn-cell">
+                            <button id="submit" class="btn btn-block btn-success">Upload</button>
+                        </div>
+                        <div class="btn-cell">
+                            <a class="btn btn-block btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-compact step3">
+            <div class="form-row text-center">
+                <a class="btn btn-block btn-success" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Continue</a>
+            </div>
+        </div>
+        <div class="form previews">
             <ul id="fileList" class="image-previews"></ul>
         </div>
     </div>
@@ -33,23 +65,31 @@
     <script type="text/javascript">
 
         var am         = new AjaxManager();
+        var elShown    = $('#shown');
+        var elHidden   = $('#hidden');
         var elFiles    = $('#files');
         var elFileList = $('#fileList');
         var elSubmit   = $('#submit');
+        var elStep1    = $('.step1');
+        var elStep2    = $('.step2');
+        var elStep3    = $('.step3');
+        var elPreviews = $('#previews');
+        var images     = new Array();
         var fileList;
-        var images;
 
         elFiles.change(function(e) {
             fileList = e.target.files;
-            images   = convertFileListToArray(fileList);
-
-            // Create previews
-            createPreviews(images);
+            images   = images.concat(convertFileListToArray(fileList));
 
             if (images.length) {
-                elSubmit.prop('disabled', false);
+                createPreviews(images);
+
+                elPreviews.removeClass('hide');
+
+                elStep1.appendTo(elHidden);
+                elStep2.appendTo(elShown);
             } else {
-                elSubmit.prop('disabled', true);
+                elPreviews.addClass('hide');
             }
         });
 
@@ -76,7 +116,10 @@
                 i--;
             }
 
-            am.run();
+            am.run(function() {
+                elStep2.appendTo(elHidden);
+                elStep3.appendTo(elShown);
+            });
 
             if ( ! images.length) {
                 elSubmit.prop('disabled', true);
@@ -143,7 +186,7 @@
                     return function(e) {
                         var elLi      = $('<li />');
                         var elPreview = $('<div />');
-                        var elStatus  = $('<div />');
+                        var elRemove  = $('<button />');
                         var image     = e.target.result;
 
                         images[key]['item'] = md5(image);
@@ -157,8 +200,12 @@
                             })
                             .appendTo(elLi);
 
-                        elStatus
+                        elRemove
+                            .addClass('btn')
+                            .addClass('btn-block')
+                            .addClass('btn-danger')
                             .addClass('status')
+                            .text('Remove')
                             .appendTo(elLi);
 
                         elLi
@@ -166,7 +213,6 @@
                             .appendTo(elFileList);
 
                         createPreview((key + 1), images);
-                        updatePreviewStatus(images[key]['item'], 'ready');
                     }
                 })(file);
 
@@ -212,6 +258,9 @@
                 dataType: 'json',
                 processData: false,
                 contentType: false,
+                beforeSend: function(jqXHR, settings) {
+                    updatePreviewStatus(image['item'], 'uploading')
+                },
                 success: function(data, status, jqXHR) {
                     if (data.id) {
                         updatePreviewStatus(image['item'], 'success');
@@ -235,37 +284,50 @@
         /**
          * Update preview status
          *
-         * @param  integer index
-         * @param  string  status
+         * @param string item
+         * @param string status
          */
-        function updatePreviewStatus(index, status)
+        function updatePreviewStatus(item, status)
         {
-            var elPreview = elFileList.find('[data-item="' + index + '"]');
+            var elPreview = elFileList.find('[data-item="' + item + '"]');
             var elStatus  = elPreview.find('.status');
-            var elText    = $('<span />');
 
             switch (status) {
-                case 'ready':
-                    elText.text('Ready to upload');
-                    break;
                 case 'waiting':
-                    elText.text('Waiting to be uploaded...');
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-success')
+                        .addClass('btn-warning')
+                        .prop('disabled', true)
+                        .text('Waiting...');
+                    break;
+                case 'uploading':
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-success')
+                        .addClass('btn-warning')
+                        .prop('disabled', true)
+                        .text('Uploading...');
                     break;
                 case 'success':
-                    elText
-                        .addClass('text-success')
-                        .text('Upload successful');
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-warning')
+                        .addClass('btn-success')
+                        .prop('disabled', true)
+                        .text('Uploaded');
                     break;
                 case 'error':
-                    elText
-                        .addClass('text-danger')
-                        .text('Upload failed');
+                    elStatus
+                        .removeClass('btn-warning')
+                        .removeClass('btn-success')
+                        .addClass('btn-danger')
+                        .prop('disabled', true)
+                        .text('Failed');
                     break;
                 default:
                     break;
             }
-
-            elStatus.html(elText);
         }
 
     </script>

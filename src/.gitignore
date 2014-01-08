@@ -10,3 +10,4 @@
 /bin/
 /composer.phar
 /node_modules/
+/src/DWI/PortfolioBundle/Resources/public/albums/*

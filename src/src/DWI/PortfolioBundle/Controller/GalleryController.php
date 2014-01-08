@@ -133,6 +133,9 @@ class GalleryController extends Controller
 
         return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-edit.html.twig', array(
             'form' => $form->createView(),
+            'gallery' => array(
+                'id' => $gallery->getId(),
+            ),
         ));
     }
 

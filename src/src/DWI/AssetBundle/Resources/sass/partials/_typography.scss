@@ -77,6 +77,11 @@ cite {
     font-style: normal;
 }
 
+strong,
+b {
+    font-weight: $font-weight-bold;
+}
+
 // Contextual emphasis
 
 .text-muted,

@@ -58,23 +58,27 @@ var AjaxManager = (function(window, $, undefined) {
         /**
          * Run queued requests
          */
-        this.run = function() {
+        this.run = function(callback) {
             var that = this;
             var sf;
 
-            if( priv.requests.length ) {
+            if(priv.requests.length) {
                 sf = priv.requests[0].complete;
 
                 priv.requests[0].complete = function() {
-                    if( typeof sf === 'function' ) {
+                    if(typeof sf === 'function') {
                         sf();
                     }
 
                     priv.requests.shift();
-                    that.run.apply(that, []);
+                    that.run.apply(that, [callback]);
                 };
 
                 $.ajax(priv.requests[0]);
+            } else {
+                if (typeof callback === 'function') {
+                    callback();
+                }
             }
         };
 
@@ -84,9 +88,7 @@ var AjaxManager = (function(window, $, undefined) {
          */
         this.stop = function() {
             priv.requests = [];
-            clearTimeout(this.tid);
         };
-
     }
 
     return AjaxManager;
@@ -276,6 +278,19 @@ msw = (x >> 16) + (y >> 16) + (lsw >> 16);
 return (msw << 16) | (lsw & 0xFFFF);
 }
 }
+;$(function() {
+    $('.file-multiple').mousedown(function() {
+        $(this).find('.btn').addClass('active');
+    }).mouseup(function() {
+        $(this).find('.btn').removeClass('active');
+    });
+
+    $('.file-multiple').mouseover(function() {
+        $(this).find('.btn').addClass('hover');
+    }).mouseout(function() {
+        $(this).find('.btn').removeClass('hover');
+    });
+});
 ;$(function() {
     $('.txt-medium-editable').each(function(){
         var $this = $(this);
