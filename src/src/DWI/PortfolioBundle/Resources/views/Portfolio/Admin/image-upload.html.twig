@@ -69,11 +69,11 @@
         var elHidden   = $('#hidden');
         var elFiles    = $('#files');
         var elFileList = $('#fileList');
+        var elPreviews = $('#previews');
         var elSubmit   = $('#submit');
         var elStep1    = $('.step1');
         var elStep2    = $('.step2');
         var elStep3    = $('.step3');
-        var elPreviews = $('#previews');
         var images     = new Array();
         var fileList;
 
@@ -126,8 +126,59 @@
             }
         });
 
+        $('body').on('click', '.remove-image', function() {
+            removeImage($(this).parent().data('item'));
+
+            if ( ! images.length) {
+                elStep1.appendTo(elShown);
+                elStep2.appendTo(elHidden);
+
+                elPreviews.addClass('hide');
+            }
+        });
+
         // Functions
         // ================================================================= //
+
+        /**
+         * Create ajax request options
+         *
+         * @param  FormData data
+         * @param  Array    image
+         * @return jqXHR
+         */
+        function createAjaxOptions(data, image)
+        {
+            return {
+                url: "{{ url('dwi_portfolio_upload_image', {id: gallery.id}) }}",
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                beforeSend: function(jqXHR, settings) {
+                    updatePreviewStatus(image['item'], 'uploading')
+                },
+                success: function(data, status, jqXHR) {
+                    if (data.id) {
+                        updatePreviewStatus(image['item'], 'success');
+
+                        return true;
+                    } else {
+                        updatePreviewStatus(image['item'], 'error');
+
+                        return false;
+                    }
+                },
+                error: function(jqXHR, status, error) {
+                    updatePreviewStatus(image['item'], 'error');
+
+                    return false;
+                }
+            };
+        }
+
 
         /**
          * Convert FileList to Array
@@ -205,6 +256,7 @@
                             .addClass('btn-block')
                             .addClass('btn-danger')
                             .addClass('status')
+                            .addClass('remove-image')
                             .text('Remove')
                             .appendTo(elLi);
 
@@ -242,42 +294,37 @@
 
 
         /**
-         * Create ajax request options
+         * Remove image & preview
          *
-         * @param  FormData data
-         * @param  Array    image
-         * @return jqXHR
+         * @param  string item
+         * @return bool
          */
-        function createAjaxOptions(data, image)
+        function removeImage(item)
         {
-            return {
-                url: "{{ url('dwi_portfolio_upload_image', {id: gallery.id}) }}",
-                type: 'POST',
-                data: data,
-                cache: false,
-                dataType: 'json',
-                processData: false,
-                contentType: false,
-                beforeSend: function(jqXHR, settings) {
-                    updatePreviewStatus(image['item'], 'uploading')
-                },
-                success: function(data, status, jqXHR) {
-                    if (data.id) {
-                        updatePreviewStatus(image['item'], 'success');
+            var found = false;
 
-                        return true;
-                    } else {
-                        updatePreviewStatus(image['item'], 'error');
+            for (var i = 0; i < images.length; i++) {
+                if (item === images[i].item) {
+                    images.splice(i, 1);
+                    removePreview(item);
 
-                        return false;
-                    }
-                },
-                error: function(jqXHR, status, error) {
-                    updatePreviewStatus(image['item'], 'error');
-
-                    return false;
+                    found = true;
+                    i--;
                 }
-            };
+            }
+
+            return found;
+        }
+
+
+        /**
+         * Attempts to remove the preview for the given item
+         *
+         * @param string item
+         */
+        function removePreview(item)
+        {
+            $('[data-item="' + item + '"]').remove();
         }
 
 
