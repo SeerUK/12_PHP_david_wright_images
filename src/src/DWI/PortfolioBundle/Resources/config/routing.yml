@@ -52,8 +52,9 @@ dwi_portfolio_upload_image:
         id: \d+
 
 dwi_portfolio_remove_image:
-    pattern: /portfolio/gallery/{id}/image/remove
+    pattern: /portfolio/gallery/{galleryId}/image/{id}/remove
     defaults: { _controller: DWIPortfolioBundle:Image:deleteImage }
     methods: [GET,POST]
     requirements:
+        galleryId: \d+
         id: \d+

@@ -8,7 +8,7 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\View\Presenter;
+namespace DWI\PortfolioBundle\View\Presenter\Image;
 
 use DWI\CoreBundle\View\Model\ViewModel;
 use DWI\CoreBundle\View\Presenter\AbstractPresenter;

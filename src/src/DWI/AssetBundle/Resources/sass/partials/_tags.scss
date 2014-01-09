@@ -2,7 +2,8 @@
 // Tags
 // ----------------------------------------------------
 
-ul.tags {
+.tags {
+    font-size: 0;
     list-style: none;
     margin: 0;
     padding:0 ;
@@ -12,6 +13,7 @@ ul.tags {
         display: inline-block;
         font-size: ceil(($font-size-base * 0.9));
         font-weight: $font-weight-bold;
+        margin-right: 10px;
         text-transform: uppercase;
 
         > a {
@@ -25,6 +27,10 @@ ul.tags {
         }
     }
 
+    > li:last-child {
+        margin-right: 0;
+    }
+
     li:hover > a {
         border: 2px solid $red;
         color: $red;
@@ -34,5 +40,12 @@ ul.tags {
         background: $red;
         border: 2px solid $red;
         color: white;
+    }
+}
+
+
+.jumbotron {
+    .tags {
+        margin-top: 40px;
     }
 }

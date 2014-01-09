@@ -10,9 +10,10 @@ parameters:
     dwi_portfolio.create_gallery_form.class: Symfony\Component\Form\Form
     dwi_portfolio.upload_image_form_factory.class: DWI\PortfolioBundle\Form\Factory\ImageFormFactory
     dwi_portfolio.upload_image_form.class: Symfony\Component\Form\Form
-    dwi_portfolio.portfolio_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioPresenter
-    dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\GalleryPresenter
-    dwi_portfolio.upload_image_presenter.class: DWI\PortfolioBundle\View\Presenter\UploadImagePresenter
+    dwi_portfolio.portfolio_presenter.class: DWI\PortfolioBundle\View\Presenter\Portfolio\PortfolioPresenter
+    dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\GalleryPresenter
+    dwi_portfolio.upload_image_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\UploadImagePresenter
+    dwi_portfolio.delete_image_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\DeleteImagePresenter
 
 services:
     dwi_portfolio.gallery_repository:
@@ -74,3 +75,6 @@ services:
 
     dwi_portfolio.upload_image_presenter:
         class: %dwi_portfolio.upload_image_presenter.class%
+
+    dwi_portfolio.delete_image_presenter:
+        class: %dwi_portfolio.delete_image_presenter.class%

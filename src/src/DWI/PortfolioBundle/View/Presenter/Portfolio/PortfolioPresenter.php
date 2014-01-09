@@ -8,7 +8,7 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\View\Presenter;
+namespace DWI\PortfolioBundle\View\Presenter\Portfolio;
 
 use DWI\CoreBundle\Exception\InvalidDataTypeException;
 use DWI\CoreBundle\View\Model\ViewModel;

@@ -1,0 +1,37 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Remove Image{% endblock %}
+
+{% block body %}
+    <div class="canvas">
+        <div class="jumbotron">
+            Remove Image<br />
+            <small>(This change cannot be reversed.)</small>
+        </div>
+    </div>
+
+    <div class="canvas canvas-padded gray-lighter">
+        <div class="form-compact">
+            <div class="form-row text-center">Are you sure you want to delete the following image?</div>
+            <div class="text-center">
+                <img src="{{ asset(model.image.thumbnail) }}" />
+            </div>
+        </div>
+
+        <form method="POST" class="form-compact">
+            <input type="hidden" name="doDelete" value="1">
+
+            <div class="form-row">
+                <input type="submit" name="submit" value="Delete" class="btn btn-block btn-danger" />
+            </div>
+        </form>
+
+        <form method="POST" class="form-compact">
+            <input type="hidden" name="doDelete" value="0">
+
+            <div class="form-row">
+                <input type="submit" name="submit" value="Cancel" class="btn btn-block btn-white" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

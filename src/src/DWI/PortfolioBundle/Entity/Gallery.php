@@ -18,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="Gallery")
  * @ORM\Entity(repositoryClass="DWI\PortfolioBundle\Repository\GalleryRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Gallery
 {
@@ -375,5 +376,50 @@ class Gallery
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Get upload root directory
+     *
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    /**
+     * Get web path
+     *
+     * @return string
+     */
+    protected function getUploadDir()
+    {
+        return 'bundles/dwiportfolio/albums/' . $this->getId();
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function removeFiles()
+    {
+        $dir = $this->getUploadRootDir();
+
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+
+            foreach ($objects as $object) {
+                if ('.' !== $object && '..' !== $object) {
+                    if (is_dir($dir . '/' . $object)) {
+                        rmdir($dir . '/' . $object);
+                    } else {
+                        unlink($dir . '/' . $object);
+                    }
+                }
+            }
+
+            reset($objects);
+            rmdir($dir);
+        }
     }
 }

@@ -22,6 +22,12 @@
                 <div class="swiper-wrapper">
                     {% for image in gallery.images %}
                         <div class="swiper-slide">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                {# Do something adminy #}
+                                <div class="controls">
+                                    <a class="btn btn-danger" href="{{ url('dwi_portfolio_remove_image', {'galleryId': gallery.id, 'id': image.id}) }}">Delete</a>
+                                </div>
+                            {% endif %}
                             <img src="{{ asset(image.webPath) }}" />
                         </div>
                     {% endfor %}

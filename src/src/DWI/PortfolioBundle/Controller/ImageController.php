@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
 use DWI\CoreBundle\HttpFoundation\RestJsonResponse;
 use DWI\PortfolioBundle\Entity\Gallery;
+use DWI\PortfolioBundle\Entity\Image;
 
 /**
  * Image Controller
@@ -108,5 +109,47 @@ class ImageController extends Controller
         }
 
         return $response;
+    }
+
+
+    /**
+     * Delete Image
+     *
+     * @param  Image $image
+     * @return Symfony\Component\HttpFoundation\Response
+     *
+     * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function deleteImageAction($galleryId, Image $image)
+    {
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        if ( ! $image) {
+            throw $this->createNotFoundException('That image doesn\'t exist!');
+        }
+
+        $request   = $this->get('request');
+        $presenter = $this->get('dwi_portfolio.delete_image_presenter')
+            ->setVariable('image', $image);
+
+        // If we've viewed and posted our response
+        if ('POST' === $request->getMethod()) {
+            if ($request->request->get('doDelete')) {
+                $this->get('dwi_portfolio.image_repository')
+                    ->remove($image);
+            }
+
+            // Redirect user to the gallery
+            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+                'id' => $galleryId,
+            )));
+        }
+
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:image-delete.html.twig', array(
+            'model' => $presenter->prepareView(),
+        ));
     }
 }

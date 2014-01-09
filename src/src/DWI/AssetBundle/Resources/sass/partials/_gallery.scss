@@ -107,9 +107,21 @@
 
     .swiper-slide {
         cursor:move;
+        position: relative;
 
         img {
             height: 100%;
+        }
+
+        .controls {
+            background: black;
+            background: rgba(0,0,0,0.4);
+            position: absolute;
+            bottom:0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            text-align: right;
         }
     }
 }

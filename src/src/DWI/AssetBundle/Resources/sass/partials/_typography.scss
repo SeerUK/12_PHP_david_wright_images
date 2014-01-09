@@ -143,6 +143,10 @@ b {
 .text-center { text-align: center; }
 .text-justify { text-align: justify; }
 
+// Weight
+.text-light { font-weight: $font-weight-light }
+.text-thin { font-weight: $font-weight-thin }
+
 
 // Lists
 // --------------------------------------------------

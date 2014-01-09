@@ -8,7 +8,7 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\View\Presenter;
+namespace DWI\PortfolioBundle\View\Presenter\Gallery;
 
 use DWI\CoreBundle\View\Model\ViewModel;
 use DWI\CoreBundle\View\Presenter\AbstractPresenter;
@@ -61,6 +61,7 @@ class GalleryPresenter extends AbstractPresenter
         $gallery = $this->getVariable('gallery');
 
         return $gvm
+            ->setVariable('id', $gallery->getId())
             ->setVariable('title', $gallery->getTitle())
             ->setVariable('subtitle', $gallery->getSubtitle())
             ->setVariable('description', $gallery->getDescription())
