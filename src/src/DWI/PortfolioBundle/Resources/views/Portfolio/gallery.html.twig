@@ -25,11 +25,11 @@
                             {% if is_granted('ROLE_ADMIN') %}
                                 {# Do something adminy #}
                                 <div class="controls">
-                                    <a class="btn btn-info" href="{{ url('dwi_portfolio_set_cover_gallery', {'galleryId': gallery.id, 'id': image.id}) }}">Set as cover</a>
+                                    <a class="btn btn-info" href="{{ url('dwi_portfolio_set_cover_gallery', {'id': gallery.id, 'imageId': image.id}) }}">Set as cover</a>
                                     <a class="btn btn-danger" href="{{ url('dwi_portfolio_remove_image', {'galleryId': gallery.id, 'id': image.id}) }}">Delete</a>
                                 </div>
                             {% endif %}
-                            <img src="{{ asset(image.webPath) }}" />
+                            <img src="{{ asset(image.webPath)|imagine_filter('gallery_image') }}" />
                         </div>
                     {% endfor %}
                 </div>

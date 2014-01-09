@@ -88,11 +88,10 @@ sizes, pagination, etc.
 .swiper-slide {
 	height: 100%;
 	width: auto;
-	opacity: 0.5;
+	opacity: 0.3;
 }
 .swiper-slide-active {
 	opacity: 1;
-
 }
 .swiper-slide-visible {
 	/* Specific visible slide styling: */

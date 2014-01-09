@@ -33,11 +33,11 @@
                     <div class="thumb {{ not gallery.isActive ? 'inactive' }}" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
                             <a class="cover" href="{{ url('dwi_portfolio_gallery', {'id': gallery.id}) }}"></a>
-                            {% if is_granted('ROLE_ADMIN') %}
+                            {# {% if is_granted('ROLE_ADMIN') %}
                                 <div class="controls pull-right">
                                     <a class="control" href="{{ url('dwi_portfolio_remove_gallery', {'id': gallery.id}) }}"><i class="flaticon32 flaticon32-x-2"></i></a>
                                 </div>
-                            {% endif %}
+                            {% endif %} #}
                         </div>
 
                         {% if gallery.coverImagePath %}

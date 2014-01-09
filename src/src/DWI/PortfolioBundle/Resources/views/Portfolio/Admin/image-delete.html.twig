@@ -13,8 +13,8 @@
     <div class="canvas canvas-padded gray-lighter">
         <div class="form-compact">
             <div class="form-row text-center">Are you sure you want to delete the following image?</div>
-            <div class="text-center">
-                <img src="{{ asset(model.image.thumbnail) }}" />
+            <div class="form-row text-center">
+                <img src="{{ asset(model.image.thumbnail)|imagine_filter('gallery_thumb') }}" />
             </div>
         </div>
 

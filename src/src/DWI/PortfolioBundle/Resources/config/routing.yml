@@ -37,6 +37,7 @@ dwi_portfolio_set_cover_gallery:
     methods: [GET,POST]
     requirements:
         id: \d+
+        imageId: \d+
 
 dwi_portfolio_publish_gallery:
     pattern: /portfolio/gallery/{id}/publish

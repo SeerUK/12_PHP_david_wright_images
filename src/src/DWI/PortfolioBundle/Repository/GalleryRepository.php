@@ -78,7 +78,9 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
             LEFT JOIN
                 g.tags AS t
             LEFT JOIN
-                g.views AS gv';
+                g.views AS gv
+            ORDER BY
+                g.id DESC';
 
         $offset = $this->getPageFirstResult($page, $limit);
         $query  = $this->getEntityManager()->createQuery($dql)
