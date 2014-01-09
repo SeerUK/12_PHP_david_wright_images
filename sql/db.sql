@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS CoverImage (
     lastModified timestamp,
 
     PRIMARY KEY (id),
+    UNIQUE KEY (galleryId),
     FOREIGN KEY (galleryId) REFERENCES Gallery(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (imageId) REFERENCES Image(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="Used to store the gallery cover image ID";

@@ -91,7 +91,7 @@ class PortfolioPresenter extends AbstractPresenter
     private function getGalleryCoverImagePath($gallery)
     {
         if ($ci = $gallery->getCoverImage()) {
-            return $ci->getImage()->getWebThumbPath();
+            return $ci->getImage()->getWebPath();
         }
 
         return false;

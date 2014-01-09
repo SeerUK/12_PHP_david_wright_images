@@ -41,7 +41,7 @@
                         </div>
 
                         {% if gallery.coverImagePath %}
-                            <img src="{{ asset(gallery.coverImagePath) }}" alt="" />
+                            <img src="{{ asset(gallery.coverImagePath)|imagine_filter('gallery_thumb') }}" alt="" />
                         {% else %}
                             <img src="http://placehold.it/300x300" alt="" />
                         {% endif %}

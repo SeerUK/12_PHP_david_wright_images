@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new DWI\PortfolioBundle\DWIPortfolioBundle(),
             new DWI\CoreBundle\DWICoreBundle(),
             new DWI\SecurityBundle\DWISecurityBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

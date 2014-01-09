@@ -215,7 +215,12 @@ class GalleryController extends Controller
 
         if ('POST' === $request->getMethod()) {
             if ($request->request->get('doSetCover')) {
-                $ci = new CoverImage();
+                if ($gallery->getCoverImage()) {
+                    $ci = $gallery->getCoverImage();
+                } else {
+                    $ci = new CoverImage();
+                }
+
                 $ci->setGallery($gallery);
                 $ci->setImage($image);
 
@@ -224,7 +229,6 @@ class GalleryController extends Controller
                 $this->get('dwi_portfolio.gallery_repository')
                     ->update($gallery);
             }
-
 
             return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
                 'id' => $gallery->getId(),

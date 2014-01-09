@@ -19,7 +19,7 @@
                 <div class="btn-table">
                     <div class="btn-row">
                         <div class="btn-cell file-multiple">
-                            <input id="files" type="file" name="{{ form.fields.file.name }}" multiple="multiple" />
+                            <input id="files" type="file" name="{{ form.fields.file.name }}" accept="image/jpeg" multiple="multiple" />
                             <button class="btn btn-block btn-success">Choose Files</button>
                         </div>
                         <div class="btn-cell">
@@ -191,10 +191,12 @@
             var images = new Array();
 
             $.each(fileList, function(key, value) {
-                images[key] = {
-                    'file': value,
-                    'item': null
-                };
+                if (isValidImage(value)) {
+                    images[key] = {
+                        'file': value,
+                        'item': null
+                    };
+                }
             });
 
             return images;
@@ -287,7 +289,7 @@
          */
         function isValidImage(image)
         {
-            return image.type.match('image.*')
+            return image.type.match('image/jpeg')
                 ? true
                 : false;
         }

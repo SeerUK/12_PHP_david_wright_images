@@ -26,3 +26,6 @@ dwi_static:
     resource: "@DWIStaticBundle/Resources/config/routing.yml"
     prefix:   /
 
+_imagine:
+    resource: .
+    type:     imagine

@@ -1,4 +1,4 @@
-# 
+#
 # PHP 5.4 Base Setup
 # ------------------
 
@@ -15,6 +15,7 @@ class php5 {
 
   php::module {[
       'cli',
+      'gd',
       'intl',
       'memcache',
       'memcached',
@@ -42,6 +43,6 @@ class php5 {
     require => Package['php'],
     notify  => Service['apache2'],
   }
-  
+
 }
 

@@ -9,6 +9,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     box.vm.box     = "precise64"
     box.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
+    box.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--memory", 1024]
+    end
+
     box.vm.network :private_network, ip: "192.168.56.101"
     box.vm.network "forwarded_port", guest: 80, host: 8080, auto_correct: true
     # box.vm.network "forwarded_port", guest: 443, host: 4030, auto_correct: true
