@@ -12,6 +12,7 @@ parameters:
     dwi_portfolio.upload_image_form.class: Symfony\Component\Form\Form
     dwi_portfolio.portfolio_presenter.class: DWI\PortfolioBundle\View\Presenter\Portfolio\PortfolioPresenter
     dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\GalleryPresenter
+    dwi_portfolio.gallery_set_cover_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\SetCoverPresenter
     dwi_portfolio.upload_image_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\UploadImagePresenter
     dwi_portfolio.delete_image_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\DeleteImagePresenter
 
@@ -72,6 +73,9 @@ services:
 
     dwi_portfolio.gallery_presenter:
         class: %dwi_portfolio.gallery_presenter.class%
+
+    dwi_portfolio.gallery_set_cover_presenter:
+        class: %dwi_portfolio.gallery_set_cover_presenter.class%
 
     dwi_portfolio.upload_image_presenter:
         class: %dwi_portfolio.upload_image_presenter.class%

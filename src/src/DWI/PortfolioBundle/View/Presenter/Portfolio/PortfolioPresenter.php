@@ -43,12 +43,10 @@ class PortfolioPresenter extends AbstractPresenter
      */
     private function prepareControls()
     {
-        $controls = new ViewModel();
+        $model = new ViewModel();
+        $model->setVariable('views', $this->getVariable('views'));
 
-        $controls
-            ->setVariable('views', $this->getVariable('views'));
-
-        return $controls;
+        return $model;
     }
 
 

@@ -40,10 +40,10 @@ class GalleryPresenter extends AbstractPresenter
      */
     public function prepareControls()
     {
-        $cvm     = new ViewModel();
+        $model   = new ViewModel();
         $gallery = $this->getVariable('gallery');
 
-        return $cvm
+        return $model
             ->setVariable('galleryId', $gallery->getId())
             ->setVariable('views', $this->getVariable('views'))
             ->setVariable('isActive', $gallery->getIsActive());
@@ -57,10 +57,10 @@ class GalleryPresenter extends AbstractPresenter
      */
     public function prepareGallery()
     {
-        $gvm     = new ViewModel();
+        $model   = new ViewModel();
         $gallery = $this->getVariable('gallery');
 
-        return $gvm
+        return $model
             ->setVariable('id', $gallery->getId())
             ->setVariable('title', $gallery->getTitle())
             ->setVariable('subtitle', $gallery->getSubtitle())

@@ -90,7 +90,7 @@ class Gallery
     /**
      * @var DWI\PortfolioBundle\Entity\GalleryCoverImage
      *
-     * @ORM\OneToOne(targetEntity="DWI\PortfolioBundle\Entity\CoverImage", mappedBy="gallery")
+     * @ORM\OneToOne(targetEntity="DWI\PortfolioBundle\Entity\CoverImage", mappedBy="gallery", cascade={"persist"})
      */
     protected $coverImage;
 

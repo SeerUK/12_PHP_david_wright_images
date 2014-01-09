@@ -8,7 +8,7 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\View\Presenter\Image;
+namespace DWI\PortfolioBundle\View\Presenter\Gallery;
 
 use DWI\CoreBundle\View\Model\ViewModel;
 use DWI\CoreBundle\View\Presenter\AbstractPresenter;
@@ -16,7 +16,7 @@ use DWI\CoreBundle\View\Presenter\AbstractPresenter;
 /**
  * Gallery Presenter
  */
-class DeleteImagePresenter extends AbstractPresenter
+class SetCoverPresenter extends AbstractPresenter
 {
     /**
      * Prepare view
@@ -28,6 +28,7 @@ class DeleteImagePresenter extends AbstractPresenter
         $model = new ViewModel();
 
         return $model
+            ->addChild($this->prepareGallery(), 'gallery')
             ->addChild($this->prepareImage(), 'image');
     }
 
@@ -37,12 +38,27 @@ class DeleteImagePresenter extends AbstractPresenter
      *
      * @return ViewModel
      */
+    public function prepareGallery()
+    {
+        $model   = new ViewModel();
+        $gallery = $this->getVariable('gallery');
+
+        return $model
+            ->setVariable('title', $gallery->getTitle());
+    }
+
+
+    /**
+     * Prepare image view model
+     *
+     * @return ViewModel
+     */
     public function prepareImage()
     {
-        $ivm   = new ViewModel();
+        $model = new ViewModel();
         $image = $this->getVariable('image');
 
-        return $ivm
+        return $model
             ->setVariable('thumbnail', $image->getWebPath());
     }
 }

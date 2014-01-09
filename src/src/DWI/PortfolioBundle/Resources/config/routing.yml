@@ -31,6 +31,13 @@ dwi_portfolio_remove_gallery:
     requirements:
         id: \d+
 
+dwi_portfolio_set_cover_gallery:
+    pattern: /portfolio/gallery/{id}/setcover/{imageId}
+    defaults: { _controller: DWIPortfolioBundle:Gallery:setCover }
+    methods: [GET,POST]
+    requirements:
+        id: \d+
+
 dwi_portfolio_publish_gallery:
     pattern: /portfolio/gallery/{id}/publish
     defaults: { _controller: DWIPortfolioBundle:Gallery:publishGallery }

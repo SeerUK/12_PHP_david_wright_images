@@ -13,7 +13,9 @@ namespace DWI\PortfolioBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
+use DWI\PortfolioBundle\Entity\CoverImage;
 use DWI\PortfolioBundle\Entity\Gallery;
+use DWI\PortfolioBundle\Entity\Image;
 
 /**
  * Gallery Controller
@@ -178,6 +180,59 @@ class GalleryController extends Controller
 
         return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-delete.html.twig', array(
             'gallery' => $gallery,
+        ));
+    }
+
+
+    /**
+     * Set Gallery Cover Image
+     *
+     * @param Gallery $gallery
+     * @param integer $imageId
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function setCoverAction(Gallery $gallery, $imageId)
+    {
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        if ( ! $gallery) {
+            throw $this->createNotFoundException('That gallery doesn\'t exist!');
+        }
+
+        try {
+            $image = $this->get('dwi_portfolio.image_repository')
+                ->findOneById($imageId);
+        } catch (NoResultException $e) {
+            throw $this->createNotFoundException('That image doesn\'t exist!');
+        }
+
+        $request   = $this->get('request');
+        $presenter = $this->get('dwi_portfolio.gallery_set_cover_presenter')
+            ->setVariable('gallery', $gallery)
+            ->setVariable('image', $image);
+
+        if ('POST' === $request->getMethod()) {
+            if ($request->request->get('doSetCover')) {
+                $ci = new CoverImage();
+                $ci->setGallery($gallery);
+                $ci->setImage($image);
+
+                $gallery->setCoverImage($ci);
+
+                $this->get('dwi_portfolio.gallery_repository')
+                    ->update($gallery);
+            }
+
+
+            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+                'id' => $gallery->getId(),
+            )));
+        }
+
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-set-cover.html.twig', array(
+            'model' => $presenter->prepareView(),
         ));
     }
 

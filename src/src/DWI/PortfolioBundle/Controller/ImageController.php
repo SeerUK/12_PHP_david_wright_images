@@ -115,7 +115,8 @@ class ImageController extends Controller
     /**
      * Delete Image
      *
-     * @param  Image $image
+     * @param  integer $galleryId
+     * @param  Image   $image
      * @return Symfony\Component\HttpFoundation\Response
      *
      * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException

@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Set Gallery Cover{% endblock %}
+
+{% block body %}
+    <div class="canvas">
+        <div class="jumbotron">
+            Set Gallery Cover<br />
+            <small>(Updates instantly)</small>
+        </div>
+    </div>
+
+    <div class="canvas canvas-padded gray-lighter">
+        <div class="form-compact">
+            <div class="form-row text-center">
+                Are you sure you want to change the cover of <br /><strong>"{{ model.gallery.title }}"</strong> to:
+            </div>
+            <div class="form-row text-center">
+                <img src="{{ asset(model.image.thumbnail) }}" />
+            </div>
+        </div>
+
+        <form method="POST" class="form-compact">
+            <input type="hidden" name="doSetCover" value="1">
+
+            <div class="form-row">
+                <input type="submit" name="submit" value="Set Cover" class="btn btn-block btn-success" />
+            </div>
+        </form>
+
+        <form method="POST" class="form-compact">
+            <input type="hidden" name="doSetCover" value="0">
+
+            <div class="form-row">
+                <input type="submit" name="submit" value="Cancel" class="btn btn-block btn-white" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

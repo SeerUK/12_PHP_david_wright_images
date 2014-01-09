@@ -107,6 +107,7 @@
 
     .swiper-slide {
         cursor:move;
+        overflow: hidden;
         position: relative;
 
         img {
@@ -114,14 +115,22 @@
         }
 
         .controls {
+            @include transition(all ease 0.4s);
+
             background: black;
             background: rgba(0,0,0,0.4);
             position: absolute;
-            bottom:0;
+            bottom: -200px;
             left: 0;
             right: 0;
             padding: 20px;
             text-align: right;
+        }
+    }
+
+    .swiper-slide:hover {
+        .controls {
+            bottom: 0;
         }
     }
 }
