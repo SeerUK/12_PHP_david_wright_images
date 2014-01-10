@@ -12,6 +12,8 @@ namespace DWI\PortfolioBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 /**
  * Gallery Entity
@@ -389,6 +391,26 @@ class Gallery
     }
 
     /**
+     * Gets thumb cache root directory
+     *
+     * @return string
+     */
+    protected function getThumbCacheRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getThumbCacheDir();
+    }
+
+    /**
+     * Gets gallery image cache root directory
+     *
+     * @return string
+     */
+    protected function getGalleryCacheRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getGalleryCacheDir();
+    }
+
+    /**
      * Get web path
      *
      * @return string
@@ -399,27 +421,45 @@ class Gallery
     }
 
     /**
+     * Gets Imagine thumb cache path
+     *
+     * @return string
+     */
+    protected function getThumbCacheDir()
+    {
+        return 'media/cache/gallery_thumb/' . $this->getUploadDir();
+    }
+
+    /**
+     * Gets Imagine gallery image cache path
+     *
+     * @return string
+     */
+    protected function getGalleryCacheDir()
+    {
+        return 'media/cache/gallery_image/' . $this->getUploadDir();
+    }
+
+    /**
      * @ORM\PreRemove()
      */
     public function removeFiles()
     {
-        $dir = $this->getUploadRootDir();
+        $fs      = new Filesystem();
+        $full    = $this->getUploadRootDir();
+        $thumb   = $this->getThumbCacheRootDir();
+        $gallery = $this->getGalleryCacheRootDir();
 
-        if (is_dir($dir)) {
-            $objects = scandir($dir);
+        if ($fs->exists($full)) {
+            $fs->remove($full);
+        }
 
-            foreach ($objects as $object) {
-                if ('.' !== $object && '..' !== $object) {
-                    if (is_dir($dir . '/' . $object)) {
-                        rmdir($dir . '/' . $object);
-                    } else {
-                        unlink($dir . '/' . $object);
-                    }
-                }
-            }
+        if ($fs->exists($thumb)) {
+            $fs->remove($thumb);
+        }
 
-            reset($objects);
-            rmdir($dir);
+        if ($fs->exists($gallery)) {
+            $fs->remove($gallery);
         }
     }
 }

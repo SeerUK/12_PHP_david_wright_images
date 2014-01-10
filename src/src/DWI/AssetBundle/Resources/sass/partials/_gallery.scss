@@ -105,6 +105,48 @@
 .swiper-container {
     padding: 40px 0;
 
+    .arrow-left,
+    .arrow-right {
+        @include user-select(none);
+
+        background: $white;
+        cursor: pointer;
+        margin-top: -35px;
+        padding: 20px;
+        position: absolute;
+        top: 50%;
+
+        .arrow {
+            background-image: url('../../../bundles/dwiasset/img/swiper-arrows.png');
+            background-repeat: no-repeat;
+            display: block;
+            height: 30px;
+            width: 17px;
+        }
+    }
+
+    .arrow-left {
+        @include border-top-right-radius(3px);
+        @include border-bottom-right-radius(3px);
+
+        left: 0;
+
+        .arrow {
+            background-position: top;
+        }
+    }
+
+    .arrow-right {
+        @include border-top-left-radius(3px);
+        @include border-bottom-left-radius(3px);
+
+        right: 0;
+
+        .arrow {
+            background-position: bottom;
+        }
+    }
+
     .swiper-slide {
         cursor:move;
         overflow: hidden;

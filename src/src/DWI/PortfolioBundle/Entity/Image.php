@@ -11,6 +11,8 @@
 namespace DWI\PortfolioBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -177,7 +179,7 @@ class Image
     }
 
     /**
-     * Gets absolute path for image, i.e. exact filesystem location
+     * Gets absolute path for image
      *
      * @return string
      */
@@ -189,23 +191,31 @@ class Image
     }
 
     /**
-     * Gets absolute path for thumbnail image, i.e. exact filesystem location
+     * Gets absolute path for thumbnail cache image
      *
      * @return string
      */
-    public function getAbsoluteThumbPath()
+    public function getAbsoluteThumbCachePath()
     {
-        if (null === $this->path) {
-            return null;
-        }
-
-        $pi = pathinfo($this->path);
-
-        return $this->getUploadRootDir() . '/' . $pi['dirname'] . '/' . $pi['filename'] . '_thumb.' . $pi['extension'];
+        return null === $this->path
+            ? null
+            : $this->getThumbCacheRootDir() . '/' . $this->path;
     }
 
     /**
-     * Gets web path for image, i.e. relative web location
+     * Gets absolute path for gallery cache image
+     *
+     * @return string
+     */
+    public function getAbsoluteGalleryCachePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getGalleryCacheRootDir() . '/' . $this->path;
+    }
+
+    /**
+     * Gets web path for image
      *
      * @return string
      */
@@ -217,23 +227,7 @@ class Image
     }
 
     /**
-     * Gets web path for thumbnail image, i.e. relative web location
-     *
-     * @return string
-     */
-    public function getWebThumbPath()
-    {
-        if (null === $this->path) {
-            return null;
-        }
-
-        $pi = pathinfo($this->path);
-
-        return $this->getUploadDir() . '/' . $pi['dirname'] . '/' . $pi['filename'] . '_thumb.' . $pi['extension'];
-    }
-
-    /**
-     * Gets upload root directory, i.e. exact filesystem location
+     * Gets upload root directory
      *
      * @return string
      */
@@ -243,13 +237,53 @@ class Image
     }
 
     /**
-     * Gets web path, i.e. relative web location
+     * Gets thumb cache root directory
+     *
+     * @return string
+     */
+    protected function getThumbCacheRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getThumbCacheDir();
+    }
+
+    /**
+     * Gets gallery image cache root directory
+     *
+     * @return string
+     */
+    protected function getGalleryCacheRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getGalleryCacheDir();
+    }
+
+    /**
+     * Gets web path
      *
      * @return string
      */
     protected function getUploadDir()
     {
         return 'bundles/dwiportfolio/albums/' . $this->getGallery()->getId();
+    }
+
+    /**
+     * Gets Imagine thumb cache path
+     *
+     * @return string
+     */
+    protected function getThumbCacheDir()
+    {
+        return 'media/cache/gallery_thumb/' . $this->getUploadDir();
+    }
+
+    /**
+     * Gets Imagine gallery image cache path
+     *
+     * @return string
+     */
+    protected function getGalleryCacheDir()
+    {
+        return 'media/cache/gallery_image/' . $this->getUploadDir();
     }
 
     /**
@@ -321,9 +355,21 @@ class Image
      */
     public function removeUpload()
     {
-        // TODO: ALSO REMOVE OTHER IMAGE SIZES
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
+        $fs      = new Filesystem();
+        $full    = $this->getAbsolutePath();             // Original file
+        $thumb   = $this->getAbsoluteThumbCachePath();   // Imagine cached thumbnail
+        $gallery = $this->getAbsoluteGalleryCachePath(); // Imagine cached gallery image
+
+        if ($fs->exists($full)) {
+            $fs->exists($full);
+        }
+
+        if ($fs->exists($thumb)) {
+            $fs->exists($thumb);
+        }
+
+        if ($fs->exists($gallery)) {
+            $fs->exists($gallery);
         }
     }
 }
