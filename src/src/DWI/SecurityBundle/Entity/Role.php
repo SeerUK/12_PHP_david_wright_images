@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping\JoinTable;
  * @ORM\Table(name="Role")
  * @ORM\Entity(repositoryClass="DWI\SecurityBundle\Entity\UserRepository")
  */
-class Role implements RoleInterface
+class Role implements RoleInterface, \Serializable
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -97,5 +97,31 @@ class Role implements RoleInterface
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->name,
+            $this->role,
+            $this->users
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->name,
+            $this->role,
+            $this->users
+        ) = unserialize($serialized);
     }
 }
