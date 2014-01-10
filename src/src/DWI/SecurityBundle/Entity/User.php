@@ -74,6 +74,14 @@ class User implements UserInterface, \Serializable
     /**
      * @inheritDoc
      */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getUsername()
     {
         return $this->username;
