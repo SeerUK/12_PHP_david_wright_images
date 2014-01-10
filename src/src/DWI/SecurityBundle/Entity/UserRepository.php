@@ -52,7 +52,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $class));
         }
 
-        return $this->loadUserByUsername($user->getUsername());
+        return $this->findOneById($user->getId());
     }
 
     public function supportsClass($class)
