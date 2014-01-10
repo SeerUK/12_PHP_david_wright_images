@@ -29,27 +29,27 @@ class User implements UserInterface, \Serializable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="username", type="string", length=25, unique=true)
      */
-    private $username;
+    protected $username;
 
     /**
      * @ORM\Column(name="password", type="string", length=128)
      */
-    private $password;
+    protected $password;
 
     /**
      * @inheritDoc
      */
-    private $salt;
+    protected $salt;
 
     /**
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
@@ -58,12 +58,12 @@ class User implements UserInterface, \Serializable
      *     inverseJoinColumns={@JoinColumn(name="roleId", referencedColumnName="id")}
      * )
      */
-    private $roles;
+    protected $roles;
 
     /**
      * @ORM\Column(name="isActive", type="boolean")
      */
-    private $isActive;
+    protected $isActive;
 
     public function __construct()
     {
