@@ -1,4 +1,5 @@
 {% set gallery = model.gallery %}
+{% set tags = model.gallery.tags %}
 
 {% extends '::base.html.twig' %}
 
@@ -48,6 +49,16 @@
                     <dd>{{ gallery.date|date("M Y") }}</dd>
                     <dt>No. of Images</dt>
                     <dd>{{ gallery.images|length }}</dd>
+                    {% if tags is defined and tags is not empty %}
+                        <dt>Tags</dt>
+                        {% spaceless %}
+                            <dd>
+                                {% for tag in tags %}
+                                    {{ tag.name }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </dd>
+                        {% endspaceless %}
+                    {% endif %}
                 </dl>
             </div>
             <div class="gallery-desc gallery-type">

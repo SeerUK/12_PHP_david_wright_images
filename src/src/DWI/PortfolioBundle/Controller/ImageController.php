@@ -44,7 +44,7 @@ class ImageController extends Controller
         $request = $this->get('request');
         $form    = $this->get('dwi_portfolio.upload_image_form');
 
-        $uip = $this->get('dwi_portfolio.upload_image_presenter')
+        $uip = $this->get('dwi_portfolio.image_upload_presenter')
             ->setVariable('form', $form)
             ->setVariable('gallery', $gallery);
 
@@ -133,7 +133,7 @@ class ImageController extends Controller
         }
 
         $request   = $this->get('request');
-        $presenter = $this->get('dwi_portfolio.delete_image_presenter')
+        $presenter = $this->get('dwi_portfolio.image_delete_presenter')
             ->setVariable('image', $image);
 
         // If we've viewed and posted our response

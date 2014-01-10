@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Tag Entity
  *
  * @ORM\Table(name="Tag")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="DWI\PortfolioBundle\Repository\TagRepository")
  */
 class Tag
 {
@@ -42,6 +42,13 @@ class Tag
      * @ORM\Column(name="description", type="string", length=250, nullable=false)
      */
     private $description;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isPrimary", type="boolean", nullable=false)
+     */
+    private $isPrimary;
 
     /**
      * @var \DateTime
@@ -111,12 +118,35 @@ class Tag
     /**
      * Set description
      *
-     * @param string $description
+     * @param  string $description
      * @return Tag
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get isPrimary
+     *
+     * @return boolean
+     */
+    public function getIsPrimary()
+    {
+        return $this->isPrimary;
+    }
+
+    /**
+     * Set isPrimary
+     *
+     * @param  boolean $isPrimary
+     * @return Tag
+     */
+    public function setIsPrimary($isPrimary)
+    {
+        $this->isPrimary = $isPrimary;
 
         return $this;
     }
@@ -134,7 +164,7 @@ class Tag
     /**
      * Set lastmodified
      *
-     * @param \DateTime $lastmodified
+     * @param  \DateTime $lastmodified
      * @return Tag
      */
     public function setLastmodified($lastmodified)
@@ -147,7 +177,7 @@ class Tag
     /**
      * Add gallery
      *
-     * @param \DWI\PortfolioBundle\Entity\Gallery $gallery
+     * @param  \DWI\PortfolioBundle\Entity\Gallery $gallery
      * @return Tag
      */
     public function addGallery(\DWI\PortfolioBundle\Entity\Gallery $gallery)

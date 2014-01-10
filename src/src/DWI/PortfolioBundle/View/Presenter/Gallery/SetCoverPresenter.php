@@ -38,7 +38,7 @@ class SetCoverPresenter extends AbstractPresenter
      *
      * @return ViewModel
      */
-    public function prepareGallery()
+    private function prepareGallery()
     {
         $model   = new ViewModel();
         $gallery = $this->getVariable('gallery');
@@ -53,7 +53,7 @@ class SetCoverPresenter extends AbstractPresenter
      *
      * @return ViewModel
      */
-    public function prepareImage()
+    private function prepareImage()
     {
         $model = new ViewModel();
         $image = $this->getVariable('image');

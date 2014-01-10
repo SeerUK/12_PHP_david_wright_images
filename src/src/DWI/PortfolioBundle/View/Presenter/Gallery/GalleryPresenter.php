@@ -38,7 +38,7 @@ class GalleryPresenter extends AbstractPresenter
      *
      * @return ViewModel
      */
-    public function prepareControls()
+    private function prepareControls()
     {
         $model   = new ViewModel();
         $gallery = $this->getVariable('gallery');
@@ -55,7 +55,7 @@ class GalleryPresenter extends AbstractPresenter
      *
      * @return ViewModel
      */
-    public function prepareGallery()
+    private function prepareGallery()
     {
         $model   = new ViewModel();
         $gallery = $this->getVariable('gallery');
@@ -66,6 +66,7 @@ class GalleryPresenter extends AbstractPresenter
             ->setVariable('subtitle', $gallery->getSubtitle())
             ->setVariable('description', $gallery->getDescription())
             ->setVariable('date', $gallery->getDate())
-            ->setVariable('images', $gallery->getImages());
+            ->setVariable('images', $gallery->getImages())
+            ->setVariable('tags', $gallery->getTags());
     }
 }

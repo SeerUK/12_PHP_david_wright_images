@@ -16,7 +16,7 @@ use DWI\CoreBundle\View\Presenter\AbstractPresenter;
 /**
  * Gallery Presenter
  */
-class DeleteImagePresenter extends AbstractPresenter
+class DeletePresenter extends AbstractPresenter
 {
     /**
      * Prepare view
@@ -37,7 +37,7 @@ class DeleteImagePresenter extends AbstractPresenter
      *
      * @return ViewModel
      */
-    public function prepareImage()
+    private function prepareImage()
     {
         $ivm   = new ViewModel();
         $image = $this->getVariable('image');

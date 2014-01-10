@@ -1,4 +1,5 @@
 {% set portfolio = model.portfolio %}
+{% set tags = model.tags %}
 
 {% extends '::base.html.twig' %}
 
@@ -13,10 +14,9 @@
             <div class="tags">
                 <ul class="tags">
                     <li class="active"><a href="#">All</a></li>
-                    <li><a href="#">Concerts</a></li>
-                    <li><a href="#">Landscapes</a></li>
-                    <li><a href="#">Portrait</a></li>
-                    <li><a href="#">Theatre</a></li>
+                    {% for tag in tags %}
+                        <li><a href="#">{{ tag.name }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

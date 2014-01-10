@@ -16,9 +16,9 @@ use DWI\CoreBundle\View\Presenter\AbstractPresenter;
 use DWI\PortfolioBundle\Entity\Gallery;
 
 /**
- * Portfolio Presenter
+ * Portfolio View Presenter
  */
-class PortfolioPresenter extends AbstractPresenter
+class ViewPresenter extends AbstractPresenter
 {
     /**
      * Prepare view model
@@ -30,7 +30,8 @@ class PortfolioPresenter extends AbstractPresenter
         $model = new ViewModel();
         $model
             ->addChild($this->prepareControls(), 'controls')
-            ->addChild($this->prepareGalleries(), 'portfolio');
+            ->addChild($this->prepareGalleries(), 'portfolio')
+            ->setVariable('tags', $this->getVariable('tags'));
 
         return $model;
     }

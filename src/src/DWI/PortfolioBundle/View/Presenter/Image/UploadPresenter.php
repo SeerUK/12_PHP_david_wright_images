@@ -16,7 +16,7 @@ use DWI\CoreBundle\View\Presenter\AbstractPresenter;
 /**
  * Upload Image Presenter
  */
-class UploadImagePresenter extends AbstractPresenter
+class UploadPresenter extends AbstractPresenter
 {
     /**
      * Prepare view
@@ -38,7 +38,7 @@ class UploadImagePresenter extends AbstractPresenter
      *
      * @return Symfony\Component\Form\FormView
      */
-    public function prepareForm()
+    private function prepareForm()
     {
         $fvm      = new ViewModel();
         $formView = $this->getVariable('form')
@@ -63,7 +63,7 @@ class UploadImagePresenter extends AbstractPresenter
      *
      * @return ViewModel
      */
-    public function prepareGallery()
+    private function prepareGallery()
     {
         $gvm     = new ViewModel();
         $gallery = $this->getVariable('gallery');

@@ -33,6 +33,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
                 g,
                 gci,
                 gi,
+                t,
                 gv
             FROM
                 DWIPortfolioBundle:Gallery AS g
@@ -40,6 +41,8 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
                 g.coverImage AS gci
             LEFT JOIN
                 g.images AS gi
+            LEFT JOIN
+                g.tags AS t
             LEFT JOIN
                 g.views AS gv
             WHERE

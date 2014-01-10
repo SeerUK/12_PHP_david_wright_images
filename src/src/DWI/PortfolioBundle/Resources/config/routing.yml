@@ -1,8 +1,16 @@
 dwi_portfolio_homepage:
     pattern:  /portfolio/{page}
-    defaults: { _controller: DWIPortfolioBundle:Portfolio:portfolio, page: 1 }
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:view, page: 1 }
     methods:  [GET]
     requirements:
+        page: \d+
+
+dwi_portfolio_view_tag:
+    pattern:  /portfolio/tag/{id}/{page}
+    defaults: { _controller: DWIPortfolioBundle:Portfolio:viewTag, page: 1 }
+    methods:  [GET]
+    requirements:
+        id: \d+
         page: \d+
 
 dwi_portfolio_gallery:

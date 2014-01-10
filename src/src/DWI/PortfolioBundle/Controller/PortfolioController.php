@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
 use DWI\PortfolioBundle\Entity\Gallery;
+use DWI\PortfolioBundle\Entity\Tag;
 
 /**
  * Portolio Controller
@@ -21,27 +22,60 @@ use DWI\PortfolioBundle\Entity\Gallery;
 class PortfolioController extends Controller
 {
     /**
-     * View Portfolio
+     * View all galleries
      *
      * @param  string $page
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function portfolioAction($page)
+    public function viewAction($page)
     {
-        $sc = $this->get('security.context');
-        $gr = $this->get('dwi_portfolio.gallery_repository');
-        $pp = $this->get('dwi_portfolio.portfolio_presenter');
+        $galleryRepo = $this->get('dwi_portfolio.gallery_repository');
+        $tagRepo     = $this->get('dwi_portfolio.tag_repository');
+        $presenter   = $this->get('dwi_portfolio.portfolio_view_presenter');
 
-        // Setup view model
-        $pp->setVariable('galleries', $gr->findByPage($page, 10));
+        $presenter
+            ->setVariable('galleries', $galleryRepo->findByPage($page, 10))
+            ->setVariable('tags', $tagRepo->findPrimary());
 
-        if ($sc->isGranted('ROLE_ADMIN')) {
-            $vg = $this->get('dwi_portfolio.gallery_view_gateway');
-            $pp->setVariable('views', $vg->findTotal());
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $viewGateway = $this->get('dwi_portfolio.gallery_view_gateway');
+            $presenter->setVariable('views', $viewGateway->findTotal());
         }
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
-            'model' => $pp->prepareView(),
+            'model' => $presenter->prepareView(),
+        ));
+    }
+
+
+    /**
+     * View galleries with given tag
+     *
+     * @param  Tag     $tag
+     * @param  integer $page
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function viewTagAction(Tag $tag, $page)
+    {
+        if ( ! $tag) {
+            throw $this->createNotFoundException('That tag doesn\'t exist!');
+        }
+
+        $galleryRepo = $this->get('dwi_portfolio.gallery_repository');
+        $tagRepo     = $this->get('dwi_portfolio.tag_repository');
+        $presenter   = $this->get('dwi_portfolio.portfolio_view_tag_presenter');
+
+        $presenter
+            ->setVariable('galleries', $galleryRepo->findByPage($page, 10))
+            ->setVariable('tags', $tagRepo->findPrimary());
+
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $viewGateway = $this->get('dwi_portfolio.gallery_view_gateway');
+            $presenter->setVariable('views', $viewGateway->findTotal());
+        }
+
+        return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
+            'model' => $presenter->prepareView(),
         ));
     }
 }
