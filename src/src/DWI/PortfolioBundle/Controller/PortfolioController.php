@@ -34,7 +34,7 @@ class PortfolioController extends Controller
         $presenter   = $this->get('dwi_portfolio.portfolio_view_presenter');
 
         $presenter
-            ->setVariable('galleries', $galleryRepo->findByPage($page, 10))
+            ->setVariable('galleries', $galleryRepo->findByPage($page, 9))
             ->setVariable('tags', $tagRepo->findPrimary());
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
@@ -66,7 +66,8 @@ class PortfolioController extends Controller
         $presenter   = $this->get('dwi_portfolio.portfolio_view_tag_presenter');
 
         $presenter
-            ->setVariable('galleries', $galleryRepo->findByPage($page, 10))
+            ->setVariable('galleries', $galleryRepo->findByTagAndPage($tag->getId(), $page, 10))
+            ->setVariable('tag', $tag)
             ->setVariable('tags', $tagRepo->findPrimary());
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {

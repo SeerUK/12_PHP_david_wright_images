@@ -9,16 +9,16 @@
     <div class="canvas">
         <div class="jumbotron">
             Portfolio<br />
-            <small>Take a look at some of my recent work below</small>
+            {% if model.tag is defined %}
+                <small>My galleries tagged with '{{ model.tag.name }}'</small>
+            {% else %}
+                <small>Take a look at some of my recent work below</small>
+            {% endif %}
 
-            <div class="tags">
-                <ul class="tags">
-                    <li class="active"><a href="#">All</a></li>
-                    {% for tag in tags %}
-                        <li><a href="#">{{ tag.name }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% include 'DWIPortfolioBundle:Portfolio/partials:portfolio-tags.html.twig' with {
+                'tag': (model.tag is defined) ? model.tag : false,
+                'tags': model.tags
+            } %}
         </div>
     </div>
 
@@ -33,11 +33,6 @@
                     <div class="thumb {{ not gallery.isActive ? 'inactive' }}" title="{{ gallery.title }}">
                         <div class="thumb-overlay">
                             <a class="cover" href="{{ url('dwi_portfolio_gallery', {'id': gallery.id}) }}"></a>
-                            {# {% if is_granted('ROLE_ADMIN') %}
-                                <div class="controls pull-right">
-                                    <a class="control" href="{{ url('dwi_portfolio_remove_gallery', {'id': gallery.id}) }}"><i class="flaticon32 flaticon32-x-2"></i></a>
-                                </div>
-                            {% endif %} #}
                         </div>
 
                         {% if gallery.coverImagePath %}

@@ -31,6 +31,7 @@ class ViewTagPresenter extends AbstractPresenter
         $model
             ->addChild($this->prepareControls(), 'controls')
             ->addChild($this->prepareGalleries(), 'portfolio')
+            ->addChild($this->prepareTag(), 'tag')
             ->setVariable('tags', $this->getVariable('tags'));
 
         return $model;
@@ -80,6 +81,22 @@ class ViewTagPresenter extends AbstractPresenter
         }
 
         return $portfolio;
+    }
+
+
+    /**
+     * Prepare Tag view model
+     *
+     * @return ViewModel
+     */
+    private function prepareTag()
+    {
+        $model = new ViewModel();
+        $tag   = $this->getVariable('tag');
+
+        return $model
+            ->setVariable('id', $tag->getId())
+            ->setVariable('name', $tag->getName());
     }
 
 

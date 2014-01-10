@@ -21,7 +21,7 @@ use DWI\PortfolioBundle\Entity\Gallery;
 class GalleryRepository extends EntityRepository implements PersistentEntityRepository
 {
     /**
-     * Find galleryes by id, also returns gallery images
+     * Find galleries by id
      *
      * @param  integer $id
      * @return DWI\PortfolioBundle\Entity\Gallery
@@ -57,7 +57,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
 
 
     /**
-     * Find galleries by page, returns gallery cover images and tags too
+     * Find galleries by page
      *
      * @param  integer $page
      * @param  integer $limit
@@ -87,6 +87,49 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
 
         $offset = $this->getPageFirstResult($page, $limit);
         $query  = $this->getEntityManager()->createQuery($dql)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit);
+
+        return $query->useResultCache(true)
+            ->getResult();
+    }
+
+
+    /**
+     * Find galleries by tag and page
+     *
+     * @param  integer $tagId
+     * @param  integer $page
+     * @param  integer $limit
+     * @return array
+     */
+    public function findByTagAndPage($tagId, $page, $limit)
+    {
+        $dql = '
+            SELECT
+                g,
+                gci,
+                gcii,
+                t,
+                gv
+            FROM
+                DWIPortfolioBundle:Gallery AS g
+            LEFT JOIN
+                g.coverImage AS gci
+            LEFT JOIN
+                gci.image AS gcii
+            LEFT JOIN
+                g.tags AS t
+            LEFT JOIN
+                g.views AS gv
+            WHERE
+                t.id = :tagId
+            ORDER BY
+                g.id DESC';
+
+        $offset = $this->getPageFirstResult($page, $limit);
+        $query  = $this->getEntityManager()->createQuery($dql)
+            ->setParameter('tagId', $tagId)
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 

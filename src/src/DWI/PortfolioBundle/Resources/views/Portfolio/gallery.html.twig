@@ -54,7 +54,9 @@
                         {% spaceless %}
                             <dd>
                                 {% for tag in tags %}
-                                    {{ tag.name }}{% if not loop.last %}, {% endif %}
+                                    <a href="{{ url('dwi_portfolio_view_tag', { id: tag.id }) }}">
+                                        {{ tag.name }}{% if not loop.last %}, {% endif %}
+                                    </a>
                                 {% endfor %}
                             </dd>
                         {% endspaceless %}

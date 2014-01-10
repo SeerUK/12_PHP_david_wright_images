@@ -1,0 +1,21 @@
+<div class="tags">
+    <ul class="tags">
+        {% if not tag %}
+            <li class="active">
+        {% else %}
+            <li>
+        {% endif %}
+            <a href="{{ url('dwi_portfolio_homepage') }}">All</a>
+        </li>
+
+        {% for primaryTag in tags %}
+            {% if tag and tag.id == primaryTag.id %}
+                <li class="active">
+            {% else %}
+                <li>
+            {% endif %}
+                <a href="{{ url('dwi_portfolio_view_tag', { id: primaryTag.id }) }}">{{ primaryTag.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
