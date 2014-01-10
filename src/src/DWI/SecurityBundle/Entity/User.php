@@ -22,7 +22,7 @@ use Doctrine\ORM\Mapping\JoinTable;
  * @ORM\Table(name="User")
  * @ORM\Entity(repositoryClass="DWI\SecurityBundle\Entity\UserRepository")
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -172,5 +172,25 @@ class User implements UserInterface
     public function equals(UserInterface $user)
     {
         return $this->userName === $user->getUsername();
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 }
