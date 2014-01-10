@@ -193,7 +193,6 @@ class User implements UserInterface, \Serializable
             $this->password,
             $this->salt,
             $this->email,
-            $this->roles,
             $this->isActive
         ));
     }
@@ -209,7 +208,6 @@ class User implements UserInterface, \Serializable
             $this->password,
             $this->salt,
             $this->email,
-            $this->roles,
             $this->isActive
         ) = unserialize($serialized);
     }
