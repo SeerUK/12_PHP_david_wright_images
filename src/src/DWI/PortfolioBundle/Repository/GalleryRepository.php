@@ -47,12 +47,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
             ->where('g.id = :id')
             ->setParameter('id', $id);
 
-        if (is_array($options)) {
-            if (isset($options['isActive'])) {
-                $query->andWhere('g.isActive = :isActive')
-                    ->setParameter('isActive', $options['isActive']);
-            }
-        }
+        $query  = $this->augmentQueryFromOptions($query, $options);
 
         return $query->getQuery()
             ->useResultCache(true)
@@ -80,6 +75,19 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
             ->leftJoin('g.views', 'gv')
             ->orderBy('g.id', 'DESC');
 
+        $query  = $this->augmentQueryFromOptions($query, $options);
+        $offset = $this->getPageFirstResult($page, self::PER_PAGE);
+
+        return $query->getQuery()
+            ->setFirstResult($offset)
+            ->setMaxResults(self::PER_PAGE)
+            ->useResultCache(true)
+            ->getResult();
+    }
+
+
+    private function augmentQueryFromOptions($query, $options)
+    {
         if (is_array($options)) {
             if (isset($options['isActive'])) {
                 $query->andWhere('g.isActive = :isActive')
@@ -92,13 +100,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
             }
         }
 
-        $offset = $this->getPageFirstResult($page, self::PER_PAGE);
-
-        return $query->getQuery()
-            ->setFirstResult($offset)
-            ->setMaxResults(self::PER_PAGE)
-            ->useResultCache(true)
-            ->getResult();
+        return $query;
     }
 
 
