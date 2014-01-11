@@ -30,7 +30,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      * Find galleries by id
      *
      * @param  integer $id
-     * @param   [varname] [description]
+     * @param  array   $options
      * @return DWI\PortfolioBundle\Entity\Gallery
      */
     public function findById($id, array $options = null)
@@ -59,7 +59,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      * Find galleries by page
      *
      * @param  integer $page
-     * @param  integer $limit
+     * @param  array   $options
      * @return array
      */
     public function findByPage($page, array $options)
@@ -86,6 +86,13 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
     }
 
 
+    /**
+     * Augment given query with given options
+     *
+     * @param  QueryBuilder $query
+     * @param  array        $options
+     * @return QueryBuilder
+     */
     private function augmentQueryFromOptions($query, $options)
     {
         if (is_array($options)) {
