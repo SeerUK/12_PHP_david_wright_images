@@ -21,37 +21,41 @@ use DWI\PortfolioBundle\Entity\Gallery;
 class GalleryRepository extends EntityRepository implements PersistentEntityRepository
 {
     /**
+     * Number of galleries per-age
+     */
+    const PER_PAGE = 9;
+
+
+    /**
      * Find galleries by id
      *
      * @param  integer $id
+     * @param   [varname] [description]
      * @return DWI\PortfolioBundle\Entity\Gallery
      */
-    public function findById($id)
+    public function findById($id, array $options = null)
     {
-        $dql = '
-            SELECT
-                g,
-                gci,
-                gi,
-                t,
-                gv
-            FROM
-                DWIPortfolioBundle:Gallery AS g
-            LEFT JOIN
-                g.coverImage AS gci
-            LEFT JOIN
-                g.images AS gi
-            LEFT JOIN
-                g.tags AS t
-            LEFT JOIN
-                g.views AS gv
-            WHERE
-                g.id = :id';
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $query = $this->getEntityManager()->createQuery($dql)
+        $query = $qb
+            ->select('g, gci, gi, t, gv')
+            ->from('DWIPortfolioBundle:Gallery', 'g')
+            ->leftJoin('g.coverImage', 'gci')
+            ->leftJoin('g.images', 'gi')
+            ->leftJoin('g.tags', 't')
+            ->leftJoin('g.views', 'gv')
+            ->where('g.id = :id')
             ->setParameter('id', $id);
 
-        return $query->useResultCache(true)
+        if (is_array($options)) {
+            if (isset($options['isActive'])) {
+                $query->andWhere('g.isActive = :isActive')
+                    ->setParameter('isActive', $options['isActive']);
+            }
+        }
+
+        return $query->getQuery()
+            ->useResultCache(true)
             ->getSingleResult();
     }
 
@@ -63,77 +67,37 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      * @param  integer $limit
      * @return array
      */
-    public function findByPage($page, $limit)
+    public function findByPage($page, array $options)
     {
-        $dql = '
-            SELECT
-                g,
-                gci,
-                gcii,
-                t,
-                gv
-            FROM
-                DWIPortfolioBundle:Gallery AS g
-            LEFT JOIN
-                g.coverImage AS gci
-            LEFT JOIN
-                gci.image AS gcii
-            LEFT JOIN
-                g.tags AS t
-            LEFT JOIN
-                g.views AS gv
-            ORDER BY
-                g.id DESC';
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $offset = $this->getPageFirstResult($page, $limit);
-        $query  = $this->getEntityManager()->createQuery($dql)
+        $query = $qb
+            ->select('g, gci, gcii, t, gv')
+            ->from('DWIPortfolioBundle:Gallery', 'g')
+            ->leftJoin('g.coverImage', 'gci')
+            ->leftJoin('gci.image', 'gcii')
+            ->leftJoin('g.tags', 't')
+            ->leftJoin('g.views', 'gv')
+            ->orderBy('g.id', 'DESC');
+
+        if (is_array($options)) {
+            if (isset($options['isActive'])) {
+                $query->andWhere('g.isActive = :isActive')
+                    ->setParameter('isActive', $options['isActive']);
+            }
+
+            if (isset($options['tagId'])) {
+                $query->andWhere('t.id = :tagId')
+                    ->setParameter('tagId', $options['tagId']);
+            }
+        }
+
+        $offset = $this->getPageFirstResult($page, self::PER_PAGE);
+
+        return $query->getQuery()
             ->setFirstResult($offset)
-            ->setMaxResults($limit);
-
-        return $query->useResultCache(true)
-            ->getResult();
-    }
-
-
-    /**
-     * Find galleries by tag and page
-     *
-     * @param  integer $tagId
-     * @param  integer $page
-     * @param  integer $limit
-     * @return array
-     */
-    public function findByTagAndPage($tagId, $page, $limit)
-    {
-        $dql = '
-            SELECT
-                g,
-                gci,
-                gcii,
-                t,
-                gv
-            FROM
-                DWIPortfolioBundle:Gallery AS g
-            LEFT JOIN
-                g.coverImage AS gci
-            LEFT JOIN
-                gci.image AS gcii
-            LEFT JOIN
-                g.tags AS t
-            LEFT JOIN
-                g.views AS gv
-            WHERE
-                t.id = :tagId
-            ORDER BY
-                g.id DESC';
-
-        $offset = $this->getPageFirstResult($page, $limit);
-        $query  = $this->getEntityManager()->createQuery($dql)
-            ->setParameter('tagId', $tagId)
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
-
-        return $query->useResultCache(true)
+            ->setMaxResults(self::PER_PAGE)
+            ->useResultCache(true)
             ->getResult();
     }
 

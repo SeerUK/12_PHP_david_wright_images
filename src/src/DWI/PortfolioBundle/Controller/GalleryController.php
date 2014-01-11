@@ -39,7 +39,12 @@ class GalleryController extends Controller
 
         // Try fetch gallery
         try {
-            $gallery = $gr->findById($id);
+            $options = array();
+            if ( ! $sc->isGranted('ROLE_ADMIN')) {
+                $options['isActive'] = true;
+            }
+
+            $gallery = $gr->findById($id, $options);
         } catch (NoResultException $e) {
             throw $this->createNotFoundException('That gallery doesn\'t exist!');
         }

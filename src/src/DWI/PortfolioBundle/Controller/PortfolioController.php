@@ -33,14 +33,19 @@ class PortfolioController extends Controller
         $tagRepo     = $this->get('dwi_portfolio.tag_repository');
         $presenter   = $this->get('dwi_portfolio.portfolio_view_presenter');
 
-        $presenter
-            ->setVariable('galleries', $galleryRepo->findByPage($page, 9))
-            ->setVariable('tags', $tagRepo->findPrimary());
-
+        $options = array();
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $viewGateway = $this->get('dwi_portfolio.gallery_view_gateway');
             $presenter->setVariable('views', $viewGateway->findTotal());
+        } else {
+            $options['isActive'] = true;
         }
+
+        $galleries = $galleryRepo->findByPage($page, $options);
+
+        $presenter
+            ->setVariable('galleries', $galleries)
+            ->setVariable('tags', $tagRepo->findPrimary());
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
             'model' => $presenter->prepareView(),
@@ -65,15 +70,20 @@ class PortfolioController extends Controller
         $tagRepo     = $this->get('dwi_portfolio.tag_repository');
         $presenter   = $this->get('dwi_portfolio.portfolio_view_tag_presenter');
 
-        $presenter
-            ->setVariable('galleries', $galleryRepo->findByTagAndPage($tag->getId(), $page, 10))
-            ->setVariable('tag', $tag)
-            ->setVariable('tags', $tagRepo->findPrimary());
+        $options = array('tagId' => $tag->getId());
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $viewGateway = $this->get('dwi_portfolio.gallery_view_gateway');
             $presenter->setVariable('views', $viewGateway->findTotal());
+        } else {
+            $options['isActive'] = true;
         }
+
+        $presenter
+            ->setVariable('galleries', $galleryRepo->findBypage($page, $options))
+            ->setVariable('tag', $tag)
+            ->setVariable('tags', $tagRepo->findPrimary());
+
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
             'model' => $presenter->prepareView(),
