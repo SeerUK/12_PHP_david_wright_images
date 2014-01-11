@@ -46,6 +46,9 @@ class ViewTagPresenter extends AbstractPresenter
     private function prepareControls()
     {
         $model = new ViewModel();
+        $tag   = $this->getVariable('tag');
+
+        $model->setVariable('views_type', ucfirst($tag->getName()) . ' gallery views');
         $model->setVariable('views', $this->getVariable('views'));
 
         return $model;

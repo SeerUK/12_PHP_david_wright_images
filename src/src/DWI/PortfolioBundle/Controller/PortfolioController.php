@@ -74,7 +74,7 @@ class PortfolioController extends Controller
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $viewGateway = $this->get('dwi_portfolio.gallery_view_gateway');
-            $presenter->setVariable('views', $viewGateway->findTotal());
+            $presenter->setVariable('views', $viewGateway->findTagViews($tag->getId()));
         } else {
             $options['isActive'] = true;
         }

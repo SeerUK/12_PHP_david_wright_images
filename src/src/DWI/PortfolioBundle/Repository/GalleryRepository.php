@@ -62,7 +62,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
      * @param  array   $options
      * @return array
      */
-    public function findByPage($page, array $options)
+    public function findByPage($page, array $options = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 

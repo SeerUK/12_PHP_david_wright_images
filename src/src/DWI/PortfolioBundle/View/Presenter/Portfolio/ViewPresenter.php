@@ -45,6 +45,7 @@ class ViewPresenter extends AbstractPresenter
     private function prepareControls()
     {
         $model = new ViewModel();
+        $model->setVariable('views_type', 'Total gallery views');
         $model->setVariable('views', $this->getVariable('views'));
 
         return $model;

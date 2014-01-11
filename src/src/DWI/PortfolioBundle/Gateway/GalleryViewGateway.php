@@ -92,6 +92,53 @@ class GalleryViewGateway extends AbstractGateway
 
 
     /**
+     * Find total views of galleries with given tag ID
+     *
+     * @param  integer $tagId
+     * @return integer
+     */
+    public function findTagViews($tagId)
+    {
+        if ( ! filter_var($tagId, FILTER_VALIDATE_INT)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' expected an integer. Received ' .
+                gettype($tagId)
+            );
+        }
+
+        $ck = __METHOD__ . ':' . $tagId;
+
+        // Fetch cached result, or recache
+        if ( ! (bool) $result = $this->cache->fetch($ck)) {
+            $sql = '
+                SELECT
+                    COALESCE(SUM(gv.views), 0) AS views
+                FROM
+                    GalleryView AS gv
+                LEFT JOIN
+                    Gallery AS g ON g.id = gv.galleryId
+                LEFT JOIN
+                    GalleryTag AS gt ON gt.galleryId = g.id
+                WHERE
+                    gt.tagId = :tagId';
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindValue('tagId', $tagId);
+            $stmt->execute();
+
+            $result = $stmt->fetch();
+
+            $this->cache->save($ck, $result);
+        }
+
+        return $result['views']
+            ? $result['views']
+            : 0;
+    }
+
+
+    /**
      * Record view by gallery id
      *
      * @param  integer $id
