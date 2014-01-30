@@ -29,6 +29,7 @@ module.exports = function (grunt) {
         uglify: {
             options: {
                 // mangle: false
+                debug: true,
             },
             target: {
                 files: {

@@ -1,13 +1,18 @@
 $(function() {
-    $('.file-multiple').mousedown(function() {
+    $('body').on('mousedown', '.file-multiple', function() {
         $(this).find('.btn').addClass('active');
-    }).mouseup(function() {
+    });
+
+    $('body').on('mouseup', '.file-multiple', function() {
         $(this).find('.btn').removeClass('active');
     });
 
-    $('.file-multiple').mouseover(function() {
+    $('body').on('mouseover', '.file-multiple', function() {
         $(this).find('.btn').addClass('hover');
-    }).mouseout(function() {
+    });
+
+    $('body').on('mouseout', '.file-multiple', function() {
+        $(this).find('.btn').removeClass('active');
         $(this).find('.btn').removeClass('hover');
     });
 });

@@ -13,12 +13,45 @@
 
     "use strict";
 
-    var iuidx = 0;
+    var ImageUploader = function(am) {
+        var that = this;
 
-    var ImageUploader = function(am, el) {
-        var that = this,
-            engine = Handlebars,
-            container;
+
+        /**
+         * Options & Default Objects
+         *
+         * @type Object
+         */
+        this.options  = {};
+        this.defaults = {
+            CSRFToken: {
+                name: '',
+                value: '',
+            },
+            engine: Handlebars,
+            fileField: '',
+            cancelUrl: '',
+            uploadUrl: '/',
+        };
+
+
+        /**
+         * Elements handled by ImageUploader
+         *
+         * @type Object
+         */
+        this.elements = {
+            inputFile: $('')
+        };
+
+
+        /**
+         * Array of files
+         *
+         * @type Array
+         */
+        this.files = [];
+
 
         /**
          * Binds interactive events
@@ -26,8 +59,26 @@
          * @return ImageUploader
          */
         this.bindEvents = function() {
+            var container = that.elements.container;
+            that.elements = $.extend({}, that.elements, {
+                inputFile: container.find('.inputFiles'),
+            });
+
+            that.elements.inputFile.change(that.inputFileChangeEvent);
+
             return this;
         };
+
+
+        this.inputFileChangeEvent = function() {
+
+        };
+
+
+        this.addFile = function() {
+
+        };
+
 
         /**
          * Draws a given template
@@ -36,6 +87,7 @@
          * @return string
          */
         this.drawTemplate = function(template, vars) {
+            var engine   = that.options.engine;
             var template = engine.compile($('#template-' + template).html());
 
             if (vars == null || typeof vars !== 'object') {
@@ -45,16 +97,20 @@
             return template(vars);
         };
 
+
         /**
          * Draw the container for the images
          *
          * @return ImageUploader
          */
-        this.drawContainer = function() {
-            el.append(this.drawTemplate('images', {id: 'iu-images-' + iuidx}));
+        this.drawBase = function() {
+            that.elements.container.append(this.drawTemplate('base', {
+                cancelUrl: that.options.cancelUrl,
+            }));
 
-            return $('#iu-images-' + iuidx);
+            return this;
         };
+
 
         /**
          * Draw an image preview
@@ -65,20 +121,28 @@
 
         };
 
-        return {
-            addImagePreview: function() {
 
-            },
-            init: function() {
-                // Increment IU Index
-                iuidx++;
-
-                // Draw base container
-                container = that.drawContainer();
-
-                // Bind events to elements
-                that.bindEvents();
+        /**
+         * Set options
+         *
+         * @param Object opts
+         */
+        this.setOptions = function(opts) {
+            if (opts != null && typeof opts === 'object') {
+                that.options = $.extend({}, that.defaults, opts);
             }
+
+            return this;
+        };
+
+
+        return {
+            init: function(el, opts) {
+                that.setOptions(opts);
+                that.elements.container = el;
+                that.drawBase();
+                that.bindEvents();
+            },
         }
     };
 

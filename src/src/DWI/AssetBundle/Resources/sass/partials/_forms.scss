@@ -67,7 +67,6 @@
         > input[type="file"] {
             @include opacity(0);
 
-            cursor: pointer;
             position: absolute;
             top:0;
             bottom: 0;

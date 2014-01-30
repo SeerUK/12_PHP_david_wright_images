@@ -1,6 +1,28 @@
-<script id="template-images" type="text/x-handlebars-template">
+<script id="template-base" type="text/x-handlebars-template">
     {% verbatim %}
-        <ul id="{{id}}" class="iu-images"></ul>
+        <div class="canvas canvas-padded gray-lighter">
+            <div class="form-compact step1">
+                <div class="form-row">
+                    <div class="btn-table">
+                        <div class="btn-row">
+                            <div class="btn-cell file-multiple">
+                                <input class="inputFiles" type="file" name="test" accept="image/jpeg" multiple="multiple" />
+                                <button class="btn btn-block btn-success">Add Files</button>
+                            </div>
+                            <div class="btn-cell">
+                                <button class="btn btn-block btn-success">Upload</button>
+                            </div>
+                            <div class="btn-cell">
+                                <a class="btn btn-block btn-white" href="{{cancelUrl}}">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="canvas canvas-padded">
+            <ul class="iu-images"></ul>
+        </div>
     {% endverbatim %}
 </script>
 
@@ -13,11 +35,19 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
-        var el = $('#previews');
+        var el = $('#image-uploader');
         var am = new AjaxManager();
-        var iu = new ImageUploader(am, el);
+        var iu = new ImageUploader(am);
 
-        iu.init();
+        iu.init(el, {
+            CSRFToken: {
+                name: "{{ form.fields._token.name }}",
+                value: "{{ form.fields._token.value }}",
+            },
+            fileField: "{{ form.fields.file.name }}",
+            cancelUrl: "{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}",
+            uploadUrl: "{{ url('dwi_portfolio_upload_image', {id: gallery.id}) }}",
+        });
     });
 
 </script>

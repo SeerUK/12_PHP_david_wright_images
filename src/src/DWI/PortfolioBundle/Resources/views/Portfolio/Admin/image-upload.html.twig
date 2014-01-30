@@ -13,52 +13,7 @@
         </div>
     </div>
 
-    <div id="shown" class="canvas canvas-padded gray-lighter">
-        <div class="form-compact step1">
-            <div class="form-row">
-                <div class="btn-table">
-                    <div class="btn-row">
-                        <div class="btn-cell file-multiple">
-                            <input id="files" type="file" name="{{ form.fields.file.name }}" accept="image/jpeg" multiple="multiple" />
-                            <button class="btn btn-block btn-success">Choose Files</button>
-                        </div>
-                        <div class="btn-cell">
-                            <a class="btn btn-block btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="previews" class="canvas canvas-padded">
-        Preparing image uploader...
-    </div>
-
-    <div id="hidden" class="hide">
-        <div class="form-compact step2">
-            <div class="form-row text-center">
-                <div class="btn-table">
-                    <div class="btn-row">
-                        <div class="btn-cell">
-                            <button id="submit" class="btn btn-block btn-success">Upload</button>
-                        </div>
-                        <div class="btn-cell">
-                            <a class="btn btn-block btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-compact step3">
-            <div class="form-row text-center">
-                <a class="btn btn-block btn-success" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Continue</a>
-            </div>
-        </div>
-        <div class="form previews">
-            <ul id="fileList" class="image-previews"></ul>
-        </div>
-    </div>
+    <div id="image-uploader"></div>
 {% endblock %}
 
 {% block javascript %}
