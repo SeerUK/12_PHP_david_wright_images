@@ -1,0 +1,383 @@
+{% set form = model.form %}
+{% set gallery = model.gallery %}
+
+{% extends '::base.html.twig' %}
+
+{% block title %}Upload Images{% endblock %}
+
+{% block body %}
+    <div class="canvas">
+        <div class="jumbotron">
+            Upload Images<br />
+            <small>Into gallery "{{ gallery.title }}"</small>
+        </div>
+    </div>
+
+    <div id="shown" class="canvas canvas-padded gray-lighter">
+        <div class="form-compact step1">
+            <div class="form-row">
+                <div class="btn-table">
+                    <div class="btn-row">
+                        <div class="btn-cell file-multiple">
+                            <input id="files" type="file" name="{{ form.fields.file.name }}" accept="image/jpeg" multiple="multiple" />
+                            <button class="btn btn-block btn-success">Choose Files</button>
+                        </div>
+                        <div class="btn-cell">
+                            <a class="btn btn-block btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="previews" class="canvas canvas-padded">
+        Preparing image uploader
+    </div>
+
+    <div id="hidden" class="hide">
+        <div class="form-compact step2">
+            <div class="form-row text-center">
+                <div class="btn-table">
+                    <div class="btn-row">
+                        <div class="btn-cell">
+                            <button id="submit" class="btn btn-block btn-success">Upload</button>
+                        </div>
+                        <div class="btn-cell">
+                            <a class="btn btn-block btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-compact step3">
+            <div class="form-row text-center">
+                <a class="btn btn-block btn-success" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Continue</a>
+            </div>
+        </div>
+        <div class="form previews">
+            <ul id="fileList" class="image-previews"></ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+
+        var am         = new AjaxManager();
+        var elShown    = $('#shown');
+        var elHidden   = $('#hidden');
+        var elFiles    = $('#files');
+        var elFileList = $('#fileList');
+        var elPreviews = $('#previews');
+        var elSubmit   = $('#submit');
+        var elStep1    = $('.step1');
+        var elStep2    = $('.step2');
+        var elStep3    = $('.step3');
+        var images     = new Array();
+        var fileList;
+
+        elFiles.change(function(e) {
+            fileList = e.target.files;
+            images   = images.concat(convertFileListToArray(fileList));
+
+            if (images.length) {
+                createPreviews(images);
+
+                elPreviews.removeClass('hide');
+
+                elStep1.appendTo(elHidden);
+                elStep2.appendTo(elShown);
+            } else {
+                elPreviews.addClass('hide');
+            }
+        });
+
+        elSubmit.click(function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            // Go over each file and upload them
+            for (var i = 0; i < images.length; i++) {
+                if ( ! isValidImage(images[i]['file'])) {
+                    continue;
+                }
+
+                // Spinner here
+                updatePreviewStatus(images[i]['item'], 'waiting');
+
+                var data = new FormData();
+
+                data.append("{{ form.fields._token.name }}", "{{ form.fields._token.value }}");
+                data.append("{{ form.fields.file.name }}", images[i]['file']);
+
+                am.addRequest(createAjaxOptions(data, images[i]));
+                images.splice(i, 1);
+                i--;
+            }
+
+            am.run(function() {
+                elStep2.appendTo(elHidden);
+                elStep3.appendTo(elShown);
+            });
+
+            if ( ! images.length) {
+                elSubmit.prop('disabled', true);
+            }
+        });
+
+        $('body').on('click', '.remove-image', function() {
+            removeImage($(this).parent().data('item'));
+
+            if ( ! images.length) {
+                elStep1.appendTo(elShown);
+                elStep2.appendTo(elHidden);
+
+                elPreviews.addClass('hide');
+            }
+        });
+
+        // Functions
+        // ================================================================= //
+
+        /**
+         * Create ajax request options
+         *
+         * @param  FormData data
+         * @param  Array    image
+         * @return jqXHR
+         */
+        function createAjaxOptions(data, image)
+        {
+            return {
+                url: "{{ url('dwi_portfolio_upload_image', {id: gallery.id}) }}",
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                beforeSend: function(jqXHR, settings) {
+                    updatePreviewStatus(image['item'], 'uploading')
+                },
+                success: function(data, status, jqXHR) {
+                    if (data.id) {
+                        updatePreviewStatus(image['item'], 'success');
+
+                        return true;
+                    } else {
+                        updatePreviewStatus(image['item'], 'error');
+
+                        return false;
+                    }
+                },
+                error: function(jqXHR, status, error) {
+                    updatePreviewStatus(image['item'], 'error');
+
+                    return false;
+                }
+            };
+        }
+
+
+        /**
+         * Convert FileList to Array
+         *
+         * @param  FileList fileList
+         * @return Array
+         */
+        function convertFileListToArray(fileList)
+        {
+            var images = new Array();
+
+            $.each(fileList, function(key, value) {
+                if (isValidImage(value)) {
+                    images[key] = {
+                        'file': value,
+                        'item': null
+                    };
+                }
+            });
+
+            return images;
+        }
+
+
+        /**
+         * Create previews
+         *
+         * @param  FileList files
+         */
+        function createPreviews(images)
+        {
+            // Destroy old previews
+            elFileList.html('');
+
+            // Synchronus previews
+            createPreview(0, images);
+        }
+
+
+        /**
+         * Create preview
+         *
+         * @param  File file
+         * @return bool
+         */
+        function createPreview(key, images)
+        {
+            if ( ! images[key]) {
+                return false;
+            }
+
+            file = images[key]['file'];
+
+            if (isValidImage(file)) {
+                var reader = new FileReader();
+
+                reader.onload = (function(file) {
+                    return function(e) {
+                        var elLi      = $('<li />');
+                        var elPreview = $('<div />');
+                        var elRemove  = $('<button />');
+                        var image     = e.target.result;
+
+                        images[key]['item'] = md5(image);
+
+                        elPreview
+                            .addClass('preview')
+                            .css({
+                                'background-image': 'url(' + image + ')',
+                                'background-position': '50%',
+                                'background-size': 'cover',
+                            })
+                            .appendTo(elLi);
+
+                        elRemove
+                            .addClass('btn')
+                            .addClass('btn-block')
+                            .addClass('btn-danger')
+                            .addClass('status')
+                            .addClass('remove-image')
+                            .text('Remove')
+                            .appendTo(elLi);
+
+                        elLi
+                            .attr('data-item', images[key]['item'])
+                            .appendTo(elFileList);
+
+                        createPreview((key + 1), images);
+                    }
+                })(file);
+
+                reader.readAsDataURL(file);
+
+                return true;
+            } else {
+                createPreview((key + 1), images);
+
+                return false
+            }
+        }
+
+
+        /**
+         * Check if image is valid file format
+         *
+         * @param  File file
+         * @return bool
+         */
+        function isValidImage(image)
+        {
+            return image.type.match('image/jpeg')
+                ? true
+                : false;
+        }
+
+
+        /**
+         * Remove image & preview
+         *
+         * @param  string item
+         * @return bool
+         */
+        function removeImage(item)
+        {
+            var found = false;
+
+            for (var i = 0; i < images.length; i++) {
+                if (item === images[i].item) {
+                    images.splice(i, 1);
+                    removePreview(item);
+
+                    found = true;
+                    i--;
+                }
+            }
+
+            return found;
+        }
+
+
+        /**
+         * Attempts to remove the preview for the given item
+         *
+         * @param string item
+         */
+        function removePreview(item)
+        {
+            $('[data-item="' + item + '"]').remove();
+        }
+
+
+        /**
+         * Update preview status
+         *
+         * @param string item
+         * @param string status
+         */
+        function updatePreviewStatus(item, status)
+        {
+            var elPreview = elFileList.find('[data-item="' + item + '"]');
+            var elStatus  = elPreview.find('.status');
+
+            switch (status) {
+                case 'waiting':
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-success')
+                        .addClass('btn-warning')
+                        .prop('disabled', true)
+                        .text('Waiting...');
+                    break;
+                case 'uploading':
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-success')
+                        .addClass('btn-warning')
+                        .prop('disabled', true)
+                        .text('Uploading...');
+                    break;
+                case 'success':
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-warning')
+                        .addClass('btn-success')
+                        .prop('disabled', true)
+                        .text('Uploaded');
+                    break;
+                case 'error':
+                    elStatus
+                        .removeClass('btn-warning')
+                        .removeClass('btn-success')
+                        .addClass('btn-danger')
+                        .prop('disabled', true)
+                        .text('Failed');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    </script>
+{% endblock %}

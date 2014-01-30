@@ -1,0 +1,23 @@
+<script id="template-images" type="text/x-handlebars-template">
+    {% verbatim %}
+        <ul id="{{id}}" class="iu-images"></ul>
+    {% endverbatim %}
+</script>
+
+<script id="template-image" type="text/x-handlebars-template">
+    {% verbatim %}
+
+    {% endverbatim %}
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var el = $('#previews');
+        var am = new AjaxManager();
+        var iu = new ImageUploader(am, el);
+
+        iu.init();
+    });
+
+</script>

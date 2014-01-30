@@ -1,0 +1,50 @@
+/**
+ * David Wright Images
+ *
+ * @author  Elliot Wright <wright.elliot@gmail.com>
+ * @since   2013
+ * @package DWI
+ */
+
+/**
+ * Image Uploader
+ */
+;(function(window, $, undefined) {
+
+    "use strict";
+
+    var ImageUploader = function(am) {
+        var that = this;
+
+        /**
+         * Draw the container for the images
+         *
+         * @return string
+         */
+        this.drawContainer = function() {
+
+        };
+
+        /**
+         * Draw an image preview
+         *
+         * @return string
+         */
+        this.drawPreview = function() {
+
+        };
+
+        return {
+            addImagePreview: function() {
+
+            },
+            init: function() {
+                console.log(this);
+            }
+        }
+    };
+
+    // Assign to global namespace
+    window.ImageUploader = ImageUploader;
+
+})(window, jQuery);
