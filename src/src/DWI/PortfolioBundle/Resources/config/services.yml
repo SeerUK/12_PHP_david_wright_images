@@ -10,6 +10,7 @@ parameters:
     dwi_portfolio.tag_entity: "DWIPortfolioBundle:Tag"
 
     # Gateways
+    dwi_portfolio.gallery_gateway.class: DWI\PortfolioBundle\Gateway\GalleryGateway
     dwi_portfolio.gallery_view_gateway.class: DWI\PortfolioBundle\Gateway\GalleryViewGateway
 
     # Forms
@@ -54,6 +55,12 @@ services:
         factory_method: getRepository
         arguments:
             em: %dwi_portfolio.tag_entity%
+
+    dwi_portfolio.gallery_gateway:
+        class: %dwi_portfolio.gallery_gateway.class%
+        arguments:
+            conn: '@doctrine.dbal.default_connection'
+            cache: '@dwi_core.result_cache'
 
     dwi_portfolio.gallery_view_gateway:
         class: %dwi_portfolio.gallery_view_gateway.class%

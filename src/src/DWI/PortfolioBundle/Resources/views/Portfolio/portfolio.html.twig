@@ -1,3 +1,4 @@
+{% set pagination = model.pagination %}
 {% set portfolio = model.portfolio %}
 {% set tags = model.tags %}
 
@@ -44,5 +45,26 @@
                 {% endfor %}
             {% endif %}
         </div>
+        {% if pagination.pages > 1 %}
+            <ul class="pagination">
+                {% if pagination.page != 1 %}
+                    <li>
+                        <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: 1 })) }}">First</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: pagination.page - 1 })) }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for i in pagination.start..pagination.end %}
+                    <li><a class="btn {{ i == pagination.page ? 'btn-danger' : 'btn-white' }}" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: i })) }}">{{ i }}</a></li>
+                {% endfor %}
+
+                {% if pagination.page != pagination.pages %}
+                    <li><a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: pagination.page + 1 })) }}">Next</a></li>
+                    <li><a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: pagination.pages })) }}">Last</a></li>
+                {% endif %}
+            </ul>
+        {% endif %}
     </div>
 {% endblock %}

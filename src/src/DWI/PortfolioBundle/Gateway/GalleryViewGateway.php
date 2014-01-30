@@ -37,15 +37,13 @@ class GalleryViewGateway extends AbstractGateway
 
         // Fetch cached result, or recache
         if ( ! (bool) $result = $this->cache->fetch($ck)) {
-            $sql = '
-                SELECT
-                    COALESCE(gv.views, 0) AS views
-                FROM
-                    GalleryView AS gv
-                WHERE
-                    gv.galleryId = :id';
+            $qb = $this->conn->createQueryBuilder();
 
-            $stmt = $this->conn->prepare($sql);
+            $qb->select('COALESCE(gv.views, 0) AS views');
+            $qb->from('GalleryView', 'gv');
+            $qb->where('gv.galleryId = :id');
+
+            $stmt = $this->conn->prepare($qb->getSql());
             $stmt->bindValue('id', $id);
             $stmt->execute();
 
@@ -71,13 +69,12 @@ class GalleryViewGateway extends AbstractGateway
 
         // Fetch cached result, or recache
         if ( ! (bool) $result = $this->cache->fetch($ck)) {
-            $sql = '
-                SELECT
-                    COALESCE(SUM(views), 0) AS views
-                FROM
-                    GalleryView';
+            $qb = $this->conn->createQueryBuilder();
 
-            $stmt = $this->conn->prepare($sql);
+            $qb->select('COALESCE(SUM(gv.views), 0) AS views');
+            $qb->from('GalleryView', 'gv');
+
+            $stmt   = $this->conn->prepare($qb->getSql());
             $stmt->execute();
 
             $result = $stmt->fetch();
@@ -97,7 +94,7 @@ class GalleryViewGateway extends AbstractGateway
      * @param  integer $tagId
      * @return integer
      */
-    public function findTagViews($tagId)
+    public function findTotalByTagId($tagId)
     {
         if ( ! filter_var($tagId, FILTER_VALIDATE_INT)) {
             throw new \InvalidArgumentException(
@@ -107,30 +104,19 @@ class GalleryViewGateway extends AbstractGateway
             );
         }
 
-        $ck = __METHOD__ . ':' . $tagId;
+        $qb = $this->conn->createQueryBuilder();
 
-        // Fetch cached result, or recache
-        if ( ! (bool) $result = $this->cache->fetch($ck)) {
-            $sql = '
-                SELECT
-                    COALESCE(SUM(gv.views), 0) AS views
-                FROM
-                    GalleryView AS gv
-                LEFT JOIN
-                    Gallery AS g ON g.id = gv.galleryId
-                LEFT JOIN
-                    GalleryTag AS gt ON gt.galleryId = g.id
-                WHERE
-                    gt.tagId = :tagId';
+        $qb->select('COALESCE(SUM(gv.views), 0) AS views');
+        $qb->from('GalleryView', 'gv');
+        $qb->leftJoin('gv', 'Gallery', 'g', 'g.id = gv.galleryId');
+        $qb->leftJoin('g', 'GalleryTag', 'gt', 'gt.galleryId = g.id');
+        $qb->where('gt.tagId = :tagId');
 
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindValue('tagId', $tagId);
-            $stmt->execute();
+        $stmt = $this->conn->prepare($qb->getSql());
+        $stmt->bindValue('tagId', $tagId);
+        $stmt->execute();
 
-            $result = $stmt->fetch();
-
-            $this->cache->save($ck, $result);
-        }
+        $result = $stmt->fetch();
 
         return $result['views']
             ? $result['views']
@@ -168,7 +154,7 @@ class GalleryViewGateway extends AbstractGateway
         $stmt->execute();
 
         $this->destroyCacheByGalleryId($id)
-            ->destroyTotalCache();
+            ->destroyCacheTotal();
     }
 
 
@@ -178,7 +164,7 @@ class GalleryViewGateway extends AbstractGateway
      * @param  integer $id
      * @return GalleryViewGateway
      */
-    public function destroyCacheByGalleryId($id)
+    private function destroyCacheByGalleryId($id)
     {
         $this->cache->delete(get_called_class() . '::findByGalleryId:' . $id);
 
@@ -191,7 +177,7 @@ class GalleryViewGateway extends AbstractGateway
      *
      * @return GalleryViewGateway
      */
-    public function destroyTotalCache()
+    private function destroyCacheTotal()
     {
         $this->cache->delete(get_called_class() . '::findTotal');
 

@@ -29,9 +29,10 @@ class PortfolioController extends Controller
      */
     public function viewAction($page)
     {
-        $galleryRepo = $this->get('dwi_portfolio.gallery_repository');
-        $tagRepo     = $this->get('dwi_portfolio.tag_repository');
-        $presenter   = $this->get('dwi_portfolio.portfolio_view_presenter');
+        $galleryGateway = $this->get('dwi_portfolio.gallery_gateway');
+        $galleryRepo    = $this->get('dwi_portfolio.gallery_repository');
+        $tagRepo        = $this->get('dwi_portfolio.tag_repository');
+        $presenter      = $this->get('dwi_portfolio.portfolio_view_presenter');
 
         $options = array();
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
@@ -45,6 +46,8 @@ class PortfolioController extends Controller
 
         $presenter
             ->setVariable('galleries', $galleries)
+            ->setVariable('galleryCount', $galleryGateway->countTotal($options))
+            ->setVariable('page', $page)
             ->setVariable('tags', $tagRepo->findPrimary());
 
         return $this->render('DWIPortfolioBundle:Portfolio:portfolio.html.twig', array(
@@ -66,21 +69,24 @@ class PortfolioController extends Controller
             throw $this->createNotFoundException('That tag doesn\'t exist!');
         }
 
-        $galleryRepo = $this->get('dwi_portfolio.gallery_repository');
-        $tagRepo     = $this->get('dwi_portfolio.tag_repository');
-        $presenter   = $this->get('dwi_portfolio.portfolio_view_tag_presenter');
+        $galleryGateway = $this->get('dwi_portfolio.gallery_gateway');
+        $galleryRepo    = $this->get('dwi_portfolio.gallery_repository');
+        $tagRepo        = $this->get('dwi_portfolio.tag_repository');
+        $presenter      = $this->get('dwi_portfolio.portfolio_view_tag_presenter');
 
         $options = array('tagId' => $tag->getId());
 
         if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
             $viewGateway = $this->get('dwi_portfolio.gallery_view_gateway');
-            $presenter->setVariable('views', $viewGateway->findTagViews($tag->getId()));
+            $presenter->setVariable('views', $viewGateway->findTotalByTagId($tag->getId()));
         } else {
             $options['isActive'] = true;
         }
 
         $presenter
             ->setVariable('galleries', $galleryRepo->findBypage($page, $options))
+            ->setVariable('galleryCount', $galleryGateway->countTotal($options))
+            ->setVariable('page', $page)
             ->setVariable('tag', $tag)
             ->setVariable('tags', $tagRepo->findPrimary());
 

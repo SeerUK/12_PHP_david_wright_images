@@ -11,9 +11,12 @@
 namespace DWI\PortfolioBundle\View\Presenter\Portfolio;
 
 use DWI\CoreBundle\Exception\InvalidDataTypeException;
+use DWI\CoreBundle\Tools\Pagination\Paginator;
 use DWI\CoreBundle\View\Model\ViewModel;
 use DWI\CoreBundle\View\Presenter\AbstractPresenter;
 use DWI\PortfolioBundle\Entity\Gallery;
+use DWI\PortfolioBundle\Entity\Tag;
+use DWI\PortfolioBundle\Repository\GalleryRepository;
 
 /**
  * Portfolio View Presenter
@@ -30,6 +33,7 @@ class ViewTagPresenter extends AbstractPresenter
         $model = new ViewModel();
         $model
             ->addChild($this->prepareControls(), 'controls')
+            ->addChild($this->preparePagination(), 'pagination')
             ->addChild($this->prepareGalleries(), 'portfolio')
             ->addChild($this->prepareTag(), 'tag')
             ->setVariable('tags', $this->getVariable('tags'));
@@ -84,6 +88,33 @@ class ViewTagPresenter extends AbstractPresenter
         }
 
         return $portfolio;
+    }
+
+
+    /**
+     * Prepare pagination
+     *
+     * @return ViewModel
+     */
+    public function preparePagination()
+    {
+        $model        = new ViewModel();
+        $page         = $this->getVariable('page');
+        $galleryCount = $this->getVariable('galleryCount');
+
+        $pages     = (int) ceil($galleryCount / GalleryRepository::PER_PAGE);
+        $paginator = new Paginator($pages);
+
+        $start = $paginator->calculateStart($page);
+        $end   = $paginator->calculateEnd($page);
+
+        $model
+            ->setVariable('page', $page)
+            ->setVariable('pages', $pages)
+            ->setVariable('start', $start)
+            ->setVariable('end', $end);
+
+        return $model;
     }
 
 
