@@ -136,9 +136,7 @@ var AjaxManager = (function(window, $, undefined) {
          *
          * @type Object
          */
-        this.elements = {
-            inputFile: $('')
-        };
+        this.elements = {};
 
 
         /**
@@ -160,19 +158,78 @@ var AjaxManager = (function(window, $, undefined) {
                 inputFile: container.find('.inputFiles'),
             });
 
-            that.elements.inputFile.change(that.inputFileChangeEvent);
+            that.elements.inputFiles.change(that.inputFileChangeEvent);
 
-            return this;
+            return that;
         };
 
 
-        this.inputFileChangeEvent = function() {
+        /**
+         * File input change event handler
+         *
+         * @param Event e
+         */
+        this.inputFileChangeEvent = function(e) {
+            that.files = that.files.concat(that.convertFileListToArray(e.target.files));
 
+            if (that.files.length) {
+                console.log(that.files);
+            }
         };
 
 
         this.addFile = function() {
 
+        };
+
+
+        /**
+         * Convert FileList to Array
+         *
+         * @param  FileList fileList
+         * @return Array
+         */
+        this.convertFileListToArray = function(files) {
+            var array = new Array();
+
+            $.each(files, function(key, value) {
+                if (that.isValidImageFile(value)) {
+                    array[key] = {
+                        'file': value,
+                        'item': null
+                    };
+                }
+            });
+
+            return array;
+        };
+
+
+        /**
+         * Check if image is valid file format
+         *
+         * @param  File file
+         * @return bool
+         */
+        this.isValidImageFile = function(file)
+        {
+            return file.type.match('image/jpeg')
+                ? true
+                : false;
+        }
+
+
+        /**
+         * Set options
+         *
+         * @param Object opts
+         */
+        this.setOptions = function(opts) {
+            if (opts != null && typeof opts === 'object') {
+                that.options = $.extend({}, that.defaults, opts);
+            }
+
+            return that;
         };
 
 
@@ -200,11 +257,14 @@ var AjaxManager = (function(window, $, undefined) {
          * @return ImageUploader
          */
         this.drawBase = function() {
-            that.elements.container.append(this.drawTemplate('base', {
+            that.elements.container.append(that.drawTemplate('base', {
                 cancelUrl: that.options.cancelUrl,
             }));
 
-            return this;
+            that.elements.inputFiles  = that.elements.container.find('.inputFiles');
+            that.elements.inputUpload = that.elements.container.find('.inputUpload');
+
+            return that;
         };
 
 
@@ -215,20 +275,6 @@ var AjaxManager = (function(window, $, undefined) {
          */
         this.drawPreview = function() {
 
-        };
-
-
-        /**
-         * Set options
-         *
-         * @param Object opts
-         */
-        this.setOptions = function(opts) {
-            if (opts != null && typeof opts === 'object') {
-                that.options = $.extend({}, that.defaults, opts);
-            }
-
-            return this;
         };
 
 
