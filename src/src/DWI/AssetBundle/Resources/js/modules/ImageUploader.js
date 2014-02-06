@@ -118,8 +118,6 @@
 
                     // Create preview
                     that.drawPreview(images[key]['item'], image);
-
-                    // Bind elements to variables? Or, are events naturally bound?
                 }
             })(file);
 
