@@ -159,6 +159,10 @@ var AjaxManager = (function(window, $, undefined) {
             });
 
             that.elements.inputFiles.change(that.inputFileChangeEvent);
+            that.elements.inputUpload.click(that.inputUploadClickEvent);
+
+            // Live events
+            $('body').on('click', '.remove-image', that.removeImageEvent);
 
             return that;
         };
@@ -170,7 +174,7 @@ var AjaxManager = (function(window, $, undefined) {
          * @param Event e
          */
         this.inputFileChangeEvent = function(e) {
-            var images  = that.convertFileListToImagesArray(e.target.files);
+            var images = that.convertFileListToImagesArray(e.target.files);
 
             // Generate previews for new files
             if (images.length) {
@@ -178,6 +182,59 @@ var AjaxManager = (function(window, $, undefined) {
             }
 
             that.images = that.images.concat(images);
+
+            // Reset file input
+            $(this).val('');
+        };
+
+
+        /**
+         * Upload input click event handler
+         *
+         * @param  Event e
+         * @return void
+         */
+        this.inputUploadClickEvent = function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            if ( ! that.images.length) {
+                return;
+            }
+
+            for (var i = 0; i < that.images.length; i++) {
+                if ( ! that.isValidImageFile(that.images[i]['file'])) {
+                    continue;
+                }
+
+                that.updatePreviewStatus(that.images[i]['item'], 'waiting');
+
+                var data = new FormData();
+
+                data.append(that.options.CSRFToken.name, that.options.CSRFToken.value);
+                data.append(that.options.fileField, that.images[i]['file']);
+
+                am.addRequest(that.createAjaxOptions(data, that.images[i]));
+                that.images.splice(i, 1);
+                i--;
+            }
+
+            am.run(function() {
+                console.log('done');
+            });
+        };
+
+
+        /**
+         * Remove image button event handler
+         *
+         * @param Event e
+         */
+        this.removeImageEvent = function(e) {
+            var $li  = $(e.target).parent();
+            var item = $li.data('item');
+
+            that.removeImage(item);
         };
 
 
@@ -196,7 +253,7 @@ var AjaxManager = (function(window, $, undefined) {
          *
          * @param  array   images
          * @param  integer key
-         * @return bool
+         * @return void
          */
         this.addImage = function(images, key) {
             if ( ! images[key]) {
@@ -209,8 +266,9 @@ var AjaxManager = (function(window, $, undefined) {
             reader.onload = (function(file) {
                 return function(e) {
                     var image = e.target.result;
+                    var date  = new Date();
 
-                    images[key]['item'] = md5(image);
+                    images[key]['item'] = md5(image + date.getTime());
 
                     // Create preview
                     that.drawPreview(images[key]['item'], image);
@@ -222,6 +280,39 @@ var AjaxManager = (function(window, $, undefined) {
 
             return;
         };
+
+
+        /**
+         * Remove Image
+         *
+         * @param  integer item
+         * @return void
+         */
+        this.removeImage = function(item) {
+            var found = false;
+
+            for (var i = 0; i < that.images.length; i++) {
+                if (item === that.images[i].item) {
+                    that.images.splice(i, 1);
+                    that.removePreview(item);
+
+                    found = true;
+                    i--;
+                }
+            }
+
+            return found;
+        };
+
+
+        /**
+         * Attempts to remove the preview for the given item
+         *
+         * @param string item
+         */
+        this.removePreview = function(item) {
+            $('[data-item="' + item + '"]').remove();
+        }
 
 
         /**
@@ -243,6 +334,45 @@ var AjaxManager = (function(window, $, undefined) {
             });
 
             return array;
+        };
+
+
+        /**
+         * Create ajax request options
+         *
+         * @param  FormData data
+         * @param  Array    image
+         * @return jqXHR
+         */
+        this.createAjaxOptions = function(data, image) {
+            return {
+                url: that.options.uploadUrl,
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                beforeSend: function(jqXHR, settings) {
+                    that.updatePreviewStatus(image['item'], 'uploading')
+                },
+                success: function(data, status, jqXHR) {
+                    if (data.id) {
+                        that.updatePreviewStatus(image['item'], 'success');
+
+                        return true;
+                    } else {
+                        that.updatePreviewStatus(image['item'], 'error');
+
+                        return false;
+                    }
+                },
+                error: function(jqXHR, status, error) {
+                    that.updatePreviewStatus(image['item'], 'error');
+
+                    return false;
+                }
+            };
         };
 
 
@@ -272,6 +402,56 @@ var AjaxManager = (function(window, $, undefined) {
 
             return that;
         };
+
+        /**
+         * Update preview status
+         *
+         * @param string item
+         * @param string status
+         */
+        that.updatePreviewStatus = function(item, status) {
+            var elPreview = that.elements.container.find('[data-item="' + item + '"]');
+            var elStatus  = elPreview.find('.status');
+
+            console.log(elPreview);
+
+            switch (status) {
+                case 'waiting':
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-success')
+                        .addClass('btn-warning')
+                        .prop('disabled', true)
+                        .text('Waiting...');
+                    break;
+                case 'uploading':
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-success')
+                        .addClass('btn-warning')
+                        .prop('disabled', true)
+                        .text('Uploading...');
+                    break;
+                case 'success':
+                    elStatus
+                        .removeClass('btn-danger')
+                        .removeClass('btn-warning')
+                        .addClass('btn-success')
+                        .prop('disabled', true)
+                        .text('Uploaded');
+                    break;
+                case 'error':
+                    elStatus
+                        .removeClass('btn-warning')
+                        .removeClass('btn-success')
+                        .addClass('btn-danger')
+                        .prop('disabled', true)
+                        .text('Failed');
+                    break;
+                default:
+                    break;
+            }
+        }
 
 
         /**
@@ -331,7 +511,7 @@ var AjaxManager = (function(window, $, undefined) {
                 that.elements.container = el;
                 that.drawBase();
                 that.bindEvents();
-            },
+            }
         }
     };
 

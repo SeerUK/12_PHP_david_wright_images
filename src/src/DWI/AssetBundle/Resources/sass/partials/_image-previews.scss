@@ -26,3 +26,7 @@
         }
     }
 }
+
+.previewList:empty {
+    display: none;
+}
