@@ -21,14 +21,17 @@
             </div>
         </div>
         <div class="canvas canvas-padded">
-            <ul class="iu-images"></ul>
+            <ul class="previewList"></ul>
         </div>
     {% endverbatim %}
 </script>
 
 <script id="template-image" type="text/x-handlebars-template">
     {% verbatim %}
-
+        <li data-item="{{item}}">
+            <div class="preview" style="background-image: url({{image}}); background-position: 50%; background-size: cover;"></div>
+            <button type="button" class="btn btn-block btn-danger remove-image">Remove</button>
+        </li>
     {% endverbatim %}
 </script>
 

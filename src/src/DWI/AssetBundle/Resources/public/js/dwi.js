@@ -140,11 +140,11 @@ var AjaxManager = (function(window, $, undefined) {
 
 
         /**
-         * Array of files
+         * Array of images
          *
          * @type Array
          */
-        this.files = [];
+        this.images = [];
 
 
         /**
@@ -170,26 +170,69 @@ var AjaxManager = (function(window, $, undefined) {
          * @param Event e
          */
         this.inputFileChangeEvent = function(e) {
-            that.files = that.files.concat(that.convertFileListToArray(e.target.files));
+            var images  = that.convertFileListToImagesArray(e.target.files);
 
-            if (that.files.length) {
-                console.log(that.files);
+            // Generate previews for new files
+            if (images.length) {
+                that.addImages(images);
             }
-        };
 
-
-        this.addFile = function() {
-
+            that.images = that.images.concat(images);
         };
 
 
         /**
-         * Convert FileList to Array
+         * Recursively add images
+         *
+         * @param array images
+         */
+        this.addImages = function(images) {
+            that.addImage(images, 0);
+        };
+
+
+        /**
+         * Add Image
+         *
+         * @param  array   images
+         * @param  integer key
+         * @return bool
+         */
+        this.addImage = function(images, key) {
+            if ( ! images[key]) {
+                return false;
+            }
+
+            var reader = new FileReader();
+            var file   = images[key]['file'];
+
+            reader.onload = (function(file) {
+                return function(e) {
+                    var image = e.target.result;
+
+                    images[key]['item'] = md5(image);
+
+                    // Create preview
+                    that.drawPreview(images[key]['item'], image);
+
+                    // Bind elements to variables? Or, are events naturally bound?
+                }
+            })(file);
+
+            reader.readAsDataURL(file);
+            that.addImage(images, (key + 1));
+
+            return;
+        };
+
+
+        /**
+         * Convert FileList to Array of images
          *
          * @param  FileList fileList
          * @return Array
          */
-        this.convertFileListToArray = function(files) {
+        this.convertFileListToImagesArray = function(files) {
             var array = new Array();
 
             $.each(files, function(key, value) {
@@ -263,6 +306,7 @@ var AjaxManager = (function(window, $, undefined) {
 
             that.elements.inputFiles  = that.elements.container.find('.inputFiles');
             that.elements.inputUpload = that.elements.container.find('.inputUpload');
+            that.elements.previewList = that.elements.container.find('.previewList');
 
             return that;
         };
@@ -273,8 +317,13 @@ var AjaxManager = (function(window, $, undefined) {
          *
          * @return ImageUploader
          */
-        this.drawPreview = function() {
+        this.drawPreview = function(item, image) {
+            that.elements.previewList.append(that.drawTemplate('image', {
+                item: item,
+                image: image
+            }));
 
+            return that;
         };
 
 
