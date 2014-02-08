@@ -317,8 +317,6 @@
             var elPreview = that.elements.container.find('[data-item="' + item + '"]');
             var elStatus  = elPreview.find('.status');
 
-            console.log(elPreview);
-
             switch (status) {
                 case 'waiting':
                     elStatus
@@ -415,6 +413,9 @@
                 that.elements.container = el;
                 that.drawBase();
                 that.bindEvents();
+            },
+            getImages: function() {
+                return that.images;
             }
         }
     };

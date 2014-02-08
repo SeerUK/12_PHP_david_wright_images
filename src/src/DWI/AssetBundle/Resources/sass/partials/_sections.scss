@@ -55,7 +55,7 @@ footer,
 header {
     @include row(12);
 
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 2px solid $gray-lighter;
     margin: 0 auto;
 
     > section.logo {
