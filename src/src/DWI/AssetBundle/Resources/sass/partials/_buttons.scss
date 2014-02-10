@@ -44,6 +44,13 @@
         @include opacity(0.6);
     }
 
+
+    &:not(:disabled):hover,
+    &:not(:disabled).hover {
+        background: darken($white, 3%);
+        color: $black;
+    }
+
     & + & {
         margin-left: 4px;
     }
@@ -77,6 +84,7 @@
         &:not(:disabled):hover,
         &:not(:disabled).hover {
             background: darken($white, 3%);
+            color: $black;
         }
     }
 
@@ -89,6 +97,7 @@
         &:not(:disabled):hover,
         &:not(:disabled).hover {
             background: darken($green, 3%);
+            color: $white;
         }
     }
 
@@ -101,6 +110,7 @@
         &:not(:disabled):hover,
         &:not(:disabled).hover {
             background: darken($orange, 3%);
+            color: $white;
         }
     }
 
@@ -113,6 +123,7 @@
         &:not(:disabled):hover,
         &:not(:disabled).hover {
             background: darken($red, 3%);
+            color: $white;
         }
     }
 
@@ -125,6 +136,7 @@
         &:not(:disabled):hover,
         &:not(:disabled).hover {
             background: darken($blue, 3%);
+            color: $white;
         }
     }
 }

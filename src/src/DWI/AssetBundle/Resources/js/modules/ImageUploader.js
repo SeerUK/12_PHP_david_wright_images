@@ -124,7 +124,7 @@
             }
 
             am.run(function() {
-                console.log('done');
+                // Upload complete...
             });
         };
 
@@ -386,7 +386,7 @@
 
             that.elements.inputFiles  = that.elements.container.find('.inputFiles');
             that.elements.inputUpload = that.elements.container.find('.inputUpload');
-            that.elements.previewList = that.elements.container.find('.previewList');
+            that.elements.previewList = that.elements.container.find('.preview-list');
 
             return that;
         };

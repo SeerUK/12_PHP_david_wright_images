@@ -172,3 +172,15 @@ nav.navbar {
         }
     }
 }
+
+
+// Body Sections
+// --------------------------------------------------
+
+.canvas {
+    section.body {
+        @include row(12);
+
+        margin: 0 auto;
+    }
+}

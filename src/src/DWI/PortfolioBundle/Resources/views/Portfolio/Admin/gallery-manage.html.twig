@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Manage Gallery '{{ model.gallery.title }}'{% endblock %}
+
+{% block body %}
+    <div class="canvas">
+        <div class="jumbotron">
+            Manage Gallery<br />
+            <small>{{ model.gallery.title }}</small>
+        </div>
+    </div>
+
+    <div class="canvas canvas-padded gray-lighter">
+        <section class="body">
+            graph
+        </section>
+    </div>
+
+    <div class="canvas canvas-padded">
+        <section class="body">
+            <ul class="image-list">
+                {% for image in model.gallery.images %}
+                    <li>
+                        <div class="preview"><img src="{{ asset(image.webPath)|imagine_filter('gallery_thumb') }}" /></div>
+                        <div>
+                            {% if image.description %}
+                                <span>Test</span>
+                            {% else %}
+                                <span>No description set. No description set. No description set. No description set. No description set. No description set. No description set.</span><br />
+                            {% endif %}
+                            <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}</span>
+                        </div>
+                        <div class="controls">
+                            <button class="btn">Ico</button>
+                            <button class="btn">Ico</button>
+                            <a class="btn" href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set Cover</a>
+                            <a class="btn btn-danger" href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}">Delete</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+{% endblock %}
+
