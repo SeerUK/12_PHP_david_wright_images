@@ -24,15 +24,15 @@
                         <div class="preview"><img src="{{ asset(image.webPath)|imagine_filter('gallery_thumb') }}" /></div>
                         <div>
                             {% if image.description %}
-                                <span>Test</span>
+                                <span>{{ image.description }}</span>
                             {% else %}
                                 <span>No description set. No description set. No description set. No description set. No description set. No description set. No description set.</span><br />
                             {% endif %}
                             <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}</span>
                         </div>
                         <div class="controls">
-                            <button class="btn">Ico</button>
-                            <button class="btn">Ico</button>
+                            <button class="btn">&#x25B2;</button>
+                            <button class="btn">&#x25BC;</button>
                             <a class="btn" href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set Cover</a>
                             <a class="btn btn-danger" href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}">Delete</a>
                         </div>

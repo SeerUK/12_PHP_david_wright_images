@@ -41,8 +41,8 @@ class ManagePresenter extends AbstractPresenter
     {
         $model   = new ViewModel();
         $gallery = $this->getVariable('gallery');
-        $images  = array();
 
+        $images = array();
         foreach ($gallery->getImages() as $image) {
             $images[] = array(
                 'id'           => $image->getId(),
