@@ -24,9 +24,9 @@
                         <div class="preview"><img src="{{ asset(image.webPath)|imagine_filter('gallery_thumb') }}" /></div>
                         <div>
                             {% if image.description %}
-                                <span>{{ image.description }}</span>
+                                <span>{{ image.description }}</span><br />
                             {% else %}
-                                <span>No description set. No description set. No description set. No description set. No description set. No description set. No description set.</span><br />
+                                <span>No description set.</span><br />
                             {% endif %}
                             <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}</span>
                         </div>

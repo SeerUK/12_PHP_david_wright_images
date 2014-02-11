@@ -143,9 +143,9 @@ class GalleryViewGateway extends AbstractGateway
 
         $sql = '
             INSERT INTO
-                GalleryView (galleryId, views)
+                GalleryView (galleryId, views, date)
             VALUES
-                (:id, 1)
+                (:id, 1, NOW())
             ON DUPLICATE KEY UPDATE
                 views = views + 1';
 

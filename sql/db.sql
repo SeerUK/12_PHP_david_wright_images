@@ -22,10 +22,11 @@ CREATE TABLE IF NOT EXISTS GalleryView (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     galleryId int UNSIGNED NOT NULL,
     views int UNSIGNED NOT NULL,
+    date date NOT NULL,
     lastModified timestamp,
 
     PRIMARY KEY (id),
-    UNIQUE KEY (galleryId),
+    UNIQUE KEY (galleryId, date),
     FOREIGN KEY (galleryId) REFERENCES Gallery(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="Contains gallery views";
 
