@@ -39,7 +39,7 @@ class GalleryViewGateway extends AbstractGateway
         if ( ! (bool) $result = $this->cache->fetch($ck)) {
             $qb = $this->conn->createQueryBuilder();
 
-            $qb->select('COALESCE(gv.views, 0) AS views');
+            $qb->select('COALESCE(SUM(gv.views), 0) AS views');
             $qb->from('GalleryView', 'gv');
             $qb->where('gv.galleryId = :id');
 
@@ -55,6 +55,57 @@ class GalleryViewGateway extends AbstractGateway
         return $result['views']
             ? $result['views']
             : 0;
+    }
+
+
+    /**
+     * Find dated gallery views by id
+     *
+     * @param  integer $id
+     * @param  integer $limit
+     * @return integer
+     */
+    public function findDatedByGalleryId($id, $limit = 30)
+    {
+        if ( ! filter_var($id, FILTER_VALIDATE_INT)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' \'id\'expected an integer. Received ' .
+                gettype($id)
+            );
+        }
+
+        if ( ! filter_var($limit, FILTER_VALIDATE_INT)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' \'limit\'expected an integer. Received ' .
+                gettype($limit)
+            );
+        }
+
+        $ck = __METHOD__ . ':' . $id;
+
+        // Fetch cached result, or recache
+        if ( ! (bool) $result = $this->cache->fetch($ck)) {
+            $qb = $this->conn->createQueryBuilder();
+
+            $qb->select('COALESCE(gv.views, 0) AS views', 'gv.date');
+            $qb->from('GalleryView', 'gv');
+            $qb->where('gv.galleryId = :id');
+            $qb->groupBy('date');
+            $qb->orderBy('date', 'DESC');
+            $qb->setMaxResults($limit);
+
+            $stmt = $this->conn->prepare($qb->getSql());
+            $stmt->bindValue('id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll();
+
+            $this->cache->save($ck, $result);
+        }
+
+        return $result;
     }
 
 
@@ -154,6 +205,7 @@ class GalleryViewGateway extends AbstractGateway
         $stmt->execute();
 
         $this->destroyCacheByGalleryId($id)
+            ->destroyDatedCacheByGalleryId($id)
             ->destroyCacheTotal();
     }
 
@@ -167,6 +219,20 @@ class GalleryViewGateway extends AbstractGateway
     private function destroyCacheByGalleryId($id)
     {
         $this->cache->delete(get_called_class() . '::findByGalleryId:' . $id);
+
+        return $this;
+    }
+
+
+    /**
+     * Destroys dated cached views of a gallery
+     *
+     * @param  integer $id
+     * @return GalleryViewGateway
+     */
+    private function destroyDatedCacheByGalleryId($id)
+    {
+        $this->cache->delete(get_called_class() . '::findDatedByGalleryId:' . $id);
 
         return $this;
     }

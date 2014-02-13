@@ -28,7 +28,8 @@ class ManagePresenter extends AbstractPresenter
         $model = new ViewModel();
 
         return $model
-            ->addChild($this->prepareGallery(), 'gallery');
+            ->addChild($this->prepareGallery(), 'gallery')
+            ->addChild($this->prepareViews(), 'views');
     }
 
 
@@ -56,5 +57,38 @@ class ManagePresenter extends AbstractPresenter
             ->setVariable('id', $gallery->getId())
             ->setVariable('title', $gallery->getTitle())
             ->setVariable('images', $images);
+    }
+
+
+    /**
+     * Prepare view view model
+     *
+     * @return ViewModel
+     */
+    private function prepareViews()
+    {
+        $model = new ViewModel();
+
+        $views = array();
+        foreach ($this->getVariable('datedViews') as $view) {
+            $views[$view['date']] = (int) $view['views'];
+        }
+
+        $dates = array();
+        for ($i = 0; $i < 30; $i++) {
+            $timestamp = strtotime('-'. $i .' days');
+            $date      = date('Y-m-d', $timestamp);
+
+            $dates[$i][] = $timestamp * 1000;
+            $dates[$i][] = isset($views[$date])
+                ? $views[$date]
+                : 0;
+        }
+
+        $dates = array_reverse($dates);
+
+        return $model
+            ->setVariable('chartViews', $dates)
+            ->setVariable('total', $this->getVariable('totalViews'));
     }
 }

@@ -87,7 +87,8 @@ class GalleryController extends Controller
         }
 
         $mp->setVariable('gallery', $gallery);
-        $mp->setVariable('views', $vg->findByGalleryId($gallery->getId()));
+        $mp->setVariable('datedViews', $vg->findDatedByGalleryId($gallery->getId()));
+        $mp->setVariable('totalViews', $vg->findByGalleryId($gallery->getId()));
 
         return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-manage.html.twig', array(
             'model' => $mp->prepareView(),

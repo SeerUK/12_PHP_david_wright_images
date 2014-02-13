@@ -12,7 +12,12 @@
 
     <div class="canvas canvas-padded gray-lighter">
         <section class="body">
-            graph
+            <table class="table">
+                <tr>
+                    <td style="width: 80%;"><div id="chart" style="background: #ecf0f1; height: 120px; margin: 0 auto"></div></td>
+                    <td class="text-center"><span><h2>{{ model.views.total }}<br /><small>Total Views</small></h2></span></td>
+                </tr>
+            </table>
         </section>
     </div>
 
@@ -43,3 +48,60 @@
     </div>
 {% endblock %}
 
+{% block javascript %}
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#chart').highcharts({
+                chart: {
+                    type: 'area',
+                    backgroundColor: '#ecf0f1'
+                },
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                colors: [
+                    '#2ecc71'
+                ],
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    type: 'datetime',
+                    labels: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    },
+                    min: 0,
+                    gridLineColor: '#d8dee2',
+                    gridLineWidth: 2,
+                    labels: {
+                        enabled: false
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    formatter: function() {
+                        return '<b>' + Highcharts.dateFormat('%e %b', this.x) +'</b><br />'+ this.y +' views';
+                    }
+                },
+
+                series: [{
+                    data: {{ model.views.chartViews|json_encode() }}
+                }]
+            });
+        });
+
+    </script>
+
+{% endblock %}
