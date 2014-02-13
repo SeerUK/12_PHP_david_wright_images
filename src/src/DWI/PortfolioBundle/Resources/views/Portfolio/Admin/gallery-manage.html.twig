@@ -24,7 +24,7 @@
     <div class="canvas canvas-padded">
         <section class="body">
             <ul class="image-list">
-                {% for image in model.gallery.images %}
+                {% for key, image in model.gallery.images %}
                     <li>
                         <div class="preview"><img src="{{ asset(image.webPath)|imagine_filter('gallery_thumb') }}" /></div>
                         <div>
@@ -38,8 +38,13 @@
                         <div class="controls">
                             <button class="btn">&#x25B2;</button>
                             <button class="btn">&#x25BC;</button>
-                            <a class="btn" href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set Cover</a>
-                            <a class="btn btn-danger" href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}">Delete</a>
+                            <button class="btn" data-dropdown="#dropdown-{{ key }}">Options</button>
+                            <div id="dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip" style="display: none;">
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set Cover</a></li>
+                                    <li><a href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}">Delete</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </li>
                 {% endfor %}

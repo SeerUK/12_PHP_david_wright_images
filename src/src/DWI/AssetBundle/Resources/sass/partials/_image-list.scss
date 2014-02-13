@@ -3,7 +3,7 @@
 // -------------------------------------------------
 
 .image-list {
-    li {
+    > li {
         border-bottom: 2px solid $gray-lighter;
         display: table;
         margin-bottom: 10px;
@@ -22,7 +22,7 @@
 
         .controls {
             text-align: right;
-            width: 280px;
+            width: 180px;
         }
 
         img {
@@ -34,7 +34,7 @@
         }
     }
 
-    li:last-child {
+    > li:last-child {
         border-bottom: 0;
         margin-bottom: 0;
         padding-bottom: 0;
