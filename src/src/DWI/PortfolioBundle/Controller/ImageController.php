@@ -11,6 +11,7 @@
 namespace DWI\PortfolioBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Doctrine\ORM\NoResultException;
 use DWI\CoreBundle\HttpFoundation\RestJsonResponse;
@@ -90,12 +91,17 @@ class ImageController extends Controller
             $image = $form->getData();
             $image->setGallery($gallery);
 
-            $this->get('dwi_portfolio.image_repository')
-                ->persist($image);
+            try {
+                $this->get('dwi_portfolio.image_repository')
+                    ->persist($image);
 
-            $response->setData(array(
-                'id' => $image->getId(),
-            ));
+                $response->setData(array(
+                    'id' => $image->getId(),
+                ));
+            } catch (FileException $e) {
+                $response->addError($e->getMessage())
+                    ->setStatusCode(500);
+            }
         } else {
             if (count($form->getErrors())) {
                 foreach ($form->getErrors() as $error) {
