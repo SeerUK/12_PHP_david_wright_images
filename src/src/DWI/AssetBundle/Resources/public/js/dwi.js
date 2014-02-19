@@ -253,7 +253,7 @@ var AjaxManager = (function(window, $, undefined) {
          *
          * @param  array   images
          * @param  integer key
-         * @return void
+         * @return bool|void
          */
         this.addImage = function(images, key) {
             if ( ! images[key]) {
@@ -272,11 +272,13 @@ var AjaxManager = (function(window, $, undefined) {
 
                     // Create preview
                     that.drawPreview(images[key]['item'], image);
+
+                    // Create next preview
+                    that.addImage(images, (key + 1));
                 }
             })(file);
 
             reader.readAsDataURL(file);
-            that.addImage(images, (key + 1));
 
             return;
         };

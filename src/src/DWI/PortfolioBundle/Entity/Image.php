@@ -48,6 +48,14 @@ class Image
      */
     private $path;
 
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="displayOrder", type="integer", nullable=true)
+     */
+    private $displayOrder;
+
     /**
      * @var \DateTime
      *
@@ -112,12 +120,35 @@ class Image
     /**
      * Set path
      *
-     * @param string $path
+     * @param  string $path
      * @return Image
      */
     public function setPath($path)
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get display order
+     *
+     * @return string
+     */
+    public function getDisplayOrder()
+    {
+        return $this->displayOrder;
+    }
+
+    /**
+     * Set display order
+     *
+     * @param  integer $displayOrder
+     * @return Image
+     */
+    public function setDisplayOrder($displayOrder)
+    {
+        $this->displayOrder = $displayOrder;
 
         return $this;
     }

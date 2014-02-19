@@ -44,7 +44,7 @@ class ManagePresenter extends AbstractPresenter
         $gallery = $this->getVariable('gallery');
 
         $images = array();
-        foreach ($gallery->getImages() as $image) {
+        foreach ($this->getVariable('images') as $image) {
             $images[] = array(
                 'id'           => $image->getId(),
                 'description'  => $image->getDescription(),

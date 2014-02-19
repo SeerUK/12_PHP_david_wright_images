@@ -34,6 +34,7 @@ class GalleryController extends Controller
     {
         $sc = $this->get('security.context');
         $gr = $this->get('dwi_portfolio.gallery_repository');
+        $ir = $this->get('dwi_portfolio.image_repository');
         $vg = $this->get('dwi_portfolio.gallery_view_gateway');
         $gp = $this->get('dwi_portfolio.gallery_presenter');
 
@@ -50,6 +51,7 @@ class GalleryController extends Controller
 
         $vg->recordByGalleryId($id);
         $gp->setVariable('gallery', $gallery);
+        $gp->setVariable('images', $ir->findByGalleryId($gallery->getId()));
 
         if ($sc->isGranted('ROLE_ADMIN')) {
             $gp->setVariable('views', $vg->findByGalleryId($id));
@@ -77,6 +79,7 @@ class GalleryController extends Controller
         }
 
         $gr = $this->get('dwi_portfolio.gallery_repository');
+        $ir = $this->get('dwi_portfolio.image_repository');
         $vg = $this->get('dwi_portfolio.gallery_view_gateway');
         $mp = $this->get('dwi_portfolio.gallery_manage_presenter');
 
@@ -87,6 +90,7 @@ class GalleryController extends Controller
         }
 
         $mp->setVariable('gallery', $gallery);
+        $mp->setVariable('images', $ir->findByGalleryId($gallery->getId()));
         $mp->setVariable('datedViews', $vg->findDatedByGalleryId($gallery->getId()));
         $mp->setVariable('totalViews', $vg->findByGalleryId($gallery->getId()));
 

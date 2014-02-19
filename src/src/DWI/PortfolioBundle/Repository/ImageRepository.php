@@ -21,6 +21,52 @@ use DWI\PortfolioBundle\Entity\Image;
 class ImageRepository extends EntityRepository implements PersistentEntityRepository
 {
     /**
+     * Find images by gallery ID
+     *
+     * @param  integer $id
+     * @return array
+     */
+    public function findByGalleryId($id, array $options = null)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $query = $qb
+            ->select('i')
+            ->from('DWIPortfolioBundle:Image', 'i')
+            ->innerJoin('i.gallery', 'g')
+            ->where('g.id = :id')
+            ->orderBy('i.displayOrder', 'ASC')
+            ->setParameter('id', $id);
+
+        $query = $this->augmentQueryFromOptions($query, $options);
+
+        return $query->getQuery()
+            ->useResultCache(true)
+            ->getResult();
+    }
+
+
+    /**
+     * Augment given query with given options
+     *
+     * @param  QueryBuilder $query
+     * @param  array        $options
+     * @return QueryBuilder
+     */
+    private function augmentQueryFromOptions($query, $options)
+    {
+        if (is_array($options)) {
+            if (isset($options['isActive'])) {
+                $query->andWhere('i.isActive = :isActive')
+                    ->setParameter('isActive', $options['isActive']);
+            }
+        }
+
+        return $query;
+    }
+
+
+    /**
      * Persist Image
      *
      * @param  Image $entity

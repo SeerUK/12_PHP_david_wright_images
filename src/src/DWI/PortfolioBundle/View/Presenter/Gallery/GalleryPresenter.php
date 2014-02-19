@@ -66,7 +66,7 @@ class GalleryPresenter extends AbstractPresenter
             ->setVariable('subtitle', $gallery->getSubtitle())
             ->setVariable('description', $gallery->getDescription())
             ->setVariable('date', $gallery->getDate())
-            ->setVariable('images', $gallery->getImages())
+            ->setVariable('images', $this->getVariable('images'))
             ->setVariable('tags', $gallery->getTags());
     }
 }

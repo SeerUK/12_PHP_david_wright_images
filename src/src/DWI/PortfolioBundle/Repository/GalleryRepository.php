@@ -47,7 +47,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
             ->where('g.id = :id')
             ->setParameter('id', $id);
 
-        $query  = $this->augmentQueryFromOptions($query, $options);
+        $query = $this->augmentQueryFromOptions($query, $options);
 
         return $query->getQuery()
             ->useResultCache(true)
