@@ -56,6 +56,37 @@ class ImageController extends Controller
 
 
     /**
+     * Swap display order of images around
+     *
+     * @param  integer $fromPosition
+     * @param  integer $toPosition
+     * @return [type]               [description]
+     */
+    public function swapDisplayOrderAction($id, $from, $to)
+    {
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        $gr = $this->get('dwi_portfolio.gallery_repository');
+        $ir = $this->get('dwi_portfolio.image_repository');
+
+        // Try fetch gallery
+        try {
+            $gallery = $gr->findById($id);
+        } catch (NoResultException $e) {
+            throw $this->createNotFoundException('That gallery doesn\'t exist!');
+        }
+
+        $ir->swapImageDisplayOrderByGalleryId($gallery->getId(), $from, $to);
+
+        return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
+            'id' => $gallery->getId(),
+        )));
+    }
+
+
+    /**
      * Upload Image
      *
      * @param  integer $id

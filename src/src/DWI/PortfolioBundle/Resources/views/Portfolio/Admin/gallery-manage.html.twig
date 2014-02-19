@@ -36,8 +36,30 @@
                             <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}</span>
                         </div>
                         <div class="controls">
-                            <button class="btn">&#x25B2;</button>
-                            <button class="btn">&#x25BC;</button>
+                            {% if model.gallery.images[key - 1] is defined %}
+                                {% set href = url('dwi_portfolio_swap_display_order', {
+                                    'id': model.gallery.id,
+                                    'from': image.displayOrder,
+                                    'to': model.gallery.images[key - 1].displayOrder
+                                }) %}
+
+                                <a class="btn" href="{{ href }}">&#x25B2;</a>
+                            {% else %}
+                                <button class="btn" disabled>&#x25B2;</button>
+                            {% endif %}
+
+                            {% if model.gallery.images[key + 1] is defined %}
+                                {% set href = url('dwi_portfolio_swap_display_order', {
+                                    'id': model.gallery.id,
+                                    'from': image.displayOrder,
+                                    'to': model.gallery.images[key + 1].displayOrder
+                                }) %}
+
+                                <a class="btn" href="{{ href }}">&#x25BC;</a>
+                            {% else %}
+                                <button class="btn" disabled>&#x25BC;</button>
+                            {% endif %}
+
                             <button class="btn" data-dropdown="#dropdown-{{ key }}">Options</button>
                             <div id="dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip" style="display: none;">
                                 <ul class="dropdown-menu">

@@ -49,6 +49,7 @@ class ManagePresenter extends AbstractPresenter
                 'id'           => $image->getId(),
                 'description'  => $image->getDescription(),
                 'webPath'      => $image->getWebPath(),
+                'displayOrder' => $image->getDisplayOrder(),
                 'lastModified' => $image->getLastModified(),
             );
         }

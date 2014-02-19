@@ -27,6 +27,15 @@ dwi_portfolio_manage_gallery:
     requirements:
         id: \d+
 
+dwi_portfolio_swap_display_order:
+    pattern: /portfolio/gallery/manage/{id}/image/swap-display-order/{from}/{to}
+    defaults: { _controller: DWIPortfolioBundle:Image:swapDisplayOrder }
+    methods: [GET]
+    requirements:
+        id: \d+
+        from: \d+
+        to: \d+
+
 dwi_portfolio_create_gallery:
     pattern: /portfolio/gallery/create
     defaults: { _controller: DWIPortfolioBundle:Gallery:createGallery }

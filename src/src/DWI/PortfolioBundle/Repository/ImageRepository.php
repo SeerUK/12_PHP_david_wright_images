@@ -47,6 +47,106 @@ class ImageRepository extends EntityRepository implements PersistentEntityReposi
 
 
     /**
+     * Find an image by gallery ID and display order
+     *
+     * @param  integer $id
+     * @param  integer $displayOrder
+     * @return Image
+     */
+    public function findOneByGalleryIdAndDisplayOrder($id, $displayOrder)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $query = $qb
+            ->select('i')
+            ->from('DWIPortfolioBundle:Image', 'i')
+            ->innerJoin('i.gallery', 'g')
+            ->where('g.id = :id')
+            ->andWhere('i.displayOrder = :displayOrder')
+            ->orderBy('i.displayOrder', 'ASC')
+            ->setParameter('id', $id)
+            ->setParameter('displayOrder', $displayOrder);
+
+        return $query->getQuery()
+            ->useResultCache(true)
+            ->setMaxResults(1)
+            ->getSingleResult();
+    }
+
+
+    /**
+     * Swap an image's display order with anothers
+     *
+     * @param  integer $id   [description]
+     * @param  integer $from [description]
+     * @param  integer $to   [description]
+     * @return ImageRepository
+     */
+    public function swapImageDisplayOrderByGalleryId($id, $from, $to)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $em->getConnection()->beginTransaction();
+
+        try {
+            $fromImage = $this->findOneByGalleryIdAndDisplayOrder($id, $from);
+            $toImage   = $this->findOneByGalleryIdAndDisplayOrder($id, $to);
+
+            $fromPosition = $fromImage->getDisplayOrder();
+            $toPosition   = $toImage->getDisplayOrder();
+
+            $fromImage->setDisplayOrder($toPosition);
+            $toImage->setDisplayOrder($fromPosition);
+
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $e;
+        }
+
+        // Clear cache
+        $cd = $em->getConfiguration()->getResultCacheImpl();
+        $cd->deleteAll();
+
+        return $this;
+    }
+
+
+    /**
+     * Find the next display order position by gallery ID, should be
+     * used in a transaction, used internally.
+     *
+     * @param  integer $id
+     * @return integer
+     */
+    private function findNextDisplayOrderPositionByGalleryId($id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $query = $qb
+            ->select('i')
+            ->from('DWIPortfolioBundle:Image', 'i')
+            ->innerJoin('i.gallery', 'g')
+            ->where('g.id = :id')
+            ->orderBy('i.displayOrder', 'DESC')
+            ->setParameter('id', $id);
+
+        try {
+            $image = $query->getQuery()
+                ->setMaxResults(1)
+                ->getSingleResult();
+
+            return $image->getDisplayOrder() + 1;
+        } catch (NoResultException $e) {
+            return 1;
+        }
+    }
+
+
+    /**
      * Augment given query with given options
      *
      * @param  QueryBuilder $query
@@ -67,24 +167,37 @@ class ImageRepository extends EntityRepository implements PersistentEntityReposi
 
 
     /**
-     * Persist Image
+     * Persist Image (create new)
      *
      * @param  Image $entity
      * @return ImageRepository
      */
-    public function persist($entity)
+    public function persist($image)
     {
-        if ( ! $this->isEntityType($entity)) {
+        if ( ! $this->isEntityType($image)) {
             throw new \InvalidArgumentException(
                 __METHOD__ .
                 ' expected an instance of DWI\PortfolioBundle\Entity\Image. Received ' .
-                gettype($entity)
+                gettype($image)
             );
         }
 
         $em = $this->getEntityManager();
-        $em->persist($entity);
-        $em->flush();
+        $em->getConnection()->beginTransaction();
+
+        try {
+            $image->setDisplayOrder($this->findNextDisplayOrderPositionByGalleryId(
+                $image->getGallery()->getId()
+            ));
+
+            $em->persist($image);
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            $em->close();
+            throw $e;
+        }
 
         // Clear query cache so that subsequent requests for Image objects
         // don't return ghosts

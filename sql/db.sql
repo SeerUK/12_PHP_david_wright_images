@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Image (
     galleryId int UNSIGNED NOT NULL,
     description varchar(250),
     path varchar(250) NOT NULL,
-    displayOrder int UNSIGNED,
+    displayOrder int UNSIGNED NOT NULL,
     lastModified timestamp,
 
     PRIMARY KEY (id),
