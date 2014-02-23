@@ -1,9 +1,8 @@
 <footer class="text-center">
     {% include '::navigation.html.twig' %}
     <div class="social">
-        <a href="#"><i class="social-flickr"></i></a>
-        <a href="#"><i class="social-twitter"></i></a>
-        <a href="#"><i class="social-you_tube"></i></a>
+        <a href="http://www.flickr.com/people/75629240@N03/" target="_blank"><i class="social-flickr"></i></a>
+        <a href="https://twitter.com/davidsbig_lens" target="_blank"><i class="social-twitter"></i></a>
     </div>
 
     <a href="#">Back to the top</a>
@@ -17,5 +16,5 @@
         <a href="{{ path('dwi_security_account_login') }}">Sign In</a><br />
     {% endif %}
 
-    <small>&copy; {{ "now"|date("Y") }} David Wright, all rights reserved</small>
+    <small>&copy; 2013-{{ "now"|date("Y") }} David Wright, all rights reserved</small>
 </footer>

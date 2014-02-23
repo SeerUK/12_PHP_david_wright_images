@@ -10,12 +10,15 @@
         <div class="jumbotron">
             {{ gallery.title }}<br />
             <small>{{ gallery.subtitle }}</small>
+            {# <section class="body">
+                <a href="{{ url('dwi_portfolio_manage_gallery', { id: gallery.id }) }}" class="btn">Manage Gallery</a>
+            </section> #}
         </div>
     </div>
 
-    {% include 'DWIPortfolioBundle:Portfolio/Admin/partials:gallery-controls.html.twig' with {
+    {# {% include 'DWIPortfolioBundle:Portfolio/Admin/partials:gallery-controls.html.twig' with {
         'model': model.controls
-    } %}
+    } %} #}
 
     {% if gallery.images is not empty %}
         <div class="canvas gray-lighter">
@@ -23,12 +26,8 @@
                 <div class="swiper-wrapper">
                     {% for image in gallery.images %}
                         <div class="swiper-slide">
-                            {% if is_granted('ROLE_ADMIN') %}
-                                {# Do something adminy #}
-                                <div class="controls">
-                                    <a class="btn btn-info" href="{{ url('dwi_portfolio_set_cover_gallery', {'id': gallery.id, 'imageId': image.id}) }}">Set as cover</a>
-                                    <a class="btn btn-danger" href="{{ url('dwi_portfolio_remove_image', {'galleryId': gallery.id, 'id': image.id}) }}">Delete</a>
-                                </div>
+                            {% if image.description %}
+                                <div class="description">{{ image.description }}</div>
                             {% endif %}
                             <img src="{{ asset(image.webPath)|imagine_filter('gallery_image') }}" />
                         </div>

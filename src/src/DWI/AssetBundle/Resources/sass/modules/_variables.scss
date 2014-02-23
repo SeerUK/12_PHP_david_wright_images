@@ -10,7 +10,7 @@
 
 $white: #ffffff;
 $gray-lighter: #ecf0f1;
-$gray-light: #D8DEE2;
+$gray-light: #DEE3E6;
 $gray: #95a5a6;
 $gray-dark: #5f5c5d;
 $gray-darker: #344040;
@@ -63,6 +63,8 @@ $text-success: $green;
 $text-info: $blue;
 $text-color: $gray-darker;
 
+$admin-text-color: $white;
+
 // Base
 $font-family-sans-serif: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 $font-family-serif: "Droid Serif", Georgia, "Times New Roman", Times, serif;
@@ -85,9 +87,11 @@ $line-height-computed: floor(($font-size-base * $line-height-base));
 
 // Headings
 $headings-font-family: $font-family-sans-serif;
-$headings-font-weight: 500;
+$headings-font-weight: $font-weight-thin;
 $headings-line-height: 1.1;
 $headings-color: $gray-darker;
+
+$admin-headings-color: $white;
 
 $headings-small-font-weight: $font-weight-thin;
 $headings-small-color: $gray;

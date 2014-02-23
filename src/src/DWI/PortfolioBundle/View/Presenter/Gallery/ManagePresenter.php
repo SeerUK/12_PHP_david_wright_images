@@ -57,6 +57,8 @@ class ManagePresenter extends AbstractPresenter
         return $model
             ->setVariable('id', $gallery->getId())
             ->setVariable('title', $gallery->getTitle())
+            ->setVariable('isActive', $gallery->getIsActive())
+            ->setVariable('coverImage', $gallery->getCoverImage())
             ->setVariable('images', $images);
     }
 

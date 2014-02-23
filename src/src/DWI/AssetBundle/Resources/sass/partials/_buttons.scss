@@ -139,4 +139,17 @@
             color: $white;
         }
     }
+
+    &.btn-slate {
+        @include box-shadow(0 2px 0 lighten($slate-dark, 9%));
+
+        background: lighten($slate, 9%);
+        color: $white;
+
+        &:not(:disabled):hover,
+        &:not(:disabled).hover {
+            background: lighten($slate, 12%);
+            color: $white;
+        }
+    }
 }

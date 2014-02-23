@@ -156,22 +156,23 @@
             height: 100%;
         }
 
-        .controls {
+        .description {
             @include transition(all ease 0.4s);
 
             background: black;
             background: rgba(0,0,0,0.4);
             position: absolute;
             bottom: -200px;
+            color: $white;
             left: 0;
             right: 0;
             padding: 20px;
-            text-align: right;
+            text-align: left;
         }
     }
 
     .swiper-slide:hover {
-        .controls {
+        .description {
             bottom: 0;
         }
     }

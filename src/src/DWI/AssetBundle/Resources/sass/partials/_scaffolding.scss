@@ -17,6 +17,11 @@ body {
     line-height: $line-height-base;
     color: $text-color;
     background-color: $body-bg;
+
+    &.admin {
+        color: $admin-text-color;
+        background-color: darken($body-bg, 10%);
+    }
 }
 
 
