@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::base-admin.html.twig' %}
 
 {% block title %}Remove Image{% endblock %}
 
@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="canvas canvas-padded gray-lighter">
+    <div class="canvas canvas-padded slate">
         <div class="form-compact">
             <div class="form-row text-center">Are you sure you want to delete the following image?</div>
             <div class="form-row text-center">
@@ -30,7 +30,7 @@
             <input type="hidden" name="doDelete" value="0">
 
             <div class="form-row">
-                <input type="submit" name="submit" value="Cancel" class="btn btn-block btn-white" />
+                <input type="submit" name="submit" value="Cancel" class="btn btn-block btn-slate" />
             </div>
         </form>
     </div>

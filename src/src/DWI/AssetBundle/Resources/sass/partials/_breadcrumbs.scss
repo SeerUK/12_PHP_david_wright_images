@@ -1,0 +1,26 @@
+//
+// Image Preview List
+// -------------------------------------------------
+
+.breadcrumbs {
+    @include box-sizing(border-box);
+    @include row(12);
+
+    border-bottom: 2px solid $slate;
+    margin: 0 auto;
+    padding: 10px 10px;
+
+    > li {
+        display: inline-block;
+    }
+
+    > li:last-child {
+        font-weight: $font-weight-bold;
+    }
+
+    > li:not(:last-child):after {
+        content: '\25B8';
+        color: $text-muted;
+        padding: 0 4px 0 9px;
+    }
+}

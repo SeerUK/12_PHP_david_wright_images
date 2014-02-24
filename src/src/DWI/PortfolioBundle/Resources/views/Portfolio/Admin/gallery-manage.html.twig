@@ -3,6 +3,13 @@
 {% block title %}Manage '{{ model.gallery.title }}' Gallery{% endblock %}
 
 {% block body %}
+    <div class="canvas">
+        <ul class="breadcrumbs">
+            <li><a href="#">Portfolio Management</a></li>
+            <li>Managing Gallery '{{ model.gallery.title }}'</li>
+        </ul>
+    </div>
+
     <div class="canvas canvas-padded">
         <section class="body">
             <div class="pull-left">

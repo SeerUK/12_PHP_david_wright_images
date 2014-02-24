@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::base-admin.html.twig' %}
 
 {% form_theme form 'DWICoreBundle:Form:fields.html.twig' %}
 
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="canvas canvas-padded gray-lighter">
+    <div class="canvas canvas-padded slate">
         {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
             {{ form_row (form._token) }}
             {{ form_errors(form) }}
@@ -31,7 +31,7 @@
             <div class="form-row">
                 <div class="pull-right">
                     {{ form_widget(form.submit) }}
-                    <a class="btn btn-white" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
+                    <a class="btn btn-slate" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
                 </div>
             </div>
         {{ form_end(form, { 'render_rest': false }) }}

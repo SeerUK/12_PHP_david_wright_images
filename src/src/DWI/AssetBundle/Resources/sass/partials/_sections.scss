@@ -134,6 +134,12 @@ header {
         font-weight: $font-weight-normal;
         text-transform: none;
     }
+
+    .admin & {
+        > small {
+            color: $white;
+        }
+    }
 }
 
 
