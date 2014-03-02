@@ -1,0 +1,14 @@
+{% if app.user %}
+    <div class="canvas canvas-padded-s userbar">
+        <section class="body clearfix">
+            <span>Welcome back, <span class="text-danger">{{ app.user.username }}</span></span>
+            <nav class="userbar pull-right">
+                <ul>
+                    <li><a href="#"><i class="flaticon stroke grid-2"></i>&nbsp;&nbsp;Manage Portfolio</a></li>
+                    <li><a href="#"><i class="flaticon stroke document-4"></i>&nbsp;&nbsp;Manage Pages</a></li>
+                    <li><a href="{{ url('dwi_security_account_logout') }}"><i class="flaticon stroke logout-1"></i>&nbsp;&nbsp;Sign Out</a></li>
+                </ul>
+            </nav>
+        </section>
+    </div>
+{% endif %}

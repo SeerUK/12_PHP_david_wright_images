@@ -20,7 +20,7 @@ body {
 
     &.admin {
         color: $admin-text-color;
-        background-color: darken($body-bg, 10%);
+        background-color: $slate-darker;
     }
 }
 

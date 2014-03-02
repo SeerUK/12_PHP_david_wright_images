@@ -77,6 +77,7 @@ class ViewPresenter extends AbstractPresenter
             $gvm = new ViewModel();
             $gvm->setVariable('id', $gallery->getId())
                 ->setVariable('title', $gallery->getTitle())
+                ->setVariable('subtitle', $gallery->getSubTitle())
                 ->setVariable('coverImagePath', $this->getGalleryCoverImagePath($gallery))
                 ->setVariable('isActive', $gallery->getIsActive());
 

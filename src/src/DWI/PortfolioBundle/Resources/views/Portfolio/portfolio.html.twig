@@ -37,6 +37,11 @@
                         {% else %}
                             <img src="http://placehold.it/300x300" alt="" />
                         {% endif %}
+
+                        <div class="info">
+                            <span class="title">{{ gallery.title }}</span><br />
+                            <span class="subtitle">{{ gallery.subtitle }}</span>
+                        </div>
                     </div>
                 {% endfor %}
             {% endif %}

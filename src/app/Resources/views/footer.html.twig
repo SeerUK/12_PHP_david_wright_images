@@ -11,9 +11,9 @@
     {% if app.user %}
         Signed in as {{ app.user.username }}
         &nbsp;&nbsp;|&nbsp;&nbsp;
-        <a href="{{ path('dwi_security_account_logout') }}">Sign Out</a><br />
+        <a href="{{ url('dwi_security_account_logout') }}">Sign Out</a><br />
     {% else %}
-        <a href="{{ path('dwi_security_account_login') }}">Sign In</a><br />
+        <a href="{{ url('dwi_security_account_login') }}">Sign In</a><br />
     {% endif %}
 
     <small>&copy; 2013-{{ "now"|date("Y") }} David Wright, all rights reserved</small>

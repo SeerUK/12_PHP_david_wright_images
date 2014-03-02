@@ -3,21 +3,23 @@
 {% block title %}Manage '{{ model.gallery.title }}' Gallery{% endblock %}
 
 {% block body %}
-    <div class="canvas">
-        <div class="jumbotron">
-            Manage Gallery<br />
-            <small>{{ model.gallery.title }}</small>
-            <section class="body text-center">
-                <a href="{{ url('dwi_portfolio_upload_images_form', { id: model.gallery.id }) }}" class="btn">Upload Images</a>
+    <div class="canvas canvas-padded">
+        <section class="body">
+            <div class="pull-left">
+                <h3>Managing <span class="text-light">'{{ model.gallery.title }}'</span></h3>
+            </div>
+            <div class="pull-right">
+                <a href="{{ url('dwi_portfolio_gallery', { id: model.gallery.id }) }}" class="btn btn-slate">View Gallery</a>
+                <a href="{{ url('dwi_portfolio_upload_images_form', { id: model.gallery.id }) }}" class="btn btn-slate">Upload Images</a>
                 {% if model.gallery.isActive %}
-                    <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}" class="btn">Unpublish</a>
+                    <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}" class="btn btn-slate">Unpublish</a>
                 {% else %}
-                    <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}" class="btn">Publish</a>
+                    <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}" class="btn btn-slate">Publish</a>
                 {% endif %}
-                <a href="{{ url('dwi_portfolio_edit_gallery', { id: model.gallery.id }) }}" class="btn">Edit</a>
+                <a href="{{ url('dwi_portfolio_edit_gallery', { id: model.gallery.id }) }}" class="btn btn-slate">Edit</a>
                 <a href="{{ url('dwi_portfolio_remove_gallery', { id: model.gallery.id }) }}" class="btn btn-danger">Delete</a>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
 
     <div class="canvas canvas-padded slate">
@@ -45,8 +47,10 @@
                             {% endif %}
                             <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}.</span>
 
-                            {% if image.id == model.gallery.coverImage.image.id %}
-                                <span class="text-warning">This is the gallery cover image.</span>
+                            {% if model.gallery.coverImage %}
+                                {% if image.id == model.gallery.coverImage.image.id %}
+                                    <span class="text-warning">This is the gallery cover image.</span>
+                                {% endif %}
                             {% endif %}
                         </div>
                         <div class="controls">
@@ -57,9 +61,9 @@
                                     'to': model.gallery.images[key - 1].displayOrder
                                 }) %}
 
-                                <a class="btn" href="{{ href }}">&#x25B2;</a>
+                                <a class="btn btn-slate" href="{{ href }}">&#x25B2;</a>
                             {% else %}
-                                <button class="btn" disabled>&#x25B2;</button>
+                                <button class="btn btn-slate" disabled>&#x25B2;</button>
                             {% endif %}
 
                             {% if model.gallery.images[key + 1] is defined %}
@@ -69,12 +73,12 @@
                                     'to': model.gallery.images[key + 1].displayOrder
                                 }) %}
 
-                                <a class="btn" href="{{ href }}">&#x25BC;</a>
+                                <a class="btn btn-slate" href="{{ href }}">&#x25BC;</a>
                             {% else %}
-                                <button class="btn" disabled>&#x25BC;</button>
+                                <button class="btn btn-slate" disabled>&#x25BC;</button>
                             {% endif %}
 
-                            <button class="btn" data-dropdown="#dropdown-{{ key }}">Options</button>
+                            <button class="btn btn-slate" data-dropdown="#dropdown-{{ key }}">Options</button>
                             <div id="dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip" style="display: none;">
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set Cover</a></li>
@@ -97,7 +101,7 @@
             $('#chart').highcharts({
                 chart: {
                     type: 'area',
-                    backgroundColor: '#ecf0f1'
+                    backgroundColor: '#34495e'
                 },
                 title: {
                     text: null
@@ -122,7 +126,7 @@
                         text: null
                     },
                     min: 0,
-                    gridLineColor: '#d8dee2',
+                    gridLineColor: '#506875',
                     gridLineWidth: 2,
                     labels: {
                         enabled: false

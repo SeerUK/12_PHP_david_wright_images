@@ -19,6 +19,7 @@ h1, h2, h3, h4, h5, h6,
         color: $headings-small-color;
     }
 
+    b,
     strong,
     .strong {
         font-weight: $headings-strong-font-weight;
@@ -98,6 +99,14 @@ b {
 }
 
 // Contextual emphasis
+
+.text-faded {
+    @include opacity(0.9);
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
 
 .text-muted,
 .text-primary,
