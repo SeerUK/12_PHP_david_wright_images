@@ -21,8 +21,8 @@ dwi_portfolio_gallery:
         id: \d+
 
 dwi_portfolio_manage_gallery:
-    pattern: /portfolio/gallery/manage/{id}
-    defaults: { _controller: DWIPortfolioBundle:Gallery:manageGallery }
+    pattern: /admin/portfolio/gallery/{id}
+    defaults: { _controller: DWIPortfolioBundle:GalleryAdmin:view }
     methods: [GET]
     requirements:
         id: \d+
