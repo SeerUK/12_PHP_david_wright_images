@@ -1,0 +1,49 @@
+//
+// Sidebar
+// -------------------------------------------------
+
+.sidebar {
+    background: $slate;
+    color: $white;
+    font-size: 15px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    padding: 50px;
+
+    .user {
+        .logout {
+            color: $gray;
+            font-size: 32px;
+
+            &:hover {
+                color: $white;
+            }
+        }
+    }
+
+    nav.primary {
+        margin: 80px 0;
+
+        li {
+            font-weight: $font-weight-bold;
+            padding: 10px 0;
+            text-transform: uppercase;
+        }
+
+        .divider {
+            padding: 18px 0;
+        }
+
+        .section {
+            font-weight: $font-weight-thin;
+        }
+    }
+
+    .logo {
+        position: absolute;
+        bottom: 50px;
+    }
+}

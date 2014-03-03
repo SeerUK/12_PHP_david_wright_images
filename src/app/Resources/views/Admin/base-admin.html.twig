@@ -25,12 +25,12 @@
 
     {% block stylesheets %}{% endblock %}
 </head>
-<body>
-    {% include '::header-admin.html.twig' %}
+<body class="admin">
+    {% include ':Admin:sidebar.html.twig' %}
 
-    {% block body %}{% endblock %}
-
-    {% include '::footer.html.twig' %}
+    <section class="content">
+        {% block body %}{% endblock %}
+    </section>
 
     <script src='{{ asset('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js') }}' type='text/javascript'></script>
     <script src='{{ asset('bundles/dwiasset/js/idangerous.swiper-2.4.1.min.js') }}' type='text/javascript'></script>

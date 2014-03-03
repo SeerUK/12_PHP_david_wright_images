@@ -1,98 +1,103 @@
-{% extends '::base-admin.html.twig' %}
+{% extends ':Admin:base-admin.html.twig' %}
 
 {% block title %}Manage '{{ model.gallery.title }}' Gallery{% endblock %}
 
 {% block body %}
-    <div class="canvas canvas-padded">
-        <section class="body">
-            <div class="pull-left">
-                <h3>Managing <span class="text-light">'{{ model.gallery.title }}'</span></h3>
+    <div class="canvas canvas-padded-l">
+        <div class="pull-left">
+            <h1>Managing Gallery <span class="text-light">{{ model.gallery.title }}</span></h1>
+        </div>
+        <div class="pull-right">
+            <button class="btn" data-dropdown="#g-dropdown">Options &#x25BC;</button>
+            <div id="g-dropdown" class="dropdown dropdown-anchor-right dropdown-tip dropdown-relative dropdown-gray" style="display: none;">
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url('dwi_portfolio_gallery', { id: model.gallery.id }) }}" target="_blank">View Gallery</a></li>
+                    <li><a href="{{ url('dwi_portfolio_upload_images_form', { id: model.gallery.id }) }}">Upload Images</a></li>
+
+                    {% if model.gallery.isActive %}
+                        <li><a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}">Unpublish</a></li>
+                    {% else %}
+                        <li><a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}">Publish</a></li>
+                    {% endif %}
+
+                    <li><a href="{{ url('dwi_portfolio_edit_gallery', { id: model.gallery.id }) }}">Edit Gallery</a></li>
+                    <li><a href="{{ url('dwi_portfolio_remove_gallery', { id: model.gallery.id }) }}"><span class="text-danger">Delete</span></a></li>
+                </ul>
             </div>
-            {# <div class="pull-right">
-                <a href="{{ url('dwi_portfolio_gallery', { id: model.gallery.id }) }}" class="btn">View Gallery</a>
-                <a href="{{ url('dwi_portfolio_upload_images_form', { id: model.gallery.id }) }}" class="btn">Upload Images</a>
-                {% if model.gallery.isActive %}
-                    <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}" class="btn">Unpublish</a>
-                {% else %}
-                    <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}" class="btn">Publish</a>
-                {% endif %}
-                <a href="{{ url('dwi_portfolio_edit_gallery', { id: model.gallery.id }) }}" class="btn">Edit</a>
-                <a href="{{ url('dwi_portfolio_remove_gallery', { id: model.gallery.id }) }}" class="btn btn-danger">Delete</a>
-            </div> #}
-            <div class="pull-right">
-                <a href="#" class="btn">Options &#x25BC;</a>
-            </div>
-        </section>
+        </div>
+
     </div>
 
-    <div class="canvas canvas-padded gray-lighter">
-        <section class="body">
-            <table class="table">
-                <tr>
-                    <td style="width: 80%;"><div id="chart" style="height: 120px; margin: 0 auto"></div></td>
-                    <td class="text-center"><span><h2>{{ model.views.total }}<br /><small><b>Gallery</b> Views</small></h2></span></td>
-                </tr>
-            </table>
-        </section>
+    <div class="canvas canvas-padded-l">
+        <table class="table">
+            <tr>
+                <td style="width: 75%;">
+                    <div id="chart" style="height: 120px; margin: 0 auto; padding: 30px 0;"></div>
+                    <div class="text-right"><h4 class="text-turquoise">Last 30 Days</h4></div>
+                </td>
+                <td class="text-center views">
+                    <span class="count text-muted">{{ model.views.total|number_format }}</span><br />
+                    <span class="label text-turquoise text-faded text-uppercase text-thin"><b>Gallery</b> Views</span>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <div class="canvas canvas-padded">
-        <section class="body">
-            <ul class="image-list">
-                {% for key, image in model.gallery.images %}
-                    <li>
-                        <div class="preview"><img src="{{ asset(image.webPath)|imagine_filter('gallery_thumb') }}" /></div>
-                        <div>
-                            {% if image.description %}
-                                <span>{{ image.description }}</span><br />
-                            {% else %}
-                                <span>No description set.</span><br />
-                            {% endif %}
-                            <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}.</span>
+    <div class="canvas canvas-padded-l gray-lighter">
+        <ul class="image-list">
+            {% for key, image in model.gallery.images %}
+                <li>
+                    <div class="preview"><img src="{{ asset(image.webPath)|imagine_filter('gallery_thumb') }}" /></div>
+                    <div>
+                        {% if image.description %}
+                            <span>{{ image.description }}</span><br />
+                        {% else %}
+                            <span>No description set.</span><br />
+                        {% endif %}
+                        <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}.</span>
 
-                            {% if model.gallery.coverImage %}
-                                {% if image.id == model.gallery.coverImage.image.id %}
-                                    <span class="text-warning">This is the gallery cover image.</span>
-                                {% endif %}
+                        {% if model.gallery.coverImage %}
+                            {% if image.id == model.gallery.coverImage.image.id %}
+                                <span class="text-warning">This is the gallery cover image.</span>
                             {% endif %}
+                        {% endif %}
+                    </div>
+                    <div class="controls">
+                        {% if model.gallery.images[key - 1] is defined %}
+                            {% set href = url('dwi_portfolio_swap_display_order', {
+                                'id': model.gallery.id,
+                                'from': image.displayOrder,
+                                'to': model.gallery.images[key - 1].displayOrder
+                            }) %}
+
+                            <a class="btn btn-white" href="{{ href }}">&#x25B2;</a>
+                        {% else %}
+                            <button class="btn btn-white" disabled>&#x25B2;</button>
+                        {% endif %}
+
+                        {% if model.gallery.images[key + 1] is defined %}
+                            {% set href = url('dwi_portfolio_swap_display_order', {
+                                'id': model.gallery.id,
+                                'from': image.displayOrder,
+                                'to': model.gallery.images[key + 1].displayOrder
+                            }) %}
+
+                            <a class="btn btn-white" href="{{ href }}">&#x25BC;</a>
+                        {% else %}
+                            <button class="btn btn-white" disabled>&#x25BC;</button>
+                        {% endif %}
+
+                        <button class="btn btn-white" data-dropdown="#gi-dropdown-{{ key }}">Options &#x25BC;</button>
+                        <div id="gi-dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip dropdown-relative" style="display: none;">
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set Cover</a></li>
+                                <li><a href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}">Delete</a></li>
+                            </ul>
                         </div>
-                        <div class="controls">
-                            {% if model.gallery.images[key - 1] is defined %}
-                                {% set href = url('dwi_portfolio_swap_display_order', {
-                                    'id': model.gallery.id,
-                                    'from': image.displayOrder,
-                                    'to': model.gallery.images[key - 1].displayOrder
-                                }) %}
-
-                                <a class="btn" href="{{ href }}">&#x25B2;</a>
-                            {% else %}
-                                <button class="btn" disabled>&#x25B2;</button>
-                            {% endif %}
-
-                            {% if model.gallery.images[key + 1] is defined %}
-                                {% set href = url('dwi_portfolio_swap_display_order', {
-                                    'id': model.gallery.id,
-                                    'from': image.displayOrder,
-                                    'to': model.gallery.images[key + 1].displayOrder
-                                }) %}
-
-                                <a class="btn" href="{{ href }}">&#x25BC;</a>
-                            {% else %}
-                                <button class="btn" disabled>&#x25BC;</button>
-                            {% endif %}
-
-                            <button class="btn" data-dropdown="#dropdown-{{ key }}">Options &#x25BC;</button>
-                            <div id="dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip" style="display: none;">
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set Cover</a></li>
-                                    <li><a href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}">Delete</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </section>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}
 
@@ -104,7 +109,7 @@
             $('#chart').highcharts({
                 chart: {
                     type: 'area',
-                    backgroundColor: '#ecf0f1'
+                    backgroundColor: '#ffffff'
                 },
                 title: {
                     text: null
@@ -129,7 +134,7 @@
                         text: null
                     },
                     min: 0,
-                    gridLineColor: '#DEE3E6',
+                    gridLineColor: '#ecf0f1',
                     gridLineWidth: 2,
                     labels: {
                         enabled: false

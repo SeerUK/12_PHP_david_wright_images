@@ -8,16 +8,16 @@
 .canvas {
     background: white;
 
-    .admin & {
-        background: $slate-dark;
-    }
-
     &.canvas-padded-s {
         padding: 16px;
     }
 
     &.canvas-padded {
         padding: 40px;
+    }
+
+    &.canvas-padded-l {
+        padding: 50px;
     }
 
     &.gray-lighter {
@@ -232,5 +232,26 @@ nav.userbar {
 
         margin: 0 auto;
         padding: 0 10px;
+    }
+}
+
+.content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin-left: 300px;
+    overflow-y: auto;
+}
+
+.views {
+    .count {
+        font-size: 50px;
+        font-weight: $font-weight-thin;
+    }
+
+    .label {
+        font-size: 18px;
     }
 }

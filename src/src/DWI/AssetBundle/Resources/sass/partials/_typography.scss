@@ -26,12 +26,6 @@ h1, h2, h3, h4, h5, h6,
     }
 }
 
-.admin h1, .admin h2, .admin h3, .admin h4, .admin h5, .admin h6,
-.admin .h1, .admin .h2, .admin .h3, .admin .h4, .admin .h5, .admin .h6 {
-    color: $admin-headings-color;
-}
-
-
 h1,
 h2,
 h3 {
@@ -66,6 +60,10 @@ a {
 
     &:hover {
         color: $red;
+    }
+
+    .admin &:hover {
+        color: $turquoise;
     }
 }
 
@@ -159,6 +157,14 @@ b {
   &:hover {
     color: darken($text-info, 10%);
   }
+}
+
+.text-turquoise {
+    color: $text-turquoise;
+
+    &:hover {
+        color: darken($text-turquoise, 10%);
+    }
 }
 
 // Alignment

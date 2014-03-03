@@ -1,0 +1,19 @@
+<aside class="sidebar">
+    <section class="user clearfix">
+        <div class="pull-left">{{ app.user.username }}<br /><span class="text-muted">{{ app.user.roles|last.name }}</span></div>
+        <div class="pull-right">
+            <a href="{{ url('dwi_security_account_logout') }}"><i class="logout flaticon stroke logout-1"></i></a>
+        </div>
+    </section>
+    <nav class="primary">
+        <ul>
+            <li class="section">Portfolio</li>
+            <li><a href="">Manage Galleries</a></li>
+            <li class="divider"></li>
+            <li class="section">Pages</li>
+            <li><a href="">About</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+    </nav>
+    <section class="logo"><b>David Wright</b> Images <span class="text-warning">Admin</span></section>
+</aside>
