@@ -44,49 +44,25 @@
     </div>
 
     <div class="canvas canvas-padded-l gray-lighter">
-        <ul class="image-list">
+        <ul id="sortable" class="image-list clearfix">
             {% for key, image in model.gallery.images %}
-                <li>
-                    <div class="preview"><img src="{{ asset(image.webPath)|imagine_filter('gallery_thumb') }}" /></div>
-                    <div>
+                <li data-image="{{ image.id }}">
+                    <img class="preview" src="{{ asset(image.webPath)|imagine_filter('admin_gallery_thumb') }}" />
+                    <div class="desc">
                         {% if image.description %}
                             <span>{{ image.description }}</span><br />
                         {% else %}
                             <span>No description set.</span><br />
                         {% endif %}
-                        <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}.</span>
+                        <small class="text-muted">Modified: {{ image.lastModified|date("F jS g:ia") }}.</small>
 
-                        {% if model.gallery.coverImage %}
+                        {# {% if model.gallery.coverImage %}
                             {% if image.id == model.gallery.coverImage.image.id %}
                                 <span class="text-warning">This is the gallery cover image.</span>
                             {% endif %}
-                        {% endif %}
+                        {% endif %} #}
                     </div>
-                    <div class="controls">
-                        {% if model.gallery.images[key - 1] is defined %}
-                            {% set href = url('dwi_portfolio_swap_display_order', {
-                                'id': model.gallery.id,
-                                'from': image.displayOrder,
-                                'to': model.gallery.images[key - 1].displayOrder
-                            }) %}
-
-                            <a class="btn btn-white" href="{{ href }}">&#x25B2;</a>
-                        {% else %}
-                            <button class="btn btn-white" disabled>&#x25B2;</button>
-                        {% endif %}
-
-                        {% if model.gallery.images[key + 1] is defined %}
-                            {% set href = url('dwi_portfolio_swap_display_order', {
-                                'id': model.gallery.id,
-                                'from': image.displayOrder,
-                                'to': model.gallery.images[key + 1].displayOrder
-                            }) %}
-
-                            <a class="btn btn-white" href="{{ href }}">&#x25BC;</a>
-                        {% else %}
-                            <button class="btn btn-white" disabled>&#x25BC;</button>
-                        {% endif %}
-
+                    {# <div class="controls">
                         <button class="btn btn-white" data-dropdown="#gi-dropdown-{{ key }}">Options &#x25BC;</button>
                         <div id="gi-dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip dropdown-relative" style="display: none;">
                             <ul class="dropdown-menu">
@@ -94,7 +70,7 @@
                                 <li><a href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}">Delete</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> #}
                 </li>
             {% endfor %}
         </ul>
@@ -153,6 +129,33 @@
                     data: {{ model.views.chartViews|json_encode() }}
                 }]
             });
+
+            $('#sortable').sortable({
+                placeholder: 'drop-placeholder',
+                update: function(e, ui) {
+                    var $that = $(this);
+                    var $lis  = $that.children('li');
+                    var order = [];
+
+                    $.each($lis, function(idx, li) {
+                        var $li = $(li);
+
+                        order.push($li.data('image'));
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ url('dwi_portfolio_gallery_sort_images', { id: model.gallery.id }) }}',
+                        data: {
+                            order: order
+                        },
+                        dataType: 'json',
+                        success: function(data, status, xhr) {
+                            console.log(data);
+                        }
+                    });
+                }
+            }).disableSelection();
         });
 
     </script>

@@ -12,6 +12,7 @@ parameters:
     # Gateways
     dwi_portfolio.gallery_gateway.class: DWI\PortfolioBundle\Gateway\GalleryGateway
     dwi_portfolio.gallery_view_gateway.class: DWI\PortfolioBundle\Gateway\GalleryViewGateway
+    dwi_portfolio.image_gateway.class: DWI\PortfolioBundle\Gateway\ImageGateway
 
     # Forms
     dwi_portfolio.create_gallery_form_factory.class: DWI\PortfolioBundle\Form\Factory\GalleryFormFactory
@@ -65,6 +66,12 @@ services:
 
     dwi_portfolio.gallery_view_gateway:
         class: %dwi_portfolio.gallery_view_gateway.class%
+        arguments:
+            conn: '@doctrine.dbal.default_connection'
+            cache: '@dwi_core.result_cache'
+
+    dwi_portfolio.image_gateway:
+        class: %dwi_portfolio.image_gateway.class%
         arguments:
             conn: '@doctrine.dbal.default_connection'
             cache: '@dwi_core.result_cache'

@@ -88,3 +88,7 @@ liip_imagine:
             quality: 100
             filters:
                 relative_resize: { heighten: 500 }
+        admin_gallery_thumb:
+            quality: 75
+            filters:
+                thumbnail: { size: [240, 200], mode: outbound }

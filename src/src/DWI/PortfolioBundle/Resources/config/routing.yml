@@ -27,6 +27,13 @@ dwi_portfolio_manage_gallery:
     requirements:
         id: \d+
 
+dwi_portfolio_gallery_sort_images:
+    pattern: /admin/portfolio/gallery/{id}/images/sort
+    defaults: { _controller: DWIPortfolioBundle:GalleryAdmin:sort }
+    methods: [GET, POST]
+    requirements:
+        id: \d+
+
 dwi_portfolio_swap_display_order:
     pattern: /portfolio/gallery/manage/{id}/image/swap-display-order/{from}/{to}
     defaults: { _controller: DWIPortfolioBundle:Image:swapDisplayOrder }
