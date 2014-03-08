@@ -10,15 +10,8 @@
         <div class="jumbotron">
             {{ gallery.title }}<br />
             <small>{{ gallery.subtitle }}</small>
-            {# <section class="body">
-                <a href="{{ url('dwi_portfolio_manage_gallery', { id: gallery.id }) }}" class="btn">Manage Gallery</a>
-            </section> #}
         </div>
     </div>
-
-    {# {% include 'DWIPortfolioBundle:Portfolio/Admin/partials:gallery-controls.html.twig' with {
-        'model': model.controls
-    } %} #}
 
     {% if gallery.images is not empty %}
         <div class="canvas gray-lighter">

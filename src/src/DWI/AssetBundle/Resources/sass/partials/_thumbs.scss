@@ -68,3 +68,7 @@
         }
     }
 }
+
+.img-rounded {
+    @include border-radius(3px);
+}

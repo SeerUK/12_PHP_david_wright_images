@@ -22,19 +22,32 @@
         display: block;
         float: left;
         font-size: $font-size-base;
-        height: 266px;
+        height: 226px;
         margin-left: 20px;
         margin-bottom: 20px;
         position: relative;
-        width: 240px;
+        width: 200px;
 
         .preview {
             @include border-top-left-radius(4px);
             @include border-top-right-radius(4px);
 
             display: block;
-            height: 200px;
-            width: 240px;
+            height: 160px;
+            width: 100%;
+        }
+
+        .controls {
+            @include opacity(0.7);
+
+            position: absolute;
+            right: 10px;
+            top: 10px;
+
+        }
+
+        &:hover .controls {
+            @include opacity(1);
         }
 
         .desc {
@@ -43,8 +56,25 @@
             @include box-sizing(border-box);
 
             background: $white;
+            overflow: hidden;
             padding: 14px 14px;
+            text-overflow: ellipsis;
             width: 100%;
+            white-space: nowrap;
+        }
+
+        .status {
+            @include border-radius(2px);
+
+            background: $white;
+            padding: 7px 10px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+
+            i:last-child {
+                margin: 0;
+            }
         }
     }
 }

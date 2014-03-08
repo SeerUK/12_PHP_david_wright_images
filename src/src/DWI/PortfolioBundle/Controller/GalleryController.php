@@ -137,10 +137,8 @@ class GalleryController extends Controller
         }
 
         return $this->render('DWIPortfolioBundle:Portfolio/Admin:gallery-edit.html.twig', array(
-            'form' => $form->createView(),
-            'gallery' => array(
-                'id' => $gallery->getId(),
-            ),
+            'form'    => $form->createView(),
+            'gallery' => $gallery,
         ));
     }
 
@@ -176,7 +174,7 @@ class GalleryController extends Controller
             }
 
             // Redirect user to the gallery
-            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+            return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
                 'id' => $gallery->getId(),
             )));
         }
@@ -233,7 +231,7 @@ class GalleryController extends Controller
                     ->update($gallery);
             }
 
-            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+            return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
                 'id' => $gallery->getId(),
             )));
         }
@@ -284,7 +282,7 @@ class GalleryController extends Controller
             }
 
             // Redirect user to the gallery
-            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+            return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
                 'id' => $gallery->getId(),
             )));
         }

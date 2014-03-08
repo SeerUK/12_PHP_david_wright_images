@@ -64,6 +64,10 @@ footer,
     margin: 0 auto;
 }
 
+.admin .jumbotron {
+    width: auto;
+}
+
 
 // Header
 // --------------------------------------------------
@@ -145,12 +149,6 @@ header {
         font-size: 33%;
         font-weight: $font-weight-normal;
         text-transform: none;
-    }
-
-    .admin & {
-        > small {
-            color: $white;
-        }
     }
 }
 
@@ -243,6 +241,7 @@ nav.userbar {
     bottom: 0;
     margin-left: 300px;
     overflow-y: auto;
+    min-width: 840px;
 }
 
 .views {

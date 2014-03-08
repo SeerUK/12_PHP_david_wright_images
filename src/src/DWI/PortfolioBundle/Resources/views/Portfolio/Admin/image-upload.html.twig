@@ -1,7 +1,7 @@
 {% set form = model.form %}
 {% set gallery = model.gallery %}
 
-{% extends '::base-admin.html.twig' %}
+{% extends ':Admin:base-admin.html.twig' %}
 
 {% block title %}Upload Images{% endblock %}
 
@@ -9,7 +9,7 @@
     <div class="canvas">
         <div class="jumbotron">
             Upload Images<br />
-            <small>Into gallery "{{ gallery.title }}"</small>
+            <small>Into "{{ gallery.title }}"</small>
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-{% extends '::base-admin.html.twig' %}
+{% extends ':Admin:base-admin.html.twig' %}
 
 {% form_theme form 'DWICoreBundle:Form:fields.html.twig' %}
 
@@ -8,11 +8,11 @@
     <div class="canvas">
         <div class="jumbotron">
             Edit Gallery<br />
-            <small>(Updates instantly)</small>
+            <small>{{ gallery.title }}</small>
         </div>
     </div>
 
-    <div class="canvas canvas-padded slate">
+    <div class="canvas canvas-padded gray-lighter clearfix">
         {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
             {{ form_row (form._token) }}
             {{ form_errors(form) }}
@@ -31,7 +31,7 @@
             <div class="form-row">
                 <div class="pull-right">
                     {{ form_widget(form.submit) }}
-                    <a class="btn btn-slate" href="{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}">Cancel</a>
+                    <a class="btn btn-white" href="{{ url('dwi_portfolio_manage_gallery', {id: gallery.id}) }}">Cancel</a>
                 </div>
             </div>
         {{ form_end(form, { 'render_rest': false }) }}

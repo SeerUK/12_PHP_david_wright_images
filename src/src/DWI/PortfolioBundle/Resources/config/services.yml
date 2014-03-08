@@ -26,8 +26,9 @@ parameters:
     dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\GalleryPresenter
     dwi_portfolio.gallery_manage_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\ManagePresenter
     dwi_portfolio.gallery_set_cover_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\SetCoverPresenter
-    dwi_portfolio.image_upload_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\UploadPresenter
     dwi_portfolio.image_delete_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\DeletePresenter
+    dwi_portfolio.image_edit_description_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\EditDescriptionPresenter
+    dwi_portfolio.image_upload_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\UploadPresenter
 
 services:
     dwi_portfolio.gallery_repository:
@@ -115,8 +116,11 @@ services:
     dwi_portfolio.gallery_set_cover_presenter:
         class: %dwi_portfolio.gallery_set_cover_presenter.class%
 
-    dwi_portfolio.image_upload_presenter:
-        class: %dwi_portfolio.image_upload_presenter.class%
-
     dwi_portfolio.image_delete_presenter:
         class: %dwi_portfolio.image_delete_presenter.class%
+
+    dwi_portfolio.image_edit_description_presenter:
+        class: %dwi_portfolio.image_edit_description_presenter.class%
+
+    dwi_portfolio.image_upload_presenter:
+        class: %dwi_portfolio.image_upload_presenter.class%

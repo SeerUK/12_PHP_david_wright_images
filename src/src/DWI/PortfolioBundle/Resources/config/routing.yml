@@ -35,7 +35,7 @@ dwi_portfolio_gallery_sort_images:
         id: \d+
 
 dwi_portfolio_swap_display_order:
-    pattern: /portfolio/gallery/manage/{id}/image/swap-display-order/{from}/{to}
+    pattern: /admin/portfolio/gallery/manage/{id}/image/swap-display-order/{from}/{to}
     defaults: { _controller: DWIPortfolioBundle:Image:swapDisplayOrder }
     methods: [GET]
     requirements:
@@ -44,26 +44,26 @@ dwi_portfolio_swap_display_order:
         to: \d+
 
 dwi_portfolio_create_gallery:
-    pattern: /portfolio/gallery/create
+    pattern: /admin/portfolio/gallery/create
     defaults: { _controller: DWIPortfolioBundle:Gallery:createGallery }
     methods: [GET,POST]
 
 dwi_portfolio_edit_gallery:
-    pattern: /portfolio/gallery/{id}/edit
+    pattern: /admin/portfolio/gallery/{id}/edit
     defaults: { _controller: DWIPortfolioBundle:Gallery:editGallery }
     methods: [GET,POST]
     requirements:
         id: \d+
 
 dwi_portfolio_remove_gallery:
-    pattern: /portfolio/gallery/{id}/remove
+    pattern: /admin/portfolio/gallery/{id}/remove
     defaults: { _controller: DWIPortfolioBundle:Gallery:deleteGallery }
     methods: [GET,POST]
     requirements:
         id: \d+
 
 dwi_portfolio_set_cover_gallery:
-    pattern: /portfolio/gallery/{id}/setcover/{imageId}
+    pattern: /admin/portfolio/gallery/{id}/setcover/{imageId}
     defaults: { _controller: DWIPortfolioBundle:Gallery:setCover }
     methods: [GET,POST]
     requirements:
@@ -71,27 +71,35 @@ dwi_portfolio_set_cover_gallery:
         imageId: \d+
 
 dwi_portfolio_publish_gallery:
-    pattern: /portfolio/gallery/{id}/publish
+    pattern: /admin/portfolio/gallery/{id}/publish
     defaults: { _controller: DWIPortfolioBundle:Gallery:publishGallery }
     methods: [GET,POST]
     requirements:
         id: \d+
 
 dwi_portfolio_upload_images_form:
-    pattern: /portfolio/gallery/{id}/image/upload
+    pattern: /admin/portfolio/gallery/{id}/image/upload
     defaults: { _controller: DWIPortfolioBundle:Image:uploadImagesForm }
     methods: [GET,POST]
     requirements:
         id: \d+
 
 dwi_portfolio_upload_image:
-    pattern: /portfolio/gallery/{id}/image/upload/process
+    pattern: /admin/portfolio/gallery/{id}/image/upload/process
     defaults: { _controller: DWIPortfolioBundle:Image:uploadImage }
     requirements:
         id: \d+
 
+dwi_portfolio_edit_image_description:
+    pattern: /admin/portfolio/gallery/{galleryId}/image/{id}/edit-description
+    defaults: { _controller: DWIPortfolioBundle:Image:editDescription }
+    methods: [GET,POST]
+    requirements:
+        galleryId: \d+
+        id: \d+
+
 dwi_portfolio_remove_image:
-    pattern: /portfolio/gallery/{galleryId}/image/{id}/remove
+    pattern: /admin/portfolio/gallery/{galleryId}/image/{id}/remove
     defaults: { _controller: DWIPortfolioBundle:Image:deleteImage }
     methods: [GET,POST]
     requirements:

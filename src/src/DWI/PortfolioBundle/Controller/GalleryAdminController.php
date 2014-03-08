@@ -91,8 +91,12 @@ class GalleryAdminController extends Controller
             throw $this->createNotFoundException('That gallery doesn\'t exist!');
         }
 
-        $response->setData($request->get('order'));
+        $order =  $request->get('order');
 
-        return $response;
+        $ig->updateGalleryOrder($id, $order);
+
+        return $response->setData(array(
+            'order' => $order
+        ));
     }
 }

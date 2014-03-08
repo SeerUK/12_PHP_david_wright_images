@@ -30,7 +30,7 @@ class ImageGateway extends AbstractGateway
 
         try {
             foreach ($order as $position => $id) {
-                $this->updateOrder($galleryId, $id, $position);
+                $this->updateOrder($galleryId, $id, ($position + 1));
             }
 
             $this->conn->commit();
@@ -56,9 +56,9 @@ class ImageGateway extends AbstractGateway
         $qb = $this->conn->createQueryBuilder();
 
         $qb->update('Image', 'i');
-        $qb->set('i.order', ':order');
-        $qb->where('i.galleryId', ':galleryId');
-        $qb->andWhere('i.id', ':id');
+        $qb->set('i.displayOrder', ':order');
+        $qb->where('i.galleryId = :galleryId');
+        $qb->andWhere('i.id = :id');
         $qb->setParameter('order', $order);
         $qb->setParameter('galleryId', $galleryId);
         $qb->setParameter('id', $id);

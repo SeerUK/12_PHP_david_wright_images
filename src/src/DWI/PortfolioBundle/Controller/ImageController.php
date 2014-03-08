@@ -150,6 +150,51 @@ class ImageController extends Controller
 
 
     /**
+     * Edit Image Description
+     *
+     * @param  integer $galleryId
+     * @param  Image   $image
+     * @return Symfony\Component\HttpFoundation\Response
+     *
+     * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function editDescriptionAction($galleryId, Image $image)
+    {
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        if ( ! $image) {
+            throw $this->createNotFoundException('That image doesn\'t exist!');
+        }
+
+        $request   = $this->get('request');
+        $presenter = $this->get('dwi_portfolio.image_edit_description_presenter')
+            ->setVariable('image', $image);
+
+        // If we've viewed and posted our response
+        if ('POST' === $request->getMethod()) {
+            if ($request->request->get('doEdit')) {
+                $image->setDescription($request->request->get('desc'));
+
+                $this->get('dwi_portfolio.image_repository')
+                    ->update($image);
+            }
+
+            // Redirect user to the gallery
+            return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
+                'id' => $galleryId,
+            )));
+        }
+
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:image-edit-description.html.twig', array(
+            'model' => $presenter->prepareView(),
+        ));
+    }
+
+
+    /**
      * Delete Image
      *
      * @param  integer $galleryId
@@ -181,7 +226,7 @@ class ImageController extends Controller
             }
 
             // Redirect user to the gallery
-            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+            return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
                 'id' => $galleryId,
             )));
         }

@@ -1,6 +1,6 @@
 <script id="template-base" type="text/x-handlebars-template">
     {% verbatim %}
-        <div class="canvas canvas-padded slate">
+        <div class="canvas canvas-padded gray-lighter">
             <div class="form-compact step1">
                 <div class="form-row">
                     <div class="btn-table">
@@ -13,7 +13,7 @@
                                 <button class="btn btn-block btn-success inputUpload">Upload</button>
                             </div>
                             <div class="btn-cell">
-                                <a class="btn btn-block btn-slate" href="{{cancelUrl}}">Done</a>
+                                <a class="btn btn-block btn-white" href="{{cancelUrl}}">Done</a>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                 value: "{{ form.fields._token.value }}",
             },
             fileField: "{{ form.fields.file.name }}",
-            cancelUrl: "{{ url('dwi_portfolio_gallery', {id: gallery.id}) }}",
+            cancelUrl: "{{ url('dwi_portfolio_manage_gallery', {id: gallery.id}) }}",
             uploadUrl: "{{ url('dwi_portfolio_upload_image', {id: gallery.id}) }}",
         });
 

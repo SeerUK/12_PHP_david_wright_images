@@ -1,33 +1,38 @@
 {% extends ':Admin:base-admin.html.twig' %}
 
-{% block title %}Remove Image{% endblock %}
+{% block title %}Edit Image{% endblock %}
 
 {% block body %}
     <div class="canvas">
         <div class="jumbotron">
-            Remove Image<br />
+            Edit Image Description<br />
             <small>From {{ model.gallery.title }}</small>
         </div>
     </div>
 
     <div class="canvas canvas-padded gray-lighter">
         <div class="form-compact">
-            <div class="form-row text-center">Are you sure you want to delete the following image?</div><br />
             <div class="form-row text-center">
                 <img class="img-rounded" src="{{ asset(model.image.thumbnail)|imagine_filter('gallery_thumb') }}" />
             </div>
         </div>
 
         <form method="POST" class="form-compact">
-            <input type="hidden" name="doDelete" value="1">
+            <div class="form-compact">
+                <div class="form-row text-center">
+                    <input class="form-control" type="text" name="desc" value="{{ model.image.description}}" placeholder="Enter a description..." />
+                </div>
+            </div>
+
+            <input type="hidden" name="doEdit" value="1">
 
             <div class="form-row">
-                <input type="submit" name="submit" value="Delete" class="btn btn-block btn-danger" />
+                <input type="submit" name="submit" value="Edit" class="btn btn-block btn-success" />
             </div>
         </form>
 
         <form method="POST" class="form-compact">
-            <input type="hidden" name="doDelete" value="0">
+            <input type="hidden" name="doEdit" value="0">
 
             <div class="form-row">
                 <input type="submit" name="submit" value="Cancel" class="btn btn-block btn-white" />

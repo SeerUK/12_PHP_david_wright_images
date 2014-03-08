@@ -16,7 +16,7 @@ use DWI\CoreBundle\View\Presenter\AbstractPresenter;
 /**
  * Gallery Presenter
  */
-class DeletePresenter extends AbstractPresenter
+class EditDescriptionPresenter extends AbstractPresenter
 {
     /**
      * Prepare view
@@ -44,7 +44,8 @@ class DeletePresenter extends AbstractPresenter
         $image = $this->getVariable('image');
 
         return $ivm
-            ->setVariable('thumbnail', $image->getWebPath());
+            ->setVariable('thumbnail', $image->getWebPath())
+            ->setVariable('description', $image->getDescription());
     }
 
 

@@ -33,23 +33,8 @@
 
 // Form Styles
 
-.form {
-    .form-row {
-        @include column(12);
-    }
-}
-
-.form-compact {
-    .form-row {
-        @include column(4);
-        @include push(4);
-    }
-}
-
 .form,
 .form-compact {
-    @include row(12);
-
     margin: 0 auto 20px;
 
     .form-row {
@@ -75,6 +60,19 @@
             width: 100%;
             z-index: 2;
         }
+    }
+}
+
+.form {
+    .form-row {
+        @include column(12);
+    }
+}
+
+.form-compact {
+    .form-row {
+        margin: auto;
+        width: 300px;
     }
 }
 

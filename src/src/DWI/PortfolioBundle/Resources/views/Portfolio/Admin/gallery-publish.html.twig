@@ -1,4 +1,4 @@
-{% extends '::base-admin.html.twig' %}
+{% extends ':Admin:base-admin.html.twig' %}
 
 {% if gallery.isActive %}
     {% set verb = "unpublish" %}
@@ -16,11 +16,11 @@
     <div class="canvas">
         <div class="jumbotron">
             {{ verb|capitalize }} Gallery<br />
-            <small>(You can reverse this change later)</small>
+            <small>{{ gallery.title }}</small>
         </div>
     </div>
 
-    <div class="canvas canvas-padded slate">
+    <div class="canvas canvas-padded gray-lighter">
         <div class="form-compact">
             <div class="form-row text-center">
                 Are you sure you want to {{ verb }} gallery<br /><strong>"{{ gallery.title }}"</strong>?
@@ -39,7 +39,7 @@
             <input type="hidden" name="{{ action }}" value="0">
 
             <div class="form-row">
-                <input type="submit" name="submit" value="Cancel" class="btn btn-block btn-slate" />
+                <input type="submit" name="submit" value="Cancel" class="btn btn-block btn-white" />
             </div>
         </form>
     </div>

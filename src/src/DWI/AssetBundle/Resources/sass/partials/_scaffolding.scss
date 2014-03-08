@@ -17,6 +17,7 @@ body {
     line-height: $line-height-base;
     color: $text-color;
     background-color: $body-bg;
+    min-width: 1140px;
 
     &.admin {
         background-color: $white;
