@@ -59,10 +59,12 @@ class ImageGateway extends AbstractGateway
         $qb->set('i.displayOrder', ':order');
         $qb->where('i.galleryId = :galleryId');
         $qb->andWhere('i.id = :id');
-        $qb->setParameter('order', $order);
-        $qb->setParameter('galleryId', $galleryId);
-        $qb->setParameter('id', $id);
 
-        return $qb->execute();
+        $stmt = $this->conn->prepare($qb->getSql());
+        $stmt->bindValue('order', $order);
+        $stmt->bindValue('galleryId', $galleryId);
+        $stmt->bindValue('id', $id);
+
+        return $stmt->execute();
     }
 }

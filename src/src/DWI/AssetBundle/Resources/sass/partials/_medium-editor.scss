@@ -7,24 +7,30 @@
     @include box-sizing(border-box);
     @include box-shadow(0 2px 0 $gray-light);
 
-    background: $white;
+    background: transparent;
+    font-size: 16px;
     line-height: $line-height-base;
     min-height: 200px;
     max-height: 700px;
+    outline: 0;
     overflow:auto;
-    padding: 9px 12px;
+    padding: 20px 14px;
     resize: vertical;
     width: 100%;
 
     &:after {
         color: $gray;
         font-style: normal;
-        padding: 9px 12px;
+        padding: 20px 14px;
+    }
+
+    blockquote {
+        border-left: 5px solid $gray-light;
     }
 }
 
 .medium-editor-action {
-    font-family: $font-family-serif;
+    font-family: $font-family-sans-serif;
     font-size: $font-size-base;
     margin: 0;
 }

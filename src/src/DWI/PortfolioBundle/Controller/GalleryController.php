@@ -88,7 +88,7 @@ class GalleryController extends Controller
             $this->get('dwi_portfolio.gallery_repository')
                 ->persist($gallery);
 
-            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+            return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
                 'id' => $gallery->getId(),
             )));
         }
@@ -100,7 +100,7 @@ class GalleryController extends Controller
 
 
     /**
-     * Delete Gallery
+     * Edit Gallery
      *
      * @param  Gallery $gallery
      * @return Symfony\Component\HttpFoundation\Response
@@ -131,7 +131,7 @@ class GalleryController extends Controller
             $this->get('dwi_portfolio.gallery_repository')
                 ->update($gallery);
 
-            return $this->redirect($this->generateUrl('dwi_portfolio_gallery', array(
+            return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
                 'id' => $gallery->getId(),
             )));
         }
@@ -170,7 +170,7 @@ class GalleryController extends Controller
                 $this->get('dwi_portfolio.gallery_repository')
                     ->remove($gallery);
 
-                return $this->redirect($this->generateUrl('dwi_portfolio_homepage'));
+                return $this->redirect($this->generateUrl('dwi_portfolio_manage_portfolio'));
             }
 
             // Redirect user to the gallery

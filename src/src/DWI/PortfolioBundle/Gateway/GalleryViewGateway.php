@@ -18,6 +18,36 @@ use DWI\CoreBundle\Gateway\AbstractGateway;
 class GalleryViewGateway extends AbstractGateway
 {
     /**
+     * Find all views
+     *
+     * @return  integer
+     */
+    public function find()
+    {
+        $ck = __METHOD__;
+
+        // Fetch cached result, or recache
+        if ( ! (bool) $result = $this->cache->fetch($ck)) {
+            $qb = $this->conn->createQueryBuilder();
+
+            $qb->select('COALESCE(SUM(gv.views), 0) AS views');
+            $qb->from('GalleryView', 'gv');
+
+            $stmt = $this->conn->prepare($qb->getSql());
+            $stmt->execute();
+
+            $result = $stmt->fetch();
+
+            $this->cache->save($ck, $result);
+        }
+
+        return $result['views']
+            ? $result['views']
+            : 0;
+    }
+
+
+    /**
      * Find gallery views by id
      *
      * @param  integer $id
@@ -59,6 +89,46 @@ class GalleryViewGateway extends AbstractGateway
 
 
     /**
+     * Find dated gallery views
+     *
+     * @param  integer $limit
+     * @return integer
+     */
+    public function findDated($limit = 30)
+    {
+        if ( ! filter_var($limit, FILTER_VALIDATE_INT)) {
+            throw new \InvalidArgumentException(
+                __METHOD__ .
+                ' \'limit\'expected an integer. Received ' .
+                gettype($limit)
+            );
+        }
+
+        $ck = __METHOD__ . ':' . $limit;
+
+        // Fetch cached result, or recache
+        if ( ! (bool) $result = $this->cache->fetch($ck)) {
+            $qb = $this->conn->createQueryBuilder();
+
+            $qb->select('COALESCE(gv.views, 0) AS views', 'gv.date');
+            $qb->from('GalleryView', 'gv');
+            $qb->groupBy('date');
+            $qb->orderBy('date', 'DESC');
+            $qb->setMaxResults($limit);
+
+            $stmt = $this->conn->prepare($qb->getSql());
+            $stmt->execute();
+
+            $result = $stmt->fetchAll();
+
+            $this->cache->save($ck, $result);
+        }
+
+        return $result;
+    }
+
+
+    /**
      * Find dated gallery views by id
      *
      * @param  integer $id
@@ -83,7 +153,7 @@ class GalleryViewGateway extends AbstractGateway
             );
         }
 
-        $ck = __METHOD__ . ':' . $id;
+        $ck = __METHOD__ . ':' . $id . ':' . $limit;
 
         // Fetch cached result, or recache
         if ( ! (bool) $result = $this->cache->fetch($ck)) {
@@ -204,49 +274,6 @@ class GalleryViewGateway extends AbstractGateway
         $stmt->bindValue('id', $id);
         $stmt->execute();
 
-        $this->destroyCacheByGalleryId($id)
-            ->destroyDatedCacheByGalleryId($id)
-            ->destroyCacheTotal();
-    }
-
-
-    /**
-     * Destroys cached views of a gallery
-     *
-     * @param  integer $id
-     * @return GalleryViewGateway
-     */
-    private function destroyCacheByGalleryId($id)
-    {
-        $this->cache->delete(get_called_class() . '::findByGalleryId:' . $id);
-
-        return $this;
-    }
-
-
-    /**
-     * Destroys dated cached views of a gallery
-     *
-     * @param  integer $id
-     * @return GalleryViewGateway
-     */
-    private function destroyDatedCacheByGalleryId($id)
-    {
-        $this->cache->delete(get_called_class() . '::findDatedByGalleryId:' . $id);
-
-        return $this;
-    }
-
-
-    /**
-     * Destroy total gallery view cache
-     *
-     * @return GalleryViewGateway
-     */
-    private function destroyCacheTotal()
-    {
-        $this->cache->delete(get_called_class() . '::findTotal');
-
-        return $this;
+        $this->cache->deleteAll();
     }
 }

@@ -96,6 +96,11 @@ b {
     font-weight: $font-weight-bold;
 }
 
+i,
+em {
+    font-style: italic;
+}
+
 // Contextual emphasis
 
 .text-faded {

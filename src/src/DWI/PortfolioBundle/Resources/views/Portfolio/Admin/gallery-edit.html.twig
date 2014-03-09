@@ -13,8 +13,8 @@
     </div>
 
     <div class="canvas canvas-padded gray-lighter clearfix">
-        {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
-            {{ form_row (form._token) }}
+        {{ form_start(form, { 'attr': { 'class': 'form-editor' } }) }}
+            {{ form_widget(form._token) }}
             {{ form_errors(form) }}
 
             {{ form_widget(form.title) }}
@@ -28,12 +28,15 @@
 
             {{ form_widget(form.date) }}
 
+            <br />
+
             <div class="form-row">
                 <div class="pull-right">
                     {{ form_widget(form.submit) }}
                     <a class="btn btn-white" href="{{ url('dwi_portfolio_manage_gallery', {id: gallery.id}) }}">Cancel</a>
                 </div>
-            </div>
+            </div><br />
+
         {{ form_end(form, { 'render_rest': false }) }}
     </div>
 {% endblock %}

@@ -20,6 +20,13 @@ dwi_portfolio_gallery:
     requirements:
         id: \d+
 
+dwi_portfolio_manage_portfolio:
+    pattern: /admin/portfolio/galleries/{page}
+    defaults: { _controller: DWIPortfolioBundle:PortfolioAdmin:view, page: 1 }
+    methods: [GET]
+    requirements:
+        page: \d+
+
 dwi_portfolio_manage_gallery:
     pattern: /admin/portfolio/gallery/{id}
     defaults: { _controller: DWIPortfolioBundle:GalleryAdmin:view }

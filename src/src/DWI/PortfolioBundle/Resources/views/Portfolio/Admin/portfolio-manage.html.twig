@@ -1,95 +1,51 @@
-{% extends '::base-admin.html.twig' %}
+{% extends ':Admin:base-admin.html.twig' %}
 
-{% block title %}Manage '{{ model.gallery.title }}' Gallery{% endblock %}
+{% block title %}Manage Galleries{% endblock %}
 
 {% block body %}
-    <div class="canvas canvas-padded">
-        <section class="body">
-            <div class="pull-left">
-                <h3>Managing <span class="text-light">'{{ model.gallery.title }}'</span></h3>
-            </div>
-            <div class="pull-right">
-                <a href="{{ url('dwi_portfolio_gallery', { id: model.gallery.id }) }}" class="btn btn-slate">View Gallery</a>
-                <a href="{{ url('dwi_portfolio_upload_images_form', { id: model.gallery.id }) }}" class="btn btn-slate">Upload Images</a>
-                {% if model.gallery.isActive %}
-                    <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}" class="btn btn-slate">Unpublish</a>
-                {% else %}
-                    <a href="{{ url('dwi_portfolio_publish_gallery', { id: model.gallery.id }) }}" class="btn btn-slate">Publish</a>
-                {% endif %}
-                <a href="{{ url('dwi_portfolio_edit_gallery', { id: model.gallery.id }) }}" class="btn btn-slate">Edit</a>
-                <a href="{{ url('dwi_portfolio_remove_gallery', { id: model.gallery.id }) }}" class="btn btn-danger">Delete</a>
-            </div>
-        </section>
+    <div class="canvas canvas-padded-l">
+        <div class="pull-left">
+            <h1>Managing <span class="text-light">Galleries</span></h1><br />
+        </div>
+        <div class="pull-right">
+            <a href="{{ url('dwi_portfolio_create_gallery') }}" class="btn">Create Gallery</a>
+        </div>
     </div>
 
-    <div class="canvas canvas-padded slate">
-        <section class="body">
-            <table class="table">
-                <tr>
-                    <td style="width: 80%;"><div id="chart" style="background: #34495e; height: 120px; margin: 0 auto"></div></td>
-                    <td class="text-center"><span><h2>{{ model.views.total }}<br /><small>Total Views</small></h2></span></td>
-                </tr>
-            </table>
-        </section>
+    <div class="canvas canvas-padded-l">
+        <table class="table">
+            <tr>
+                <td style="width: 75%;">
+                    <div id="chart" style="height: 120px; margin: 0 auto; padding: 30px 0;"></div>
+                    <div class="text-right"><h4 class="text-turquoise">Last 30 Days</h4></div>
+                </td>
+                <td class="text-center views">
+                    <span class="count text-muted">{{ model.views.total|number_format }}</span><br />
+                    <span class="label text-turquoise text-faded text-uppercase text-thin"><b>Total</b> Views</span>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <div class="canvas canvas-padded">
-        <section class="body">
-            <ul class="image-list">
-                {% for key, image in model.gallery.images %}
-                    <li>
-                        <div class="preview"><img src="{{ asset(image.webPath)|imagine_filter('gallery_thumb') }}" /></div>
-                        <div>
+    <div class="canvas canvas-padded-l gray-lighter">
+        <ul class="gallery-list clearfix">
+            {% if model.galleries is not empty %}
+                {% for key, gallery in model.galleries %}
+                    <li data-gallery="{{ gallery.id }}">
+                        <img class="preview" src="{{ asset(image.webPath)|imagine_filter('admin_gallery_thumb') }}" />
+                        <div class="desc">
                             {% if image.description %}
-                                <span>{{ image.description }}</span><br />
+                                <span title="{{ image.description }}">{{ image.description }}</span><br />
                             {% else %}
-                                <span>No description set.</span><br />
+                                <span>No description set</span><br />
                             {% endif %}
-                            <span class="text-muted">Last modified: {{ image.lastModified|date("F jS \\a\\t g:ia") }}.</span>
+                            <small class="text-muted">Modified {{ image.lastModified|date("F jS g:ia") }}</small>
 
-                            {% if model.gallery.coverImage %}
-                                {% if image.id == model.gallery.coverImage.image.id %}
-                                    <span class="text-warning">This is the gallery cover image.</span>
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                        <div class="controls">
-                            {% if model.gallery.images[key - 1] is defined %}
-                                {% set href = url('dwi_portfolio_swap_display_order', {
-                                    'id': model.gallery.id,
-                                    'from': image.displayOrder,
-                                    'to': model.gallery.images[key - 1].displayOrder
-                                }) %}
-
-                                <a class="btn btn-slate" href="{{ href }}">&#x25B2;</a>
-                            {% else %}
-                                <button class="btn btn-slate" disabled>&#x25B2;</button>
-                            {% endif %}
-
-                            {% if model.gallery.images[key + 1] is defined %}
-                                {% set href = url('dwi_portfolio_swap_display_order', {
-                                    'id': model.gallery.id,
-                                    'from': image.displayOrder,
-                                    'to': model.gallery.images[key + 1].displayOrder
-                                }) %}
-
-                                <a class="btn btn-slate" href="{{ href }}">&#x25BC;</a>
-                            {% else %}
-                                <button class="btn btn-slate" disabled>&#x25BC;</button>
-                            {% endif %}
-
-                            <button class="btn btn-slate" data-dropdown="#dropdown-{{ key }}">Options</button>
-                            <div id="dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip" style="display: none;">
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set Cover</a></li>
-                                    <li><a href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}">Delete</a></li>
-                                </ul>
-                            </div>
                         </div>
                     </li>
                 {% endfor %}
-            </ul>
-        </section>
+            {% endif %}
+        </ul>
     </div>
 {% endblock %}
 
@@ -101,7 +57,7 @@
             $('#chart').highcharts({
                 chart: {
                     type: 'area',
-                    backgroundColor: '#34495e'
+                    backgroundColor: '#ffffff'
                 },
                 title: {
                     text: null
@@ -110,7 +66,7 @@
                     text: null
                 },
                 colors: [
-                    '#e74c3c'
+                    '#1abc9c'
                 ],
                 credits: {
                     enabled: false
@@ -126,7 +82,7 @@
                         text: null
                     },
                     min: 0,
-                    gridLineColor: '#506875',
+                    gridLineColor: '#ecf0f1',
                     gridLineWidth: 2,
                     labels: {
                         enabled: false

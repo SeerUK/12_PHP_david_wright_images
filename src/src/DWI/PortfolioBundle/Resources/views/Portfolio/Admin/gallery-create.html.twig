@@ -1,4 +1,4 @@
-{% extends '::base-admin.html.twig' %}
+{% extends ':Admin:base-admin.html.twig' %}
 
 {% form_theme form 'DWICoreBundle:Form:fields.html.twig' %}
 
@@ -12,8 +12,8 @@
         </div>
     </div>
 
-    <div class="canvas canvas-padded slate">
-        {{ form_start(form, { 'attr': { 'class': 'form' } }) }}
+    <div class="canvas canvas-padded gray-lighter">
+        {{ form_start(form, { 'attr': { 'class': 'form-editor' } }) }}
             {{ form_row (form._token) }}
             {{ form_errors(form) }}
 
@@ -28,12 +28,15 @@
 
             {{ form_widget(form.date) }}
 
+            <br />
+
             <div class="form-row">
                 <div class="pull-right">
                     {{ form_widget(form.submit) }}
-                    <a href="{{ url('dwi_portfolio_homepage') }}" class="btn btn-slate">Cancel</a>
+                    <a href="{{ url('dwi_portfolio_manage_portfolio') }}" class="btn btn-white">Cancel</a>
                 </div>
-            </div>
+            </div><br />
+
         {{ form_end(form, { 'render_rest': false }) }}
     </div>
 {% endblock %}

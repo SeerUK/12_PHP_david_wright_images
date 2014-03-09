@@ -27,13 +27,11 @@
 .gallery-type::after,
 .gallery-details {
     color: $gray-dark;
-    font-family: $font-family-serif;
+    font-family: $font-family-sans-serif;
 }
 
 .gallery-details {
     @include column(3);
-
-    font-style: italic;
 
     dl > dt {
         color: $black;
@@ -54,7 +52,7 @@
 
 .gallery-type {
     font-size: floor(($font-size-base * 1.1));
-    font-weight: $font-weight-normal;
+    font-weight: $font-weight-thin;
     line-height: ($line-height-computed * 1.2);
 
     &:last-child {
@@ -62,7 +60,6 @@
     }
 
     h1, h2, h3, h4, h5, h6 {
-        font-family: $font-family-serif;
         line-height: $line-height-base;
         margin-bottom: ($line-height-computed * 1.1);
 
