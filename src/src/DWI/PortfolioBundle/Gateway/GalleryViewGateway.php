@@ -110,7 +110,7 @@ class GalleryViewGateway extends AbstractGateway
         if ( ! (bool) $result = $this->cache->fetch($ck)) {
             $qb = $this->conn->createQueryBuilder();
 
-            $qb->select('COALESCE(gv.views, 0) AS views', 'gv.date');
+            $qb->select('SUM(COALESCE(gv.views, 0)) AS views', 'gv.date');
             $qb->from('GalleryView', 'gv');
             $qb->groupBy('date');
             $qb->orderBy('date', 'DESC');
