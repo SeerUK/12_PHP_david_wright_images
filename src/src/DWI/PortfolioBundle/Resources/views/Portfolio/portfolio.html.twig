@@ -53,7 +53,7 @@
                         <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: 1 })) }}">First</a>
                     </li>
                     <li>
-                        <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: pagination.page - 1 })) }}">Previous</a>
+                        <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: pagination.page - 1 })) }}">Prev</a>
                     </li>
                 {% endif %}
 

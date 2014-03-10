@@ -29,23 +29,50 @@
 
     <div class="canvas canvas-padded-l gray-lighter">
         <ul class="gallery-list clearfix">
-            {% if model.galleries is not empty %}
-                {% for key, gallery in model.galleries %}
+            {% if model.portfolio is not empty %}
+                {% for key, gallery in model.portfolio.galleries %}
                     <li data-gallery="{{ gallery.id }}">
-                        <img class="preview" src="{{ asset(image.webPath)|imagine_filter('admin_gallery_thumb') }}" />
-                        <div class="desc">
-                            {% if image.description %}
-                                <span title="{{ image.description }}">{{ image.description }}</span><br />
+                        <a href="{{ url('dwi_portfolio_manage_gallery', { id: gallery.id }) }}">
+                            {% if gallery.coverImagePath %}
+                                <img class="preview" src="{{ asset(gallery.coverImagePath)|imagine_filter('admin_gallery_thumb') }}" />
                             {% else %}
-                                <span>No description set</span><br />
+                                <img class="preview" src="http://placehold.it/275x200" />
                             {% endif %}
-                            <small class="text-muted">Modified {{ image.lastModified|date("F jS g:ia") }}</small>
-
+                        </a>
+                        <div class="status">
+                            <i class="flaticon stroke grid-2 text-muted {{ gallery.images|length > 0 ?: 'text-danger' }}" title="Gallery has images?"></i> {# Gallery has Images #}
+                            <i class="flaticon stroke photo-1 text-muted {{ gallery.coverImagePath ?: 'text-danger' }}" title="Thumbnail image set?"></i> {# Thumbnail Image Set #}
+                            <i class="flaticon stroke eye-1 text-muted text-muted {{ gallery.isActive ?: 'text-danger' }}" title="Gallery is published?"></i> {# Gallery is published #}
+                        </div>
+                        <div class="desc">
+                            <span title="{{ gallery.title }}">{{ gallery.title }}</span><br />
+                            <small class="text-muted">{{ gallery.subtitle }}</small>
                         </div>
                     </li>
                 {% endfor %}
             {% endif %}
         </ul>
+        {% if model.pagination.pages > 1 %}
+            <ul class="pagination">
+                {% if model.pagination.page != 1 %}
+                    <li>
+                        <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: 1 })) }}">First</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.page - 1 })) }}">Prev</a>
+                    </li>
+                {% endif %}
+
+                {% for i in model.pagination.start..model.pagination.end %}
+                    <li><a class="btn {{ i == model.pagination.page ? 'btn-danger' : 'btn-white' }}" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: i })) }}">{{ i }}</a></li>
+                {% endfor %}
+
+                {% if model.pagination.page != model.pagination.pages %}
+                    <li><a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.page + 1 })) }}">Next</a></li>
+                    <li><a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.pages })) }}">Last</a></li>
+                {% endif %}
+            </ul>
+        {% endif %}
     </div>
 {% endblock %}
 

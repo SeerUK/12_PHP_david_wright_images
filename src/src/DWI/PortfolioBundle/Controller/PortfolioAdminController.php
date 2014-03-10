@@ -38,15 +38,18 @@ class PortfolioAdminController extends Controller
             throw new AccessDeniedException();
         }
 
+        $gg = $this->get('dwi_portfolio.gallery_gateway');
         $gr = $this->get('dwi_portfolio.gallery_repository');
         $vg = $this->get('dwi_portfolio.gallery_view_gateway');
         $pp = $this->get('dwi_portfolio.portfolio_manage_presenter');
 
         $galleries = $gr->findByPage($page);
 
-        $pp->setVariable('galleries', $galleries);
-        $pp->setVariable('datedViews', $vg->findDated());
-        $pp->setVariable('totalViews', $vg->findTotal());
+        $pp->setVariable('page',         $page);
+        $pp->setVariable('galleries',    $galleries);
+        $pp->setVariable('galleryCount', $gg->countTotal());
+        $pp->setVariable('datedViews',   $vg->findDated());
+        $pp->setVariable('totalViews',   $vg->findTotal());
 
         return $this->render('DWIPortfolioBundle:Portfolio/Admin:portfolio-manage.html.twig', array(
             'model' => $pp->prepareView(),

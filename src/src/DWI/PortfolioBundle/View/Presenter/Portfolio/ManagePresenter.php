@@ -11,9 +11,11 @@
 namespace DWI\PortfolioBundle\View\Presenter\Portfolio;
 
 use DWI\CoreBundle\Exception\InvalidDataTypeException;
+use DWI\CoreBundle\Tools\Pagination\Paginator;
 use DWI\CoreBundle\View\Model\ViewModel;
 use DWI\CoreBundle\View\Presenter\AbstractPresenter;
 use DWI\PortfolioBundle\Entity\Gallery;
+use DWI\PortfolioBundle\Repository\GalleryRepository;
 
 /**
  * Manage Presenter
@@ -30,17 +32,18 @@ class ManagePresenter extends AbstractPresenter
         $model = new ViewModel();
 
         return $model
-            ->addChild($this->prepareGalleries(), 'galleries')
+            ->addChild($this->preparePortfolio(), 'portfolio')
+            ->addChild($this->preparePagination(), 'pagination')
             ->addChild($this->prepareViews(), 'views');
     }
 
 
     /**
-     * Prepare gallery view models
+     * Prepare portfolio view model, containing galleries
      *
      * @return ViewModel
      */
-    private function prepareGalleries()
+    private function preparePortfolio()
     {
         $portfolio = new ViewModel();
 
@@ -59,12 +62,41 @@ class ManagePresenter extends AbstractPresenter
                 ->setVariable('title', $gallery->getTitle())
                 ->setVariable('subtitle', $gallery->getSubTitle())
                 ->setVariable('coverImagePath', $this->getGalleryCoverImagePath($gallery))
+                ->setVariable('images', $gallery->getImages())
                 ->setVariable('isActive', $gallery->getIsActive());
 
             $portfolio->addChild($gvm, 'galleries', true);
         }
 
         return $portfolio;
+    }
+
+
+    /**
+     * Prepare pagination
+     *
+     * @return ViewModel
+     */
+    public function preparePagination()
+    {
+        $model        = new ViewModel();
+        $page         = $this->getVariable('page');
+        $galleryCount = $this->getVariable('galleryCount');
+
+        $pages     = (int) ceil($galleryCount / GalleryRepository::PER_PAGE);
+        $paginator = new Paginator($pages);
+
+
+        $start = $paginator->calculateStart($page);
+        $end   = $paginator->calculateEnd($page);
+
+        $model
+            ->setVariable('page', $page)
+            ->setVariable('pages', $pages)
+            ->setVariable('start', $start)
+            ->setVariable('end', $end);
+
+        return $model;
     }
 
 

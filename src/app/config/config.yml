@@ -91,4 +91,8 @@ liip_imagine:
         admin_gallery_thumb:
             quality: 75
             filters:
+                thumbnail: { size: [275, 200], mode: outbound }
+        admin_image_thumb:
+            quality: 75
+            filters:
                 thumbnail: { size: [240, 200], mode: outbound }
