@@ -1,0 +1,51 @@
+//
+// Tags List
+// ----------------------------------------------------
+
+.tags-list {
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    margin: 0;
+    width: 100%;
+
+    > li {
+        border-bottom: 2px solid $gray-light;
+        display: table-row;
+        padding: 0;
+        width: 100%;
+
+        .name,
+        .description,
+        .status,
+        .controls {
+            @include box-sizing(border-box);
+
+            display: table-cell;
+            height: 50px;
+            padding: 6px 0;
+            vertical-align: middle;
+        }
+
+        .name {
+            width: 20%;
+        }
+
+        .description {
+            width: 55%;
+        }
+
+        .status {
+            padding: 0;
+            width: 10%;
+        }
+
+        .controls {
+            width: 15%;
+        }
+    }
+
+    li:last-child {
+        border-bottom: none;
+    }
+}

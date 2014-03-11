@@ -42,10 +42,8 @@ class PortfolioController extends Controller
             $options['isActive'] = true;
         }
 
-        $galleries = $galleryRepo->findByPage($page, $options);
-
         $presenter
-            ->setVariable('galleries', $galleries)
+            ->setVariable('galleries', $galleryRepo->findByPage($page, $options))
             ->setVariable('galleryCount', $galleryGateway->countTotal($options))
             ->setVariable('page', $page)
             ->setVariable('tags', $tagRepo->findPrimary());

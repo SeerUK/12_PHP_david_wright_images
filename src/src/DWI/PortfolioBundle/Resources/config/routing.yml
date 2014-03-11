@@ -20,12 +20,17 @@ dwi_portfolio_gallery:
     requirements:
         id: \d+
 
-dwi_portfolio_manage_portfolio:
+dwi_portfolio_manage_galleries:
     pattern: /admin/portfolio/galleries/{page}
-    defaults: { _controller: DWIPortfolioBundle:PortfolioAdmin:view, page: 1 }
+    defaults: { _controller: DWIPortfolioBundle:PortfolioAdmin:galleries, page: 1 }
     methods: [GET]
     requirements:
         page: \d+
+
+dwi_portfolio_manage_tags:
+    pattern: /admin/portfolio/tags
+    defaults: { _controller: DWIPortfolioBundle:PortfolioAdmin:tags }
+    methods: [GET]
 
 dwi_portfolio_manage_gallery:
     pattern: /admin/portfolio/gallery/{id}
@@ -49,6 +54,25 @@ dwi_portfolio_swap_display_order:
         id: \d+
         from: \d+
         to: \d+
+
+dwi_portfolio_create_tag:
+    pattern: /admin/portfolio/tag/create
+    defaults: { _controller: DWIPortfolioBundle:TagAdmin:create }
+    methods: [GET,POST]
+
+dwi_portfolio_edit_tag:
+    pattern: /admin/portfolio/tag/{id}/edit
+    defaults: { _controller: DWIPortfolioBundle:TagAdmin:edit }
+    methods: [GET,POST]
+    requirements:
+        id: \d+
+
+dwi_portfolio_remove_tag:
+    pattern: /admin/portfolio/tag/{id}/remove
+    defaults: { _controller: DWIPortfolioBundle:TagAdmin:delete }
+    methods: [GET,POST]
+    requirements:
+        id: \d+
 
 dwi_portfolio_create_gallery:
     pattern: /admin/portfolio/gallery/create

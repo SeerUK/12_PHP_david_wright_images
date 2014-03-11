@@ -1,0 +1,36 @@
+{% extends ':Admin:base-admin.html.twig' %}
+
+{% block title %}Remove Tag{% endblock %}
+
+{% block body %}
+    <div class="canvas">
+        <div class="jumbotron">
+            Remove Tag<br />
+            <small>{{ tag.name }}</small>
+        </div>
+    </div>
+
+    <div class="canvas canvas-padded gray-lighter">
+        <div class="form-compact">
+            <div class="form-row text-center">
+                Are you sure you want to delete tag<br /><strong>"{{ tag.name }}"</strong>?
+            </div>
+        </div>
+
+        <form method="POST" class="form-compact">
+            <input type="hidden" name="doDelete" value="1">
+
+            <div class="form-row">
+                <input type="submit" name="submit" value="Delete" class="btn btn-block btn-danger" />
+            </div>
+        </form>
+
+        <form method="POST" class="form-compact">
+            <input type="hidden" name="doDelete" value="0">
+
+            <div class="form-row">
+                <input type="submit" name="submit" value="Cancel" class="btn btn-block btn-white" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

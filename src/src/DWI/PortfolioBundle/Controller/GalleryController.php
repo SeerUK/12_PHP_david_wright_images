@@ -68,7 +68,6 @@ class GalleryController extends Controller
      *
      * @return Symfony\Component\HttpFoundation\Response
      *
-     * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function createGalleryAction()
@@ -164,16 +163,14 @@ class GalleryController extends Controller
 
         $request = $this->get('request');
 
-        // If we've viewed and posted our response
         if ('POST' === $request->getMethod()) {
             if ($request->request->get('doDelete')) {
                 $this->get('dwi_portfolio.gallery_repository')
                     ->remove($gallery);
 
-                return $this->redirect($this->generateUrl('dwi_portfolio_manage_portfolio'));
+                return $this->redirect($this->generateUrl('dwi_portfolio_manage_galleries'));
             }
 
-            // Redirect user to the gallery
             return $this->redirect($this->generateUrl('dwi_portfolio_manage_gallery', array(
                 'id' => $gallery->getId(),
             )));

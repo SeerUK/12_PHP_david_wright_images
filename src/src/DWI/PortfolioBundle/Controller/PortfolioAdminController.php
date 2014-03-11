@@ -24,15 +24,14 @@ use DWI\PortfolioBundle\Entity\Image;
 class PortfolioAdminController extends Controller
 {
     /**
-     * Manage Gallery
+     * Manage Galleries
      *
-     * @param  Gallery $gallery
+     * @param  integer $page
      * @return Symfony\Component\HttpFoundation\Response
      *
-     * @throws Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
-    public function viewAction($page)
+    public function galleriesAction($page)
     {
         if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException();
@@ -41,18 +40,40 @@ class PortfolioAdminController extends Controller
         $gg = $this->get('dwi_portfolio.gallery_gateway');
         $gr = $this->get('dwi_portfolio.gallery_repository');
         $vg = $this->get('dwi_portfolio.gallery_view_gateway');
-        $pp = $this->get('dwi_portfolio.portfolio_manage_presenter');
+        $gp = $this->get('dwi_portfolio.galleries_manage_presenter');
 
-        $galleries = $gr->findByPage($page);
+        $gp->setVariable('page',         $page);
+        $gp->setVariable('galleries',    $gr->findByPage($page));
+        $gp->setVariable('galleryCount', $gg->countTotal());
+        $gp->setVariable('datedViews',   $vg->findDated());
+        $gp->setVariable('totalViews',   $vg->findTotal());
 
-        $pp->setVariable('page',         $page);
-        $pp->setVariable('galleries',    $galleries);
-        $pp->setVariable('galleryCount', $gg->countTotal());
-        $pp->setVariable('datedViews',   $vg->findDated());
-        $pp->setVariable('totalViews',   $vg->findTotal());
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:galleries-manage.html.twig', array(
+            'model' => $gp->prepareView(),
+        ));
+    }
 
-        return $this->render('DWIPortfolioBundle:Portfolio/Admin:portfolio-manage.html.twig', array(
-            'model' => $pp->prepareView(),
+
+    /**
+     * Manage Tags
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     *
+     * @throws Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function tagsAction()
+    {
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+
+        $tr = $this->get('dwi_portfolio.tag_repository');
+        $tp = $this->get('dwi_portfolio.tags_manage_presenter');
+
+        $tp->setVariable('tags', $tr->findAll());
+
+        return $this->render('DWIPortfolioBundle:Portfolio/Admin:tags-manage.html.twig', array(
+            'model' => $tp->prepareView(),
         ));
     }
 }

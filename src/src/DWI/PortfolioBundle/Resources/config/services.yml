@@ -15,6 +15,8 @@ parameters:
     dwi_portfolio.image_gateway.class: DWI\PortfolioBundle\Gateway\ImageGateway
 
     # Forms
+    dwi_portfolio.create_tag_form_factory.class: DWI\PortfolioBundle\Form\Factory\TagFormFactory
+    dwi_portfolio.create_tag_form.class: Symfony\Component\Form\Form
     dwi_portfolio.create_gallery_form_factory.class: DWI\PortfolioBundle\Form\Factory\GalleryFormFactory
     dwi_portfolio.create_gallery_form.class: Symfony\Component\Form\Form
     dwi_portfolio.upload_image_form_factory.class: DWI\PortfolioBundle\Form\Factory\ImageFormFactory
@@ -23,7 +25,8 @@ parameters:
     # Presenters
     dwi_portfolio.portfolio_view_presenter.class: DWI\PortfolioBundle\View\Presenter\Portfolio\ViewPresenter
     dwi_portfolio.portfolio_view_tag_presenter.class: DWI\PortfolioBundle\View\Presenter\Portfolio\ViewTagPresenter
-    dwi_portfolio.portfolio_manage_presenter.class: DWI\PortfolioBundle\View\Presenter\Portfolio\ManagePresenter
+    dwi_portfolio.galleries_manage_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioAdmin\GalleriesPresenter
+    dwi_portfolio.tags_manage_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioAdmin\TagsPresenter
     dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\GalleryPresenter
     dwi_portfolio.gallery_manage_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\ManagePresenter
     dwi_portfolio.gallery_set_cover_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\SetCoverPresenter
@@ -78,6 +81,18 @@ services:
             conn: '@doctrine.dbal.default_connection'
             cache: '@dwi_core.result_cache'
 
+    dwi_portfolio.create_tag_form_factory:
+        class: %dwi_portfolio.create_tag_form_factory.class%
+        scope: "request"
+        arguments:
+            ff: "@form.factory"
+            generator: "@router"
+
+    dwi_portfolio.create_tag_form:
+        class: %dwi_portfolio.create_tag_form.class%
+        factory_service: dwi_portfolio.create_tag_form_factory
+        factory_method: prepareForm
+
     dwi_portfolio.create_gallery_form_factory:
         class: %dwi_portfolio.create_gallery_form_factory.class%
         scope: "request"
@@ -108,8 +123,11 @@ services:
     dwi_portfolio.portfolio_view_tag_presenter:
         class: %dwi_portfolio.portfolio_view_tag_presenter.class%
 
-    dwi_portfolio.portfolio_manage_presenter:
-        class: %dwi_portfolio.portfolio_manage_presenter.class%
+    dwi_portfolio.galleries_manage_presenter:
+        class: %dwi_portfolio.galleries_manage_presenter.class%
+
+    dwi_portfolio.tags_manage_presenter:
+        class: %dwi_portfolio.tags_manage_presenter.class%
 
     dwi_portfolio.gallery_presenter:
         class: %dwi_portfolio.gallery_presenter.class%

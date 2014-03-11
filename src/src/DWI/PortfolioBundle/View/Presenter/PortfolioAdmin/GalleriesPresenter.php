@@ -8,7 +8,7 @@
  * @package DWI
  */
 
-namespace DWI\PortfolioBundle\View\Presenter\Portfolio;
+namespace DWI\PortfolioBundle\View\Presenter\PortfolioAdmin;
 
 use DWI\CoreBundle\Exception\InvalidDataTypeException;
 use DWI\CoreBundle\Tools\Pagination\Paginator;
@@ -18,9 +18,9 @@ use DWI\PortfolioBundle\Entity\Gallery;
 use DWI\PortfolioBundle\Repository\GalleryRepository;
 
 /**
- * Manage Presenter
+ * Galleries Presenter
  */
-class ManagePresenter extends AbstractPresenter
+class GalleriesPresenter extends AbstractPresenter
 {
     /**
      * Prepare view

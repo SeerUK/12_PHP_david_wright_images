@@ -21,28 +21,37 @@ use DWI\PortfolioBundle\Entity\Tag;
 class TagRepository extends EntityRepository implements PersistentEntityRepository
 {
     /**
-     * Find primary tags
+     * Find all tags
      *
-     * @return Something
+     * @return object
      */
-    public function findPrimary()
+    public function findAll()
     {
-        $dql = '
-            SELECT
-                t
-            FROM
-                DWIPortfolioBundle:Tag AS t
-            WHERE
-                t.isPrimary = 1
-            ORDER BY
-                t.name ASC';
-
-        $query = $this->getEntityManager()
-            ->createQuery($dql);
+        $query = $this->createQueryBuilder('t')
+            ->orderBy('t.name', 'ASC')
+            ->getQuery();
 
         return $query->useResultCache(true)
             ->getResult();
     }
+
+
+    /**
+     * Find primary tags
+     *
+     * @return object
+     */
+    public function findPrimary()
+    {
+        $query = $this->createQueryBuilder('t')
+            ->where('t.isPrimary = 1')
+            ->orderBy('t.name', 'ASC')
+            ->getQuery();
+
+        return $query->useResultCache(true)
+            ->getResult();
+    }
+
 
     /**
      * Persist Gallery

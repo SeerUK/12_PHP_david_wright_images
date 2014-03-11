@@ -101,6 +101,20 @@ em {
     font-style: italic;
 }
 
+.no-margin {
+    margin: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 // Contextual emphasis
 
 .text-faded {
