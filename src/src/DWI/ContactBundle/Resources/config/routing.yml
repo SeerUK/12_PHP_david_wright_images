@@ -1,3 +1,14 @@
-dwi_contact_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: DWIContactBundle:Default:index }
+dwi_contact_view:
+    pattern: /contact
+    defaults: { _controller: DWIContactBundle:Contact:view }
+    methods: [GET]
+
+dwi_contact_send:
+    pattern: /contact/send
+    defaults: { _controller: DWIContactBundle:Contact:send }
+    methods: [POST]
+
+dwi_contact_sent:
+    pattern: /contact/sent
+    defaults: { _controller: DWIContactBundle:Contact:sent }
+    methods: [GET]

@@ -113,6 +113,10 @@
     .form-control.date-control {
         width: 33.33%;
     }
+
+    textarea.form-control {
+        font-size: 16px;
+    }
 }
 
 *::-webkit-input-placeholder {

@@ -1,7 +1,9 @@
 parameters:
-#    dwi_contact.example.class: DWI\ContactBundle\Example
+    dwi_contact.con_var_gateway.class: DWI\ContactBundle\Gateway\ConVarGateway
 
 services:
-#    dwi_contact.example:
-#        class: %dwi_contact.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    dwi_contact.con_var_gateway:
+        class: %dwi_contact.con_var_gateway.class%
+        arguments:
+            conn: '@doctrine.dbal.default_connection'
+            cache: '@dwi_core.result_cache'
