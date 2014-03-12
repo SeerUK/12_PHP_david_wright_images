@@ -411,6 +411,26 @@ class Gallery
     }
 
     /**
+     * Gets admin image cache root directory
+     *
+     * @return string
+     */
+    protected function getAdminImageCacheRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getAdminImageCacheDir();
+    }
+
+    /**
+     * Gets admin gallery image cache root directory
+     *
+     * @return string
+     */
+    protected function getAdminGalleryCacheRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getAdminGalleryCacheDir();
+    }
+
+    /**
      * Get web path
      *
      * @return string
@@ -441,14 +461,36 @@ class Gallery
     }
 
     /**
+     * Gets Imagine admin image cache path
+     *
+     * @return string
+     */
+    protected function getAdminImageCacheDir()
+    {
+        return 'media/cache/admin_image_thumb/' . $this->getUploadDir();
+    }
+
+    /**
+     * Gets Imagine admin gallery image cache path
+     *
+     * @return string
+     */
+    protected function getAdminGalleryCacheDir()
+    {
+        return 'media/cache/admin_gallery_thumb/' . $this->getUploadDir();
+    }
+
+    /**
      * @ORM\PreRemove()
      */
     public function removeFiles()
     {
-        $fs      = new Filesystem();
-        $full    = $this->getUploadRootDir();
-        $thumb   = $this->getThumbCacheRootDir();
-        $gallery = $this->getGalleryCacheRootDir();
+        $fs         = new Filesystem();
+        $full       = $this->getUploadRootDir();
+        $thumb      = $this->getThumbCacheRootDir();
+        $gallery    = $this->getGalleryCacheRootDir();
+        $admImage   = $this->getAdminImageCacheRootDir();
+        $admGallery = $this->getAdminGalleryCacheRootDir();
 
         if ($fs->exists($full)) {
             $fs->remove($full);
@@ -460,6 +502,14 @@ class Gallery
 
         if ($fs->exists($gallery)) {
             $fs->remove($gallery);
+        }
+
+        if ($fs->exists($admImage)) {
+            $fs->remove($admImage);
+        }
+
+        if ($fs->exists($admGallery)) {
+            $fs->remove($admGallery);
         }
     }
 }

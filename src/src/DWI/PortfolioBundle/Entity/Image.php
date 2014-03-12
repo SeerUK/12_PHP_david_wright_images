@@ -246,6 +246,30 @@ class Image
     }
 
     /**
+     * Gets absolute path for thumbnail cache image
+     *
+     * @return string
+     */
+    public function getAbsoluteAdminImageThumbCachePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getAdminImageCacheRootDir() . '/' . $this->path;
+    }
+
+    /**
+     * Gets absolute path for gallery cache image
+     *
+     * @return string
+     */
+    public function getAbsoluteAdminGalleryThumbCachePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getAdminGalleryCacheRootDir() . '/' . $this->path;
+    }
+
+    /**
      * Gets web path for image
      *
      * @return string
@@ -288,6 +312,26 @@ class Image
     }
 
     /**
+     * Gets thumb cache root directory
+     *
+     * @return string
+     */
+    protected function getAdminImageCacheRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getAdminImageCacheDir();
+    }
+
+    /**
+     * Gets gallery image cache root directory
+     *
+     * @return string
+     */
+    protected function getAdminGalleryCacheRootDir()
+    {
+        return __DIR__ . '/../../../../web/' . $this->getAdminGalleryCacheDir();
+    }
+
+    /**
      * Gets web path
      *
      * @return string
@@ -315,6 +359,26 @@ class Image
     protected function getGalleryCacheDir()
     {
         return 'media/cache/gallery_image/' . $this->getUploadDir();
+    }
+
+    /**
+     * Gets Imagine thumb cache path
+     *
+     * @return string
+     */
+    protected function getAdminImageCacheDir()
+    {
+        return 'media/cache/admin_image_thumb/' . $this->getUploadDir();
+    }
+
+    /**
+     * Gets Imagine gallery image cache path
+     *
+     * @return string
+     */
+    protected function getAdminGalleryCacheDir()
+    {
+        return 'media/cache/admin_gallery_thumb/' . $this->getUploadDir();
     }
 
     /**
@@ -386,21 +450,31 @@ class Image
      */
     public function removeUpload()
     {
-        $fs      = new Filesystem();
-        $full    = $this->getAbsolutePath();             // Original file
-        $thumb   = $this->getAbsoluteThumbCachePath();   // Imagine cached thumbnail
-        $gallery = $this->getAbsoluteGalleryCachePath(); // Imagine cached gallery image
+        $fs         = new Filesystem();
+        $full       = $this->getAbsolutePath();             // Original file
+        $thumb      = $this->getAbsoluteThumbCachePath();   // Imagine cached thumbnail
+        $gallery    = $this->getAbsoluteGalleryCachePath(); // Imagine cached gallery image
+        $admImage   = $this->getAbsoluteAdminImageThumbCachePath();   // Imagine cached thumbnail
+        $admGallery = $this->getAbsoluteAdminGalleryThumbCachePath(); // Imagine cached gallery image
 
         if ($fs->exists($full)) {
-            $fs->exists($full);
+            $fs->remove($full);
         }
 
         if ($fs->exists($thumb)) {
-            $fs->exists($thumb);
+            $fs->remove($thumb);
         }
 
         if ($fs->exists($gallery)) {
-            $fs->exists($gallery);
+            $fs->remove($gallery);
+        }
+
+        if ($fs->exists($admImage)) {
+            $fs->remove($admImage);
+        }
+
+        if ($fs->exists($admGallery)) {
+            $fs->remove($admGallery);
         }
     }
 }
