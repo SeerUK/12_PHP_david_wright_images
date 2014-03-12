@@ -27,18 +27,25 @@
 
         background: $white;
         border: none;
+        display: block;
         font-family: $font-family-sans-serif;
         height: 34px;
         line-height: $line-height-base;
         padding: 6px 12px;
+        width: 100%;
 
         &.date-control {
             @include column(4);
 
-            display: block;
             margin-bottom: 8px;
-            width: 100%;
         }
+    }
+}
+
+.form-els {
+    .form-control {
+        display: inline-block;
+        width: auto;
     }
 }
 

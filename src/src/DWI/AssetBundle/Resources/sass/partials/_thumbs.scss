@@ -15,7 +15,15 @@
         display: block;
         margin-bottom: 20px;
         position: relative;
-        height: 300px;
+
+        .info {
+            padding: 14px;
+            text-align: center;
+
+            .title {
+                font-weight: $font-weight-bold;
+            }
+        }
 
         &.inactive {
             > .thumb-overlay {
@@ -23,10 +31,6 @@
 
                 background: $red;
             }
-        }
-
-        &:hover > .thumb-overlay {
-            @include opacity(0.4);
         }
 
         > img,
@@ -44,6 +48,7 @@
             right: 0;
             bottom: 0;
             left: 0;
+            z-index: 10;
 
             > .cover {
                 position: absolute;

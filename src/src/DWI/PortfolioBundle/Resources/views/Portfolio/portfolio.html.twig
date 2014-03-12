@@ -40,10 +40,12 @@
 
                         <div class="info">
                             <span class="title">{{ gallery.title }}</span><br />
-                            <span class="subtitle">{{ gallery.subtitle }}</span>
+                            <span class="subtitle text-muted">{{ gallery.subtitle }}</span>
                         </div>
                     </div>
                 {% endfor %}
+            {% else %}
+                <div class="text-center" style="margin-bottom: 20px;">There are no galleries here!</div>
             {% endif %}
         </div>
         {% if pagination.pages > 1 %}
@@ -68,8 +70,4 @@
             </ul>
         {% endif %}
     </div>
-
-    {% include 'DWIPortfolioBundle:Portfolio/Admin/partials:portfolio-controls.html.twig' with {
-        'model': model.controls
-    } %}
 {% endblock %}
