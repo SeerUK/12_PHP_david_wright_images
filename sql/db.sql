@@ -107,3 +107,16 @@ CREATE TABLE IF NOT EXISTS UserRole (
     FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (roleId) REFERENCES Role(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) COMMENT="User roles";
+
+CREATE TABLE IF NOT EXISTS ConVar (
+    id int UNSIGNED NOT NULL,
+    name varchar(30) NOT NULL,
+    value varchar(250) NOT NULL,
+    lastModified timestamp NOT NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY (name)
+) COMMENT="Config variables";
+
+INSERT IGNORE INTO ConVar (name, value) VALUES
+    ('contact.recipient', 'wright.elliot@gmail.com');
