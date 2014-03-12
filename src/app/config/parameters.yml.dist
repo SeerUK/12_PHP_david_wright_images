@@ -4,10 +4,10 @@ parameters:
     database_port:     null
     database_name:     DWI
     database_user:     root
-    database_password: Diablo2
+    database_password: ~
 
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
+    mailer_transport:  gmail
+    mailer_host:       ~
     mailer_user:       ~
     mailer_password:   ~
 
