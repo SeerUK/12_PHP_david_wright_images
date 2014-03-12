@@ -13,6 +13,7 @@ namespace DWI\PortfolioBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use DWI\CoreBundle\Repository\PersistentEntityRepository;
+use DWI\PortfolioBundle\Entity\Gallery;
 use DWI\PortfolioBundle\Entity\Tag;
 
 /**
@@ -29,6 +30,30 @@ class TagRepository extends EntityRepository implements PersistentEntityReposito
     {
         $query = $this->createQueryBuilder('t')
             ->orderBy('t.name', 'ASC')
+            ->getQuery();
+
+        return $query->useResultCache(true)
+            ->getResult();
+    }
+
+
+    /**
+     * Find tags by gallery id
+     *
+     * @param  integer $id
+     * @return object
+     */
+    public function findByGalleryId($id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $query = $qb
+            ->select('t')
+            ->from('DWIPortfolioBundle:Tag', 't')
+            ->innerJoin('t.galleries', 'g')
+            ->where('g.id = :id')
+            ->orderBy('t.name', 'ASC')
+            ->setParameter('id', $id)
             ->getQuery();
 
         return $query->useResultCache(true)

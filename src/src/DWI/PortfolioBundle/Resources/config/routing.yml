@@ -39,6 +39,29 @@ dwi_portfolio_manage_gallery:
     requirements:
         id: \d+
 
+dwi_portfolio_manage_gallery_tags:
+    pattern: /admin/portfolio/gallery/{id}/tags/
+    defaults: { _controller: DWIPortfolioBundle:GalleryAdmin:tags }
+    methods: [GET]
+    requirements:
+        id: \d+
+
+dwi_portfolio_add_gallery_tag:
+    pattern: /admin/portfolio/gallery/{id}/tag/add/{tagId}
+    defaults: { _controller: DWIPortfolioBundle:GalleryAdmin:addTag }
+    methods: [GET]
+    requirements:
+        id: \d+
+        tagId: \d+
+
+dwi_portfolio_remove_gallery_tag:
+    pattern: /admin/portfolio/gallery/{id}/tag/remove/{tagId}
+    defaults: { _controller: DWIPortfolioBundle:GalleryAdmin:removeTag }
+    methods: [GET]
+    requirements:
+        id: \d+
+        tagId: \d+
+
 dwi_portfolio_gallery_sort_images:
     pattern: /admin/portfolio/gallery/{id}/images/sort
     defaults: { _controller: DWIPortfolioBundle:GalleryAdmin:sort }

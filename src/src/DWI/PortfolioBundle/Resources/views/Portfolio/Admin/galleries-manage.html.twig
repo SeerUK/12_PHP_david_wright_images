@@ -28,8 +28,8 @@
     </div>
 
     <div class="canvas canvas-padded-l gray-lighter">
-        <ul class="gallery-list clearfix">
-            {% if model.portfolio is not empty %}
+        {% if model.portfolio.galleries is defined and model.portfolio.galleries is not empty %}
+            <ul class="gallery-list clearfix">
                 {% for key, gallery in model.portfolio.galleries %}
                     <li data-gallery="{{ gallery.id }}">
                         <a href="{{ url('dwi_portfolio_manage_gallery', { id: gallery.id }) }}">
@@ -41,7 +41,8 @@
                         </a>
                         <div class="status">
                             <i class="flaticon stroke grid-2 text-muted {{ gallery.images|length > 0 ?: 'text-danger' }}" title="Gallery has images?"></i> {# Gallery has Images #}
-                            <i class="flaticon stroke photo-1 text-muted {{ gallery.coverImagePath ?: 'text-danger' }}" title="Thumbnail image set?"></i> {# Thumbnail Image Set #}
+                            <i class="flaticon stroke photo-1 text-muted {{ gallery.coverImagePath ?: 'text-danger' }}" title="Thumbnail image set?"></i><br /> {# Thumbnail Image Set #}
+                            <i class="flaticon stroke tag-1 text-muted {{ gallery.tags|length > 0 ?: 'text-danger' }} " title="Gallery is tagged?"></i> {# Galery is tagged? #}
                             <i class="flaticon stroke eye-1 text-muted text-muted {{ gallery.isActive ?: 'text-danger' }}" title="Gallery is published?"></i> {# Gallery is published #}
                         </div>
                         <div class="desc">
@@ -59,28 +60,30 @@
                         </div>
                     </li>
                 {% endfor %}
-            {% endif %}
-        </ul>
-        {% if model.pagination.pages > 1 %}
-            <ul class="pagination">
-                {% if model.pagination.page != 1 %}
-                    <li>
-                        <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: 1 })) }}">First</a>
-                    </li>
-                    <li>
-                        <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.page - 1 })) }}">Prev</a>
-                    </li>
-                {% endif %}
-
-                {% for i in model.pagination.start..model.pagination.end %}
-                    <li><a class="btn {{ i == model.pagination.page ? 'btn-danger' : 'btn-white' }}" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: i })) }}">{{ i }}</a></li>
-                {% endfor %}
-
-                {% if model.pagination.page != model.pagination.pages %}
-                    <li><a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.page + 1 })) }}">Next</a></li>
-                    <li><a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.pages })) }}">Last</a></li>
-                {% endif %}
             </ul>
+            {% if model.pagination.pages > 1 %}
+                <ul class="pagination">
+                    {% if model.pagination.page != 1 %}
+                        <li>
+                            <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: 1 })) }}">First</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.page - 1 })) }}">Prev</a>
+                        </li>
+                    {% endif %}
+
+                    {% for i in model.pagination.start..model.pagination.end %}
+                        <li><a class="btn {{ i == model.pagination.page ? 'btn-danger' : 'btn-white' }}" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: i })) }}">{{ i }}</a></li>
+                    {% endfor %}
+
+                    {% if model.pagination.page != model.pagination.pages %}
+                        <li><a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.page + 1 })) }}">Next</a></li>
+                        <li><a class="btn btn-white" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({ page: model.pagination.pages })) }}">Last</a></li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        {% else %}
+            <div class="text-center">There are no galleries yet, create a gallery to start.</div>
         {% endif %}
     </div>
 {% endblock %}

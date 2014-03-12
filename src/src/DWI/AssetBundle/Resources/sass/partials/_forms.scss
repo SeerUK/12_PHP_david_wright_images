@@ -18,6 +18,31 @@
 }
 
 .form,
+.form-compact,
+.form-els {
+    .form-control {
+        @include border-radius(3px);
+        @include box-sizing(border-box);
+        @include box-shadow(0 2px 0 $gray-light);
+
+        background: $white;
+        border: none;
+        font-family: $font-family-sans-serif;
+        height: 34px;
+        line-height: $line-height-base;
+        padding: 6px 12px;
+
+        &.date-control {
+            @include column(4);
+
+            display: block;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+    }
+}
+
+.form,
 .form-compact {
     margin: 0 auto 20px;
 
@@ -43,27 +68,6 @@
             left: 0;
             width: 100%;
             z-index: 2;
-        }
-    }
-
-    .form-control {
-        @include border-radius(3px);
-        @include box-sizing(border-box);
-        @include box-shadow(0 2px 0 $gray-light);
-
-        background: $white;
-        border: none;
-        display: block;
-        font-family: $font-family-sans-serif;
-        height: 34px;
-        line-height: $line-height-base;
-        padding: 6px 12px;
-        width: 100%;
-
-        &.date-control {
-            @include column(4);
-
-            margin-bottom: 8px;
         }
     }
 

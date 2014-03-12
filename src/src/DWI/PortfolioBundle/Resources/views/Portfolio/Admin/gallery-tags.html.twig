@@ -1,0 +1,73 @@
+{% extends ':Admin:base-admin.html.twig' %}
+
+{% block title %}Manage Tags{% endblock %}
+
+{% block body %}
+    <div class="canvas canvas-padded-l clearfix">
+        <div class="pull-left">
+            <h1 style="display: inline-block;">Managing Tags <span class="text-light">{{ model.gallery.title }}</span></h1><br />
+        </div>
+    </div>
+
+    <div class="canvas canvas-padded-l gray-lighter">
+        <div class="form-els text-center" style="margin-bottom: 20px;">
+            {% if model.tags is not empty %}
+                <select id="tag-select" class="form-control">
+                    {% for key, tag in model.tags %}
+                        <option value="{{ tag.id }}">{{ tag.name }}</option>
+                    {% endfor %}
+                </select>
+                <a id="tag-link" class="btn btn-white" href=>Add Tag</a>
+            {% else %}
+                <div>There are no more tags you can add to this gallery currently.</div>
+            {% endif %}
+        </div>
+        {% if model.galleryTags is not empty %}
+            <ul class="tags-list">
+                <li class="clearfix">
+                    <div class="name"><span class="text-muted">Name</span></div>
+                    <div class="description"><span class="text-muted">Description</span></div>
+                    <div class="status text-right"><span class="text-muted">Is Primary?</span></div>
+                    <div class="controls text-right"><span class="text-muted">Controls</span></div>
+                </li>
+                {% for key, tag in model.galleryTags %}
+                    <li class="clearfix" data-tag="{{ tag.id }}">
+                        <div class="name"><h4>{{ tag.name }}</h4></div>
+                        <div class="description">{{ tag.description }}</div>
+                        <div class="status text-right">
+                            {% if tag.isPrimary %}
+                                <i class="flaticon stroke star-2"></i>
+                            {% endif %}
+                        </div>
+                        <div class="controls text-right">
+                            <a class="btn btn-white" href="{{ url('dwi_portfolio_remove_gallery_tag', { id: model.gallery.id, tagId: tag.id }) }}">Remove</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="text-center">There are no tags assigned to this gallery currently, add some above!</div>
+        {% endif %}
+        <div class="text-center" style="margin-top: 20px;">
+            <a href="{{ url('dwi_portfolio_manage_gallery', { id: model.gallery.id }) }}" class="btn btn-white">Done</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+
+    <script type="text/javascript">
+
+        $(function() {
+            $('#tag-select').change(function() {
+                // Crude, but works... even if the URL changes in the future
+                var url  = "{{ url('dwi_portfolio_add_gallery_tag', { id: model.gallery.id, tagId: 999999999 }) }}";
+                var href = url.replace('999999999', $(this).val());
+
+                $('#tag-link').attr('href', href);
+            }).change();
+        });
+
+    </script>
+
+{% endblock %}

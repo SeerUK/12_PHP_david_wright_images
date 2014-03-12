@@ -7,9 +7,10 @@
         <div class="pull-left">
             <h1>Managing Gallery <span class="text-light">{{ model.gallery.title }}</span></h1><br />
             <div class="status">
-                <i class="flaticon stroke grid-2 text-muted {{ model.gallery.images|length > 0 ?: 'text-danger' }}" title="Gallery has images?"></i> {# Gallery has Images #}
-                <i class="flaticon stroke photo-1 text-muted {{ model.gallery.coverImage is not empty ?: 'text-danger' }}" title="Thumbnail image set?"></i> {# Thumbnail Image Set #}
-                <i class="flaticon stroke eye-1 text-muted text-muted {{ model.gallery.isActive ?: 'text-danger' }}" title="Gallery is published?"></i> {# Gallery is published #}
+                <i class="flaticon stroke grid-2 text-muted {{ model.gallery.images|length > 0 ?: 'text-danger' }}" title="Gallery has images?"></i> {# Gallery has images? #}
+                <i class="flaticon stroke photo-1 text-muted {{ model.gallery.coverImage is not empty ?: 'text-danger' }}" title="Thumbnail image set?"></i> {# Thumbnail image set? #}
+                <i class="flaticon stroke tag-1 text-muted {{ model.gallery.tags|length > 0 ?: 'text-danger' }} " title="Gallery is tagged?"></i> {# Galery is tagged? #}
+                <i class="flaticon stroke eye-1 text-muted text-muted {{ model.gallery.isActive ?: 'text-danger' }}" title="Gallery is published?"></i> {# Gallery is published? #}
             </div>
         </div>
         <div class="pull-right">
@@ -26,6 +27,7 @@
                     {% endif %}
 
                     <li><a href="{{ url('dwi_portfolio_edit_gallery', { id: model.gallery.id }) }}">Edit Gallery</a></li>
+                    <li><a href="{{ url('dwi_portfolio_manage_gallery_tags', { id: model.gallery.id }) }}">Manage Tags</a></li>
                     <li><a href="{{ url('dwi_portfolio_remove_gallery', { id: model.gallery.id }) }}"><span class="text-danger">Delete</span></a></li>
                 </ul>
             </div>
@@ -48,37 +50,41 @@
     </div>
 
     <div class="canvas canvas-padded-l gray-lighter">
-        <ul id="sortable" class="image-list clearfix">
-            {% for key, image in model.gallery.images %}
-                <li data-image="{{ image.id }}">
-                    <img class="preview" src="{{ asset(image.webPath)|imagine_filter('admin_image_thumb') }}" />
-                    <div class="desc">
-                        {% if image.description %}
-                            <span title="{{ image.description }}">{{ image.description }}</span><br />
-                        {% else %}
-                            <span>No description set</span><br />
-                        {% endif %}
-                        <small class="text-muted">Modified {{ image.lastModified|date("F jS g:ia") }}</small>
+        {% if model.gallery.images is not empty %}
+            <ul id="sortable" class="image-list clearfix">
+                {% for key, image in model.gallery.images %}
+                    <li data-image="{{ image.id }}">
+                        <img class="preview" src="{{ asset(image.webPath)|imagine_filter('admin_image_thumb') }}" />
+                        <div class="desc">
+                            {% if image.description %}
+                                <span title="{{ image.description }}">{{ image.description }}</span><br />
+                            {% else %}
+                                <span>No description set</span><br />
+                            {% endif %}
+                            <small class="text-muted">Modified {{ image.lastModified|date("F jS g:ia") }}</small>
 
-                    </div>
-                    {% if model.gallery.coverImage and image.id == model.gallery.coverImage.image.id %}
-                        <div class="status">
-                            <i class="flaticon stroke photo-1"></i>
                         </div>
-                    {% endif %}
-                    <div class="controls">
-                        <button class="btn btn-white" data-dropdown="#gi-dropdown-{{ key }}"><i class="flaticon stroke settings-1"></i></button>
-                        <div id="gi-dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip dropdown-relative" style="display: none;">
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set As Gallery Thumbnail</a></li>
-                                <li><a href="{{ url('dwi_portfolio_edit_image_description', {'galleryId': model.gallery.id, 'id': image.id}) }}">Edit description</a></li>
-                                <li><a href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}"><span class="text-danger">Delete</span></a></li>
-                            </ul>
+                        {% if model.gallery.coverImage and image.id == model.gallery.coverImage.image.id %}
+                            <div class="status">
+                                <i class="flaticon stroke photo-1"></i>
+                            </div>
+                        {% endif %}
+                        <div class="controls">
+                            <button class="btn btn-white" data-dropdown="#gi-dropdown-{{ key }}"><i class="flaticon stroke settings-1"></i></button>
+                            <div id="gi-dropdown-{{ key }}" class="dropdown dropdown-anchor-right dropdown-tip dropdown-relative" style="display: none;">
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ url('dwi_portfolio_set_cover_gallery', {'id': model.gallery.id, 'imageId': image.id}) }}">Set As Gallery Thumbnail</a></li>
+                                    <li><a href="{{ url('dwi_portfolio_edit_image_description', {'galleryId': model.gallery.id, 'id': image.id}) }}">Edit description</a></li>
+                                    <li><a href="{{ url('dwi_portfolio_remove_image', {'galleryId': model.gallery.id, 'id': image.id}) }}"><span class="text-danger">Delete</span></a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="text-center">There are no images yet, upload an image to start.</div>
+        {% endif %}
     </div>
 {% endblock %}
 

@@ -54,7 +54,7 @@
 
             span {
                 display: inline-block;
-                max-width: 160px;
+                max-width: 190px;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 vertical-align:top;
@@ -68,8 +68,8 @@
             background: $white;
             padding: 7px 10px;
             position: absolute;
-            bottom: 14px;
-            right: 10px;
+            bottom: 3px;
+            right: 0;
 
             i:last-child {
                 margin: 0;

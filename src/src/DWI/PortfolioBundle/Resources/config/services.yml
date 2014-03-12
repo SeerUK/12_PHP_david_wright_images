@@ -1,38 +1,39 @@
 parameters:
     # Repositories
-    dwi_portfolio.gallery_repository.class: Doctrine\ORM\EntityRepository
-    dwi_portfolio.gallery_entity: "DWIPortfolioBundle:Gallery"
+    dwi_portfolio.gallery_repository.class:      Doctrine\ORM\EntityRepository
     dwi_portfolio.gallery_view_repository.class: Doctrine\ORM\EntityRepository
-    dwi_portfolio.gallery_view_entity: "DWIPortfolioBundle:GalleryView"
-    dwi_portfolio.image_repository.class: Doctrine\ORM\EntityRepository
-    dwi_portfolio.image_entity: "DWIPortfolioBundle:Image"
-    dwi_portfolio.tag_repository.class: Doctrine\ORM\EntityRepository
-    dwi_portfolio.tag_entity: "DWIPortfolioBundle:Tag"
+    dwi_portfolio.image_repository.class:        Doctrine\ORM\EntityRepository
+    dwi_portfolio.tag_repository.class:          Doctrine\ORM\EntityRepository
+    dwi_portfolio.gallery_entity:                "DWIPortfolioBundle:Gallery"
+    dwi_portfolio.gallery_view_entity:           "DWIPortfolioBundle:GalleryView"
+    dwi_portfolio.image_entity:                  "DWIPortfolioBundle:Image"
+    dwi_portfolio.tag_entity:                    "DWIPortfolioBundle:Tag"
 
     # Gateways
-    dwi_portfolio.gallery_gateway.class: DWI\PortfolioBundle\Gateway\GalleryGateway
+    dwi_portfolio.gallery_gateway.class:      DWI\PortfolioBundle\Gateway\GalleryGateway
     dwi_portfolio.gallery_view_gateway.class: DWI\PortfolioBundle\Gateway\GalleryViewGateway
-    dwi_portfolio.image_gateway.class: DWI\PortfolioBundle\Gateway\ImageGateway
+    dwi_portfolio.image_gateway.class:        DWI\PortfolioBundle\Gateway\ImageGateway
 
     # Forms
-    dwi_portfolio.create_tag_form_factory.class: DWI\PortfolioBundle\Form\Factory\TagFormFactory
-    dwi_portfolio.create_tag_form.class: Symfony\Component\Form\Form
     dwi_portfolio.create_gallery_form_factory.class: DWI\PortfolioBundle\Form\Factory\GalleryFormFactory
-    dwi_portfolio.create_gallery_form.class: Symfony\Component\Form\Form
-    dwi_portfolio.upload_image_form_factory.class: DWI\PortfolioBundle\Form\Factory\ImageFormFactory
-    dwi_portfolio.upload_image_form.class: Symfony\Component\Form\Form
+    dwi_portfolio.upload_image_form_factory.class:   DWI\PortfolioBundle\Form\Factory\ImageFormFactory
+    dwi_portfolio.create_tag_form_factory.class:     DWI\PortfolioBundle\Form\Factory\TagFormFactory
+    dwi_portfolio.create_tag_form.class:             Symfony\Component\Form\Form
+    dwi_portfolio.create_gallery_form.class:         Symfony\Component\Form\Form
+    dwi_portfolio.upload_image_form.class:           Symfony\Component\Form\Form
 
     # Presenters
-    dwi_portfolio.portfolio_view_presenter.class: DWI\PortfolioBundle\View\Presenter\Portfolio\ViewPresenter
-    dwi_portfolio.portfolio_view_tag_presenter.class: DWI\PortfolioBundle\View\Presenter\Portfolio\ViewTagPresenter
-    dwi_portfolio.galleries_manage_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioAdmin\GalleriesPresenter
-    dwi_portfolio.tags_manage_presenter.class: DWI\PortfolioBundle\View\Presenter\PortfolioAdmin\TagsPresenter
-    dwi_portfolio.gallery_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\GalleryPresenter
-    dwi_portfolio.gallery_manage_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\ManagePresenter
-    dwi_portfolio.gallery_set_cover_presenter.class: DWI\PortfolioBundle\View\Presenter\Gallery\SetCoverPresenter
-    dwi_portfolio.image_delete_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\DeletePresenter
+    dwi_portfolio.portfolio_view_presenter.class:         DWI\PortfolioBundle\View\Presenter\Portfolio\ViewPresenter
+    dwi_portfolio.portfolio_view_tag_presenter.class:     DWI\PortfolioBundle\View\Presenter\Portfolio\ViewTagPresenter
+    dwi_portfolio.galleries_manage_presenter.class:       DWI\PortfolioBundle\View\Presenter\PortfolioAdmin\GalleriesPresenter
+    dwi_portfolio.tags_manage_presenter.class:            DWI\PortfolioBundle\View\Presenter\PortfolioAdmin\TagsPresenter
+    dwi_portfolio.gallery_presenter.class:                DWI\PortfolioBundle\View\Presenter\Gallery\GalleryPresenter
+    dwi_portfolio.gallery_manage_presenter.class:         DWI\PortfolioBundle\View\Presenter\Gallery\ManagePresenter
+    dwi_portfolio.gallery_set_cover_presenter.class:      DWI\PortfolioBundle\View\Presenter\Gallery\SetCoverPresenter
+    dwi_portfolio.gallery_tags_presenter.class:           DWI\PortfolioBundle\View\Presenter\GalleryAdmin\TagsPresenter
+    dwi_portfolio.image_delete_presenter.class:           DWI\PortfolioBundle\View\Presenter\Image\DeletePresenter
     dwi_portfolio.image_edit_description_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\EditDescriptionPresenter
-    dwi_portfolio.image_upload_presenter.class: DWI\PortfolioBundle\View\Presenter\Image\UploadPresenter
+    dwi_portfolio.image_upload_presenter.class:           DWI\PortfolioBundle\View\Presenter\Image\UploadPresenter
 
 services:
     dwi_portfolio.gallery_repository:
@@ -137,6 +138,9 @@ services:
 
     dwi_portfolio.gallery_set_cover_presenter:
         class: %dwi_portfolio.gallery_set_cover_presenter.class%
+
+    dwi_portfolio.gallery_tags_presenter:
+        class: %dwi_portfolio.gallery_tags_presenter.class%
 
     dwi_portfolio.image_delete_presenter:
         class: %dwi_portfolio.image_delete_presenter.class%

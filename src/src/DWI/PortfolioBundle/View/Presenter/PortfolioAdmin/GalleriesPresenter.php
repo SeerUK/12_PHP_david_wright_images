@@ -63,6 +63,7 @@ class GalleriesPresenter extends AbstractPresenter
                 ->setVariable('subtitle', $gallery->getSubTitle())
                 ->setVariable('coverImagePath', $this->getGalleryCoverImagePath($gallery))
                 ->setVariable('images', $gallery->getImages())
+                ->setVariable('tags', $gallery->getTags())
                 ->setVariable('isActive', $gallery->getIsActive());
 
             $portfolio->addChild($gvm, 'galleries', true);

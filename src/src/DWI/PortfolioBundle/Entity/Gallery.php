@@ -367,7 +367,7 @@ class Gallery
      */
     public function removeTag(\DWI\PortfolioBundle\Entity\Tag $tag)
     {
-        $this->tags->removeElement($tags);
+        $this->tags->removeElement($tag);
     }
 
     /**
