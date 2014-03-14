@@ -8,9 +8,14 @@
     <a href="#">Back to the top</a>
     &nbsp;&nbsp;|&nbsp;&nbsp;
 
+
     {% if app.user %}
         Signed in as {{ app.user.username }}
         &nbsp;&nbsp;|&nbsp;&nbsp;
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ url('dwi_portfolio_manage_galleries') }}" target="_blank">Admin Panel</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+        {% endif %}
         <a href="{{ url('dwi_security_account_logout') }}">Sign Out</a><br />
     {% else %}
         <a href="{{ url('dwi_security_account_login') }}">Sign In</a><br />

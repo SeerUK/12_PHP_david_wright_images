@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS UserRole (
 ) COMMENT="User roles";
 
 CREATE TABLE IF NOT EXISTS ConVar (
-    id int UNSIGNED NOT NULL,
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
     name varchar(30) NOT NULL,
     value varchar(250) NOT NULL,
     lastModified timestamp NOT NULL,

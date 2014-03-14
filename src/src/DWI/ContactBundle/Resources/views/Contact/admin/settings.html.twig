@@ -1,0 +1,43 @@
+{% extends ':Admin:base-admin.html.twig' %}
+
+{% form_theme form 'DWICoreBundle:Form:fields.html.twig' %}
+
+{% block title %}Contact Settings{% endblock %}
+
+{% block body %}
+    <div class="canvas canvas-padded-l clearfix">
+        <div class="pull-left">
+            <h1>Managing <span class="text-light">Contact Settings</span></h1>
+        </div>
+    </div>
+
+    <div class="canvas canvas-padded-l gray-lighter clearfix">
+        {{ form_start(form, { 'attr': { 'class': 'form-editor' } }) }}
+            {{ form_widget(form._token) }}
+
+            <div>
+                <span class="text-thin">Recipient email address, currently</span>
+                <strong>{{ recipient }}</strong>
+            </div>
+            {{ form_widget(form.email) }}
+
+            <br />
+
+            <div class="form-row">
+                <div class="pull-right">
+                    {{ form_widget(form.submit) }}
+                </div>
+            </div>
+        {{ form_end(form) }}
+
+        {% if errors is not empty %}
+            {% for error in errors %}
+                <span class="text-danger">{{ error.message }}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+

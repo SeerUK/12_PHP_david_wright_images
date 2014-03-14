@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * Contact Controller
  */
 class ContactController extends Controller
-{#
+{
     /**
      * Send email form
      *
