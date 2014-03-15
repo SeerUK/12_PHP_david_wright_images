@@ -288,6 +288,10 @@ blockquote {
         margin-bottom: 0;
     }
 
+    .canvas.gray-lighter & {
+    border-left: 5px solid $gray-light;
+    }
+
     small,
     .small {
         display: block;

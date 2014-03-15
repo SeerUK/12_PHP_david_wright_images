@@ -11,13 +11,15 @@
     </div>
 
     <div class="canvas canvas-padded gray-lighter">
-        <section class="body">
-            <img src="http://placehold.it/200x300" alt="" class="pull-right" />
-            {% if content is defined and content is not empty %}
-                {{ content }}
-            {% else %}
-                <p class="text-center">Looks like this is empty for now, sorry! </p>
-            {% endif %}
+        <section class="body clearfix">
+            <div class="gallery-type">
+                <img src="http://placehold.it/200x300" alt="" class="img-padded pull-right" />
+                {% if content is defined and content is not empty %}
+                    {{ content|raw }}
+                {% else %}
+                    <p class="text-center">Looks like this is empty for now, sorry! </p>
+                {% endif %}
+            </div>
         </section>
     </div>
 {% endblock %}

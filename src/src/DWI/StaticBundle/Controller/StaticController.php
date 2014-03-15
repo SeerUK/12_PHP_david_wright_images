@@ -17,6 +17,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class StaticController extends Controller
 {
+    /**
+     * DWI Homepage
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function homeAction()
     {
         $gr = $this->get('dwi_portfolio.gallery_repository');
@@ -29,6 +34,11 @@ class StaticController extends Controller
         ));
     }
 
+    /**
+     * About page
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function aboutAction()
     {
         $pg = $this->get('dwi_static.page_gateway');
