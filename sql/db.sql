@@ -120,3 +120,13 @@ CREATE TABLE IF NOT EXISTS ConVar (
 
 INSERT IGNORE INTO ConVar (name, value) VALUES
     ('contact.recipient', 'wright.elliot@gmail.com');
+
+CREATE TABLE IF NOT EXISTS Page (
+    id int UNSIGNED NOT NULL AUTO_INCREMENT,
+    name varchar(30) NOT NULL,
+    contnet varchar(5000) NOT NULL,
+    lastModified timestamp NOT NULL,
+
+    PRIMARY KEY (id),
+    UNIQUE KEY (name)
+) COMMENT="Pages content.";
