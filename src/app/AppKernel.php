@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new DWI\StaticBundle\DWIStaticBundle(),
             new DWI\AssetBundle\DWIAssetBundle(),
-            new DWI\AuthBundle\DWIAuthBundle(),
             new DWI\ContactBundle\DWIContactBundle(),
             new DWI\PortfolioBundle\DWIPortfolioBundle(),
             new DWI\CoreBundle\DWICoreBundle(),

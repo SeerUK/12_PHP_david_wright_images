@@ -1,7 +1,0 @@
-parameters:
-#    dwi_auth.example.class: DWI\AuthBundle\Example
-
-services:
-#    dwi_auth.example:
-#        class: %dwi_auth.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
