@@ -24,7 +24,7 @@ There is still a fair bit to do, but a lot of the core principles have been deci
   - [x] Users and groups
   - [x] Firewall
   - [ ] Account pages
-- [ ] Gallery system (PortfolioBundle)
-- [ ] Assets (AssetBundle)
-- [ ] Contact system (ContactBundle)
-- [ ] "Static" content (StaticBundle)
+- [x] Gallery system (PortfolioBundle)
+- [x] Assets (AssetBundle)
+- [x] Contact system (ContactBundle)
+- [ ] "Static" content, *homepage and about page essentially* (StaticBundle)
