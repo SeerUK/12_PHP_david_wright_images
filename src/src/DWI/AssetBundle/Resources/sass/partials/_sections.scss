@@ -20,6 +20,10 @@
         padding: 50px;
     }
 
+    &.canvas-padded-xl {
+        padding: 110px 0 150px;
+    }
+
     &.gray-lighter {
         background: $gray-lighter;
     }
@@ -175,6 +179,15 @@ header {
 
         > small {
             color: $white;
+        }
+    }
+
+    &.jumbotron-s {
+        font-size: 40px;
+        padding: 20px 0;
+
+        > small {
+            font-size: 40%;
         }
     }
 }
