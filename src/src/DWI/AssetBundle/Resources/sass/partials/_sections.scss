@@ -48,6 +48,10 @@
         background: $slate-darker;
     }
 
+    &.transparent {
+        background: transparent;
+    }
+
     &.userbar {
         background: $gray-lighter;
     }
@@ -130,6 +134,21 @@ header {
             }
         }
     }
+
+    &.white {
+        border-bottom: none;
+        color: $white;
+
+        > nav.navbar {
+            > ul {
+                > li {
+                    > a {
+                        color: $white;
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -149,6 +168,14 @@ header {
         font-size: 33%;
         font-weight: $font-weight-normal;
         text-transform: none;
+    }
+
+    &.white {
+        color: $white;
+
+        > small {
+            color: $white;
+        }
     }
 }
 

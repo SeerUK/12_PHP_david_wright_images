@@ -87,6 +87,33 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
 
 
     /**
+     * Find most recent galleries with limit
+     *
+     * @param  integer $limit
+     * @param  array   $options
+     * @return array
+     */
+    public function findWithLimit($limit, array $options = null)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $query = $qb
+            ->select('g, gci, gcii')
+            ->from('DWIPortfolioBundle:Gallery', 'g')
+            ->leftJoin('g.coverImage', 'gci')
+            ->leftJoin('gci.image', 'gcii')
+            ->orderBy('g.id', 'DESC');
+
+        $query  = $this->augmentQueryFromOptions($query, $options);
+
+        return $query->getQuery()
+            ->setMaxResults($limit)
+            ->useResultCache(true)
+            ->getResult();
+    }
+
+
+    /**
      * Augment given query with given options
      *
      * @param  QueryBuilder $query

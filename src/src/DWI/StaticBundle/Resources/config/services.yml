@@ -1,7 +1,6 @@
 parameters:
-#    dwi_static.example.class: DWI\StaticBundle\Example
+    dwi_static.static_home_presenter.class: DWI\StaticBundle\View\Presenter\HomePresenter
 
 services:
-#    dwi_static.example:
-#        class: %dwi_static.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    dwi_static.static_home_presenter:
+        class: %dwi_static.static_home_presenter.class%

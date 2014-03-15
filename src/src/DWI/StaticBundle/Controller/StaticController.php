@@ -19,7 +19,14 @@ class StaticController extends Controller
 {
     public function homeAction()
     {
-        return $this->render('DWIStaticBundle:Static:home.html.twig');
+        $gr = $this->get('dwi_portfolio.gallery_repository');
+        $hp = $this->get('dwi_static.static_home_presenter');
+
+        $hp->setVariable('galleries', $gr->findWithLimit(3));
+
+        return $this->render('DWIStaticBundle:Static:home.html.twig', array(
+            'model' => $hp->prepareView(),
+        ));
     }
 
     public function aboutAction($name)

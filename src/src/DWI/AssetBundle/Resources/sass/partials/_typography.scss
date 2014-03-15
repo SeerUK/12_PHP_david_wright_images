@@ -50,6 +50,26 @@ h4, .h4 { font-size: $font-size-h4; }
 h5, .h5 { font-size: $font-size-h5; }
 h6, .h6 { font-size: $font-size-h6; }
 
+.heading {
+    @include box-sizing(border-box);
+    @include row(12);
+
+    border-bottom: 2px solid $gray-lighter;
+    margin: 36px 0;
+    text-align: center;
+    margin: 0 auto 24px;
+    padding: 0 10px;
+
+
+    h2 {
+        display: inline-block;
+        position: relative;
+        top: 36px;
+        background: $white;
+        padding: 24px 12px;
+    }
+}
+
 
 // Body
 // --------------------------------------------------

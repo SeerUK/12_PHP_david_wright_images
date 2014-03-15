@@ -1,37 +1,37 @@
-{% extends '::base.html.twig' %}
+{% extends '::base-home.html.twig' %}
 
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <!-- <div class="separator"></div> -->
-        <div class="title">
-            <h1>
-                Portfolio<br />
-                <small>Take a look at some of my recent work below.</small>
-            </h1>
-        </div>
-        <div class="tags">
-            <ul class="tags">
-                <li class="active"><a href="#">All</a></li>
-                <li><a href="#">Concerts</a></li>
-                <li><a href="#">Landscapes</a></li>
-                <li><a href="#">Portrait</a></li>
-                <li><a href="#">Theatre</a></li>
-            </ul>
+
+    <div class="canvas">
+        <section class="heading">
+            <h2>Recent Work</h2>
+        </section>
+        <div class="thumbs">
+            {% if model.portfolio.galleries is defined %}
+                {% for gallery in model.portfolio.galleries %}
+                    <div class="thumb {{ not gallery.isActive ? 'inactive' }}" title="{{ gallery.title }}">
+                        <div class="thumb-overlay">
+                            <a class="cover" href="{{ url('dwi_portfolio_gallery', {'id': gallery.id}) }}"></a>
+                        </div>
+
+                        {% if gallery.coverImagePath %}
+                            <img src="{{ asset(gallery.coverImagePath)|imagine_filter('gallery_thumb') }}" alt="" />
+                        {% else %}
+                            <img src="http://placehold.it/300x300" alt="" />
+                        {% endif %}
+
+                        <div class="info">
+                            <span class="title">{{ gallery.title }}</span><br />
+                            <span class="subtitle text-muted">{{ gallery.subtitle }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center" style="margin-bottom: 20px;">There are no galleries here!</div>
+            {% endif %}
         </div>
     </div>
-    <div class="thumbs">
-        <div class="container">
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-            <img src="http://placeholder.seydoggy.com/images/300-300?{{ random() }}" alt="" />
-        </div>
-    </div>
+
 {% endblock %}
