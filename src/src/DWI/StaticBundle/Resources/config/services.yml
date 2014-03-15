@@ -1,6 +1,16 @@
 parameters:
+    # Gateways
+    dwi_static.page_gateway.class: DWI\StaticBundle\Gateway\PageGateway
+
+    # Presenters
     dwi_static.static_home_presenter.class: DWI\StaticBundle\View\Presenter\HomePresenter
 
 services:
+    dwi_static.page_gateway:
+        class: %dwi_static.page_gateway.class%
+        arguments:
+            conn: '@doctrine.dbal.default_connection'
+            cache: '@dwi_core.result_cache'
+
     dwi_static.static_home_presenter:
         class: %dwi_static.static_home_presenter.class%

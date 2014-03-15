@@ -1,3 +1,7 @@
 dwi_static_homepage:
     pattern:  /
     defaults: { _controller: DWIStaticBundle:Static:home }
+
+dwi_static_about:
+    pattern:  /about
+    defaults: { _controller: DWIStaticBundle:Static:about }

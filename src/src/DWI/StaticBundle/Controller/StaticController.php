@@ -29,8 +29,12 @@ class StaticController extends Controller
         ));
     }
 
-    public function aboutAction($name)
+    public function aboutAction()
     {
-        return $this->render('DWIStaticBundle:Default:index.html.twig');
+        $pg = $this->get('dwi_static.page_gateway');
+
+        return $this->render('DWIStaticBundle:Static:about.html.twig', array(
+            'content' => $pg->findContentByName('about'),
+        ));
     }
 }
