@@ -52,15 +52,16 @@ class PageGateway extends AbstractGateway
      */
     public function updateContentByName($name, $content)
     {
-        $qb = $this->conn->createQueryBuilder();
+        $sql = "
+            REPLACE INTO
+                Page (name, content)
+            VALUES
+                (:name, :content)
+        ";
 
-        $qb->update('Page', 'p');
-        $qb->set('content', ':content');
-        $qb->where('name = :name');
-
-        $stmt = $this->conn->prepare($qb->getSql());
-        $stmt->bindValue('content', $content);
+        $stmt = $this->conn->prepare($sql);
         $stmt->bindValue('name', $name);
+        $stmt->bindValue('content', $content);
 
         return $stmt->execute();
     }
