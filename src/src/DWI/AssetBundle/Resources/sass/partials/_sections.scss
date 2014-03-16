@@ -139,19 +139,8 @@ header {
         }
     }
 
-    &.white {
+    &.home {
         border-bottom: none;
-        color: $white;
-
-        > nav.navbar {
-            > ul {
-                > li {
-                    > a {
-                        color: $white;
-                    }
-                }
-            }
-        }
     }
 }
 
