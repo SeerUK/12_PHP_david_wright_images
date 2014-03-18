@@ -20,6 +20,7 @@ I think, what I'm trying to say here is that this for the last month has been my
 
 There is still a fair bit to do, but a lot of the core principles have been decided upon and development on this project now is easier than ever, so, onto the list:
 
+- [x] Core components (CoreBundle)
 - [ ] Security system (SecurityBundle)
   - [x] Users and groups
   - [x] Firewall
