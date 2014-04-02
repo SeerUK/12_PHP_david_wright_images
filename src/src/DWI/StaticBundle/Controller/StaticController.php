@@ -27,7 +27,12 @@ class StaticController extends Controller
         $gr = $this->get('dwi_portfolio.gallery_repository');
         $hp = $this->get('dwi_static.static_home_presenter');
 
-        $hp->setVariable('galleries', $gr->findWithLimit(3));
+        $options = array();
+        if ( ! $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            $options['isActive'] = true;
+        }
+
+        $hp->setVariable('galleries', $gr->findWithLimit(3, $options));
 
         return $this->render('DWIStaticBundle:Static:home.html.twig', array(
             'model' => $hp->prepareView(),
