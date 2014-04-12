@@ -67,7 +67,7 @@ class GalleryRepository extends EntityRepository implements PersistentEntityRepo
         $qb = $this->getEntityManager()->createQueryBuilder();
 
         $query = $qb
-            ->select('g, gci, gcii, t, gv')
+            ->select('g') //, gci, gcii, t, gv')
             ->from('DWIPortfolioBundle:Gallery', 'g')
             // ->leftJoin('g.coverImage', 'gci')
             // ->leftJoin('gci.image', 'gcii')
