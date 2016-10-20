@@ -10,7 +10,8 @@
     <div class="canvas">
         <div class="jumbotron">
             Portfolio<br />
-            {% if model.tag is defined %}
+
+            {% if model.tag is not null %}
                 <small>My galleries tagged with '{{ model.tag.name }}'</small>
             {% else %}
                 <small>Take a look at some of my recent work below</small>

@@ -1,0 +1,46 @@
+version: "2"
+
+services:
+  web:
+    container_name: dwi-web
+    image: seeruk/docker-nginx:latest
+    environment:
+      NGINX_TEMPLATE: default-php-symfony2
+      PHP_INDEX: app_dev.php
+      VIRTUAL_PORT: 8080
+    #set your ports in docker-compose.override.yml
+    #ports:
+    #- 80:8080
+    #- 443:4430
+    volumes:
+    - ./src:/opt/www
+    links:
+    - php:php.docker
+
+  php:
+    container_name: dwi-php
+    image: seeruk/php-fpm:5.6-dev
+    environment:
+    - PHP_MEMORY_LIMIT=256M
+    volumes:
+    - ./src:/opt/www
+    links:
+    - db:db.docker
+
+  db:
+    container_name: dwi-db
+    image: mysql:5.7
+    command: mysqld --skip-name-resolve
+    environment:
+      MYSQL_ROOT_PASSWORD: dwiweb
+      MYSQL_DATABASE: dwiweb
+      MYSQL_USER: dwiweb
+      MYSQL_PASSWORD: dwiweb
+    ports:
+    - 3306:3306
+    volumes:
+    - dbdata:/var/lib/mysql
+
+volumes:
+  dbdata:
+    driver: local

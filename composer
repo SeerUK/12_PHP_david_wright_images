@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker-compose exec --user=php php bash -c "cd /opt/www; /opt/www/composer.phar $@"

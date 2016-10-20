@@ -1,19 +1,19 @@
 dwi_contact_view:
-    pattern: /contact
+    path: /contact
     defaults: { _controller: DWIContactBundle:Contact:view }
     methods: [GET]
 
 dwi_contact_send:
-    pattern: /contact/send
+    path: /contact/send
     defaults: { _controller: DWIContactBundle:Contact:send }
     methods: [POST]
 
 dwi_contact_sent:
-    pattern: /contact/sent
+    path: /contact/sent
     defaults: { _controller: DWIContactBundle:Contact:sent }
     methods: [GET]
 
 dwi_contact_admin_settings:
-    pattern: /admin/contact
+    path: /admin/contact
     defaults: { _controller: DWIContactBundle:ContactAdmin:settings }
     methods: [GET,POST]

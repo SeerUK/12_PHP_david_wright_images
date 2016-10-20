@@ -1,11 +1,3 @@
-
--- Platform: erica
-
-CREATE DATABASE IF NOT EXISTS DWI
-    CHARACTER SET = utf8;
-
-USE DWI;
-
 CREATE TABLE IF NOT EXISTS Gallery (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     title varchar(250) NOT NULL,

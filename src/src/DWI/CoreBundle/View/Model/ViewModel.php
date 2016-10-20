@@ -63,6 +63,18 @@ class ViewModel implements ModelInterface, ClearableModelInterface
         return $this->getVariable($name);
     }
 
+    /**
+     * Magic call method
+     *
+     * @param  string $name
+     * @param  array $args
+     * @return mixed
+     */
+    public function __call($name, $args)
+    {
+        return $this->getVariable($name);
+    }
+
 
     /**
      * Magic view variables setter

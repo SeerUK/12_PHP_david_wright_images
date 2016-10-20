@@ -34,6 +34,5 @@ security:
             #    realm: "Secured Demo Area"
 
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/account/login }
         - { path: ^/admin, roles: ROLE_ADMIN }

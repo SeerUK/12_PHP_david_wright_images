@@ -1,9 +1,9 @@
 dwi_security_account_login:
-    pattern: /account/login
+    path: /account/login
     defaults: { _controller: DWISecurityBundle:Account:Login }
 
 dwi_security_account_login_check:
-    pattern: /account/login/check
+    path: /account/login/check
 
 dwi_security_account_logout:
-    pattern: /account/logout
+    path: /account/logout

@@ -1,14 +1,14 @@
 dwi_static_homepage:
-    pattern:  /
+    path:  /
     defaults: { _controller: DWIStaticBundle:Static:home }
     methods: [GET]
 
 dwi_static_about:
-    pattern:  /about
+    path:  /about
     defaults: { _controller: DWIStaticBundle:Static:about }
     methods: [GET]
 
 dwi_static_about_settings:
-    pattern:  /admin/about
+    path:  /admin/about
     defaults: { _controller: DWIStaticBundle:StaticAdmin:about }
     methods: [GET,POST]

@@ -12,9 +12,8 @@ web/bundles/*
 app/config/parameters.ini
 app/config/parameters.yml
 
-# Vagrant
-vagrant/librarian/.tmp
-vagrant/.vagrant/machines/*
+# Composer
+src/composer.phar
 
 # SASS
 src/.sass-cache
