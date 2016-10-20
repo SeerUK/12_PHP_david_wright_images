@@ -79,6 +79,11 @@ swiftmailer:
     spool:     { type: memory }
 
 liip_imagine:
+    loaders:
+        default:
+            filesystem:
+                data_root: %imagine.data_root%
+
     filter_sets:
         gallery_thumb:
             quality: 75

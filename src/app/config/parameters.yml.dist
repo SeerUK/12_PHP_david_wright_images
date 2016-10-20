@@ -17,3 +17,5 @@ parameters:
     # Configurable parameters ...
     configurable.site_name: "David Wright Images"
     configurable.webmaster: "wright.elliot@gmail.com"
+
+    imagine.data_root: /absolute/path/to/src/folder

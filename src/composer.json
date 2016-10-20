@@ -20,7 +20,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
         "ircmaxell/password-compat": "1.0.*",
-        "liip/imagine-bundle": "dev-master"
+        "liip/imagine-bundle": "1.6.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
